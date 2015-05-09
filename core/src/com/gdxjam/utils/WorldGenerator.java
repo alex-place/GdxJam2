@@ -1,4 +1,3 @@
-
 package com.gdxjam.utils;
 
 import java.util.Random;
@@ -12,9 +11,12 @@ import com.gdxjam.GameManager;
 import com.gdxjam.systems.SquadSystem;
 import com.gdxjam.systems.WaveSystem;
 
-/** Generates world bounds Generates the game world by creating an asteroid field using fBm applied OpenSimplexNoise Populates the
- * world with entities.
- * @author Torin Wiebelt (Twiebs) */
+/**
+ * Generates world bounds Generates the game world by creating an asteroid field
+ * using fBm applied OpenSimplexNoise Populates the world with entities.
+ * 
+ * @author Torin Wiebelt (Twiebs)
+ */
 
 public class WorldGenerator {
 
@@ -28,11 +30,12 @@ public class WorldGenerator {
 
 	private Array<Polygon> worldSpokes;
 
-	public WorldGenerator (int width, int height, long seed) {
+	public WorldGenerator(int width, int height, long seed) {
 		this(width, height, seed, new WorldGeneratorParameter());
 	}
 
-	public WorldGenerator (int width, int height, long seed, WorldGeneratorParameter param) {
+	public WorldGenerator(int width, int height, long seed,
+			WorldGeneratorParameter param) {
 		this.width = width;
 		this.height = height + 1; // Plus one hides missing band at the top of
 		// the world
@@ -42,24 +45,26 @@ public class WorldGenerator {
 		this.param = param;
 	}
 
-	public void generate () {
-		// createWorldBounds();
-		generateAsteroidField();
+	public void generate() {
+		createWorldBounds();
+		// generateAsteroidField();
 		if (param.generateBackground) {
 			createBackground();
 		}
 		populateWorld();
-		// generateSpawners();
+		generateSpawners();
 	}
 
-	public void createWorldBounds () {
+	public void createWorldBounds() {
 		EntityFactory.createBoundry(new Vector2(0, 0), new Vector2(0, height));
-		EntityFactory.createBoundry(new Vector2(0, height), new Vector2(width, height));
-		EntityFactory.createBoundry(new Vector2(width, height), new Vector2(width, 0));
+		EntityFactory.createBoundry(new Vector2(0, height), new Vector2(width,
+				height));
+		EntityFactory.createBoundry(new Vector2(width, height), new Vector2(
+				width, 0));
 		EntityFactory.createBoundry(new Vector2(width, 0), new Vector2(0, 0));
 	}
 
-	public void populateWorld () {
+	public void populateWorld() {
 		Vector2 center = new Vector2(width * 0.5f, height * 0.5f);
 		GameManager.getEngine().getSystem(SquadSystem.class).spawnMothership(center);
 
@@ -77,29 +82,32 @@ public class WorldGenerator {
 		}
 	}
 
-	public void generateSpawners () {
+	public void generateSpawners() {
 		WaveSystem.initalizeSpawns();
 	}
 
-	public void createBackground () {
-		EntityFactory.createBackgroundArt(new Vector2(0, 0), Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,
-			Assets.space.background, 0);
+	public void createBackground() {
+		EntityFactory.createBackgroundArt(new Vector2(0, 0),
+				Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,
+				Assets.space.background, 0);
 
-		int planetCount = (int)param.numberOfPlanets.percent(rng.nextFloat());
+		int planetCount = (int) param.numberOfPlanets.percent(rng.nextFloat());
 		for (int i = 0; i < planetCount; i++) {
 			float radius = param.planetRadius.percent(rng.nextFloat());
-			int index = (int)(Assets.space.planets.size * rng.nextFloat());
-			EntityFactory.createBackgroundArt(new Vector2(Constants.VIEWPORT_WIDTH * rng.nextFloat(), Constants.VIEWPORT_HEIGHT
-				* rng.nextFloat()), radius, radius, Assets.space.planets.get(index), 1);
+			int index = (int) (Assets.space.planets.size * rng.nextFloat());
+			EntityFactory.createBackgroundArt(new Vector2(
+					Constants.VIEWPORT_WIDTH * rng.nextFloat(),
+					Constants.VIEWPORT_HEIGHT * rng.nextFloat()), radius,
+					radius, Assets.space.planets.get(index), 1);
 		}
 	}
 
-	public void generateAsteroidField () {
+	public void generateAsteroidField() {
 		float[][] heightMap = generateHeightMap();
 		generateAsteroids(heightMap);
 	}
 
-	private float[][] generateHeightMap () {
+	private float[][] generateHeightMap() {
 		generateSpokes();
 		float[][] heightMap = new float[width][height];
 		for (int x = 0; x < width; x++) {
@@ -115,17 +123,19 @@ public class WorldGenerator {
 
 	/** Generates spokes emanating from the center */
 
-	private void generateSpokes () {
+	private void generateSpokes() {
 		worldSpokes = new Array<Polygon>();
 
 		// Initial reference angle to offset the spokes from
 		float referencenAngle = rng.nextFloat() * 360.0f;
-		float spokeOffset = (MathUtils.PI2 / param.spokeCount) * MathUtils.radDeg;
+		float spokeOffset = (MathUtils.PI2 / param.spokeCount)
+				* MathUtils.radDeg;
 
 		// Determine the length of the spokes
 		float halfWidth = (width * 0.5f);
 		float halfHeight = (height * 0.5f);
-		float length = (float)Math.sqrt(halfWidth * halfWidth + halfHeight * halfHeight);
+		float length = (float) Math.sqrt(halfWidth * halfWidth + halfHeight
+				* halfHeight);
 
 		// Create the spokes using polygon shapes
 		for (int i = 0; i < param.spokeCount; i++) {
@@ -133,7 +143,8 @@ public class WorldGenerator {
 			float angle = referencenAngle + (spokeOffset * i);
 			angle += randomSign() * (rng.nextFloat() * param.spokeScattering);
 
-			// Set the vertices of the polygon as a rectangle with a height of spokeWidth and a width of the length
+			// Set the vertices of the polygon as a rectangle with a height of
+			// spokeWidth and a width of the length
 			float[] verticies = new float[8];
 			verticies[0] = 0;
 			verticies[1] = -param.spokeWidth * 0.5f;
@@ -160,17 +171,23 @@ public class WorldGenerator {
 		}
 	}
 
-	/** Evaluates a x,y pair with fBm applied OpenSimplexNoise. Applies a radial mask to the value.
+	/**
+	 * Evaluates a x,y pair with fBm applied OpenSimplexNoise. Applies a radial
+	 * mask to the value.
 	 * 
-	 * @param x The x coord
-	 * @param y The y coord
-	 * @return The heightmap value */
-	private float eval (int x, int y) {
+	 * @param x
+	 *            The x coord
+	 * @param y
+	 *            The y coord
+	 * @return The heightmap value
+	 */
+	private float eval(int x, int y) {
 		float total = 0.0f;
 		float frequency = param.frequency;
 		float amplitude = param.gain;
 		for (int i = 0; i < param.octaves; i++) {
-			total += noise.eval((float)x * frequency, (float)y * frequency) * amplitude;
+			total += noise.eval((float) x * frequency, (float) y * frequency)
+					* amplitude;
 			frequency *= param.lacunarity;
 			amplitude *= param.gain;
 		}
@@ -180,12 +197,14 @@ public class WorldGenerator {
 
 		float centerToX = x - radius;
 		float centerToY = y - radius;
-		float distanceToCenter = Math.abs((float)Math.sqrt(centerToX * centerToX + centerToY * centerToY));
+		float distanceToCenter = Math.abs((float) Math.sqrt(centerToX
+				* centerToX + centerToY * centerToY));
 		float distanceScalar = (distanceToCenter / radius);
 
 		total -= distanceScalar;
 
-		// Futher more if the array of spokes is not null factor those in as well
+		// Futher more if the array of spokes is not null factor those in as
+		// well
 		if (worldSpokes != null) {
 			for (Polygon polygon : worldSpokes) {
 				if (polygon.contains(x, y)) {
@@ -204,29 +223,36 @@ public class WorldGenerator {
 		return total;
 	}
 
-	/** Generates asteroids using natural scattering and values from the heightmap.
+	/**
+	 * Generates asteroids using natural scattering and values from the
+	 * heightmap.
 	 * 
-	 * @param heightMap */
+	 * @param heightMap
+	 */
 
-	private void generateAsteroids (float[][] heightMap) {
-		int totalRows = (int)((width - 1) * param.asteroidDensity);
-		int totalCols = (int)((height - 1) * param.asteroidDensity);
+	private void generateAsteroids(float[][] heightMap) {
+		int totalRows = (int) ((width - 1) * param.asteroidDensity);
+		int totalCols = (int) ((height - 1) * param.asteroidDensity);
 
-		float rowSpacing = (float)width / (float)totalRows;
-		float colSpacing = (float)height / (float)totalCols;
+		float rowSpacing = (float) width / (float) totalRows;
+		float colSpacing = (float) height / (float) totalCols;
 
 		for (int row = 0; row < totalRows; row++) {
 			for (int col = 0; col < totalCols; col++) {
-				float heightValue = heightMap[(int)(row * rowSpacing)][(int)(col * colSpacing)];
+				float heightValue = heightMap[(int) (row * rowSpacing)][(int) (col * colSpacing)];
 				if (heightValue <= param.heightThreshold) {
 
-					Vector2 pos = new Vector2((row * rowSpacing) + (randomSign() * param.asteroidScattering) * rowSpacing,
-						(col * colSpacing) + (randomSign() * param.asteroidScattering) * colSpacing);
+					Vector2 pos = new Vector2((row * rowSpacing)
+							+ (randomSign() * param.asteroidScattering)
+							* rowSpacing, (col * colSpacing)
+							+ (randomSign() * param.asteroidScattering)
+							* colSpacing);
 
-					float radius = param.asteroidRadius.percent(rng.nextFloat());
-					 if (rng.nextFloat() <= param.asteroidExtraScalingChance) {
-						 radius += param.asteroidRadius.max() * 2;
-					 }
+					float radius = param.asteroidRadius
+							.percent(rng.nextFloat());
+					if (rng.nextFloat() <= param.asteroidExtraScalingChance) {
+						radius += param.asteroidRadius.max() * 2;
+					}
 					EntityFactory.createAsteroid(pos, radius);
 				}
 			}
@@ -234,7 +260,7 @@ public class WorldGenerator {
 		}
 	}
 
-	private float randomSign () {
+	private float randomSign() {
 		return rng.nextBoolean() ? 1 : -1;
 	}
 
@@ -254,10 +280,10 @@ public class WorldGenerator {
 		public float asteroidScattering = 0.25f;
 		public float asteroidExtraScalingChance = 0.02f;
 
-		public int initalSquads = 5;
-		public int squadMembers = 9;
+		public int initalSquads = 1;
+		public int squadMembers = 1;
 
-		public Range numberOfPlanets = new Range(1, 1);
+		public Range numberOfPlanets = new Range(1, 3);
 		public Range planetRadius = new Range(4, 10);
 
 		public boolean generateBackground = true;
