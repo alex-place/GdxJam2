@@ -10,7 +10,6 @@ import com.gdxjam.ecs.EntityManager;
 import com.gdxjam.screens.AbstractScreen;
 import com.gdxjam.utils.EntityFactory;
 import com.gdxjam.utils.EntityUtils;
-import com.gdxjam.utils.WorldSpawner;
 
 public class GameManager {
 	private static final String TAG = "[" + GameManager.class.getSimpleName() + "]";
@@ -37,7 +36,7 @@ public class GameManager {
 		engine = new EntityManager();
 		EntityFactory.setEngine(engine);
 		EntityUtils.setEngine(engine);
-		WorldSpawner.init(engine);
+//		WorldSpawner.init(engine);
 		return engine;
 	}
 	
