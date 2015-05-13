@@ -2,8 +2,10 @@ package com.gdxjam.screens;
 
 import java.util.Random;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 import com.gdxjam.GameManager;
 import com.gdxjam.GameManager.GameConfig;
 import com.gdxjam.GameManager.GameConfig.BUILD;
@@ -11,7 +13,9 @@ import com.gdxjam.InputManager;
 import com.gdxjam.ecs.EntityManager;
 import com.gdxjam.input.DesktopGestureListener;
 import com.gdxjam.input.DeveloperInputProcessor;
+import com.gdxjam.input.EntityController;
 import com.gdxjam.systems.CameraSystem;
+import com.gdxjam.utils.Constants;
 import com.gdxjam.utils.WorldGenerator;
 
 public class GameScreen extends AbstractScreen {
@@ -42,6 +46,12 @@ public class GameScreen extends AbstractScreen {
 		long seed = new Random().nextLong();
 		WorldGenerator generator = new WorldGenerator(width, height, seed);
 		generator.generate();
+
+		Entity player = generator.createUnit(Constants.playerFaction,
+				new Vector2(100, 100));
+		InputManager.addProcessor(new EntityController(engine, player));
+		engine.addEntity(player);
+
 		engine.getSystem(CameraSystem.class).getCamera().position.set(
 				width * 0.5f, height * 0.5f, 0);
 		engine.getSystem(CameraSystem.class).setWorldBounds(width, height);

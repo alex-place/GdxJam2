@@ -1,14 +1,16 @@
 package com.gdxjam.utils;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.gdxjam.Assets;
+import com.gdxjam.components.FactionComponent.Faction;
 
 /**
- * Generates world bounds Generates the game world by creating an asteroid field
- * using fBm applied OpenSimplexNoise Populates the world with entities.
+ * Generates world bounds 
  * 
  * @author Torin Wiebelt (Twiebs)
+ * @author alex-place
  */
 
 public class WorldGenerator {
@@ -25,6 +27,10 @@ public class WorldGenerator {
 	public void generate() {
 		createBackground();
 		createWorldBounds();
+	}
+
+	public Entity createUnit(Faction faction, Vector2 position) {
+		return EntityFactory.createUnit(faction, position);
 	}
 
 	public void createWorldBounds() {
@@ -47,6 +53,8 @@ public class WorldGenerator {
 		for (int i = 0; i < planetCount; i++) {
 			planetRadius = MathUtils.random(1, 10);
 			int index = (int) (MathUtils.random(Assets.space.planets.size));
+			if (index == Assets.space.planets.size)
+				index--;
 			System.out.print(index);
 			EntityFactory.createBackgroundArt(new Vector2(
 					Constants.VIEWPORT_WIDTH * MathUtils.random(),
