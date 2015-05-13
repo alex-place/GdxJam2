@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.SquadComponent;
-import com.gdxjam.ecs.Components;
 
 public enum SquadHarvestState implements State<Entity>{
 	IDLE(){

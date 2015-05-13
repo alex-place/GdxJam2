@@ -8,10 +8,10 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.MessageManager;
 import com.gdxjam.ai.state.TelegramMessage;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.FSMComponent;
 import com.gdxjam.components.FactionComponent.Faction;
 import com.gdxjam.components.TargetComponent;
-import com.gdxjam.ecs.Components;
 import com.gdxjam.systems.GUISystem;
 
 public class EntityUtils {

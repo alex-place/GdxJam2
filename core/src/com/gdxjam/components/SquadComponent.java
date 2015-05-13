@@ -25,7 +25,6 @@ import com.gdxjam.ai.formation.VFormationPattern;
 import com.gdxjam.ai.formation.WedgeFormationPattern;
 import com.gdxjam.ai.state.SquadCombatState;
 import com.gdxjam.ai.state.TelegramMessage;
-import com.gdxjam.ecs.Components;
 import com.gdxjam.ecs.EntityCategory;
 import com.gdxjam.utils.Constants;
 import com.gdxjam.utils.EntityUtils;

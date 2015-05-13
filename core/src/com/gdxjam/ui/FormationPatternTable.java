@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.gdxjam.Assets;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.SquadComponent.FormationPatternType;
-import com.gdxjam.ecs.Components;
 
 public class FormationPatternTable extends Table{
 	

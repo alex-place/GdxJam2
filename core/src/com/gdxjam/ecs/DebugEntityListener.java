@@ -3,6 +3,7 @@ package com.gdxjam.ecs;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.Gdx;
+import com.gdxjam.components.Components;
 
 public class DebugEntityListener implements EntityListener{
 

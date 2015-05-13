@@ -7,10 +7,10 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.gdxjam.components.FactionComponent.Faction;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.ProjectileComponent;
 import com.gdxjam.components.SquadComponent;
-import com.gdxjam.ecs.Components;
 import com.gdxjam.utils.Constants;
 import com.gdxjam.utils.EntityUtils;
 

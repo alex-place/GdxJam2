@@ -14,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.ParticleComponent;
-import com.gdxjam.ecs.Components;
 
 public class ParticleSystem extends IteratingSystem {
 

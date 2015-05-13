@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.ai.msg.MessageManager;
 import com.gdxjam.ai.state.TelegramMessage;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.FSMComponent;
 import com.gdxjam.components.SquadComponent;
 import com.gdxjam.components.TargetComponent;

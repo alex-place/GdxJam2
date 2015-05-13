@@ -9,9 +9,9 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gdxjam.components.FactionComponent.Faction;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.SquadComponent;
 import com.gdxjam.components.UnitComponent;
-import com.gdxjam.ecs.Components;
 import com.gdxjam.utils.Constants;
 import com.gdxjam.utils.EntityFactory;
 

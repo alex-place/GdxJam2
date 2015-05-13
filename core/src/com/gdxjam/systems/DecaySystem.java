@@ -6,8 +6,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.gdxjam.GameManager;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.DecayComponent;
-import com.gdxjam.ecs.Components;
 
 public class DecaySystem extends IteratingSystem{
 	

@@ -3,6 +3,7 @@ package com.gdxjam.ecs;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.PooledEngine;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.SquadComponent;
 import com.gdxjam.components.UnitComponent;
 import com.gdxjam.systems.GUISystem;

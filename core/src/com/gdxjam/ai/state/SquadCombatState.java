@@ -10,9 +10,9 @@ import com.badlogic.gdx.ai.steer.behaviors.Pursue;
 import com.badlogic.gdx.ai.steer.behaviors.Wander;
 import com.badlogic.gdx.math.Vector2;
 import com.gdxjam.components.FactionComponent.Faction;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.SquadComponent;
 import com.gdxjam.components.SteerableComponent;
-import com.gdxjam.ecs.Components;
 import com.gdxjam.utils.Constants;
 
 public enum SquadCombatState implements State<Entity> {

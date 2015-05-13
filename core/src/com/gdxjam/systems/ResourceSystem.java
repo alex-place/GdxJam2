@@ -6,9 +6,9 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.gdxjam.GameManager;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.DecayComponent;
 import com.gdxjam.components.ResourceComponent;
-import com.gdxjam.ecs.Components;
 import com.gdxjam.systems.ParticleSystem.ParticleType;
 import com.gdxjam.utils.EntityFactory;
 

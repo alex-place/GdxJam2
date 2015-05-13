@@ -1,24 +1,7 @@
 
-package com.gdxjam.ecs;
+package com.gdxjam.components;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import com.gdxjam.components.BehaviorTreeComponent;
-import com.gdxjam.components.DecayComponent;
-import com.gdxjam.components.FSMComponent;
-import com.gdxjam.components.FactionComponent;
-import com.gdxjam.components.HealthComponent;
-import com.gdxjam.components.ParalaxComponent;
-import com.gdxjam.components.ParticleComponent;
-import com.gdxjam.components.PhysicsComponent;
-import com.gdxjam.components.ProjectileComponent;
-import com.gdxjam.components.ResourceComponent;
-import com.gdxjam.components.SpriteComponent;
-import com.gdxjam.components.SquadComponent;
-import com.gdxjam.components.SteerableComponent;
-import com.gdxjam.components.SteeringBehaviorComponent;
-import com.gdxjam.components.TargetComponent;
-import com.gdxjam.components.UnitComponent;
-import com.gdxjam.components.WeaponComponent;
 
 public class Components {
 

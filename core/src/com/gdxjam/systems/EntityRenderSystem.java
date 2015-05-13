@@ -18,13 +18,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.PhysicsComponent;
 import com.gdxjam.components.ResourceComponent;
 import com.gdxjam.components.SpriteComponent;
 import com.gdxjam.components.SquadComponent;
-import com.gdxjam.ecs.Components;
 
 public class EntityRenderSystem extends SortedIteratingSystem implements Disposable {
 	private static final String TAG = "[" + EntityRenderSystem.class.getSimpleName() + "]";

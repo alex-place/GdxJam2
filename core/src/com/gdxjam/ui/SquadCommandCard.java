@@ -15,9 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.gdxjam.GameManager;
 import com.gdxjam.ai.state.SquadTatics.Tatics;
 import com.gdxjam.ai.state.TelegramMessage;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.SquadComponent;
 import com.gdxjam.components.SquadComponent.FormationPatternType;
-import com.gdxjam.ecs.Components;
 import com.gdxjam.systems.SquadSystem;
 import com.gdxjam.utils.Constants;
 

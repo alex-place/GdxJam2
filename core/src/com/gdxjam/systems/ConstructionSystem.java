@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.gdxjam.ai.state.TelegramMessage;
-import com.gdxjam.ecs.Components;
+import com.gdxjam.components.Components;
 import com.gdxjam.utils.EntityFactory;
 
 public class ConstructionSystem implements Telegraph {
