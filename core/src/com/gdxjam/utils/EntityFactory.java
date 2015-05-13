@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.ai.steer.behaviors.BlendedSteering;
-import com.badlogic.gdx.ai.steer.behaviors.LookWhereYouAreGoing;
 import com.badlogic.gdx.ai.steer.behaviors.Separation;
 import com.badlogic.gdx.ai.steer.limiters.NullLimiter;
 import com.badlogic.gdx.ai.steer.proximities.RadiusProximity;
@@ -25,11 +24,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gdxjam.Assets;
 import com.gdxjam.ai.state.UnitState;
+import com.gdxjam.components.Components;
 import com.gdxjam.components.DecayComponent;
 import com.gdxjam.components.FSMComponent;
 import com.gdxjam.components.FactionComponent;
 import com.gdxjam.components.FactionComponent.Faction;
-import com.gdxjam.components.Components;
 import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.ParticleComponent;
@@ -74,6 +73,15 @@ public class EntityFactory {
 
 		return entity;
 	}
+	
+	public static Entity createUnit (Entity squad) {
+		Vector2 squadPos = Components.STEERABLE.get(squad).getPosition();
+		Vector2 position = new Vector2(128, 128); // TODO dependant on world
+		// size
+		float angle = squadPos.angleRad(position);
+		position.add(MathUtils.cos(angle) + (Constants.unitRadius * 2), MathUtils.sin(angle) + (Constants.unitRadius * 2));
+		return createUnit(position, squad);
+	}
 
 	public static Entity createAsteroid (Vector2 position, float radius) {
 		Entity entity = builder.createEntity(EntityCategory.RESOURCE, position).physicsBody(BodyType.StaticBody)
@@ -82,15 +90,6 @@ public class EntityFactory {
 			.resource((int)(Constants.baseAsteroidResourceAmt * radius)).steerable(radius).faction(Faction.NONE)
 			.sprite(Assets.space.asteroids.random(), radius * 2, radius * 2).addToEngine();
 		return entity;
-	}
-
-	public static Entity createUnit (Entity squad) {
-		Vector2 squadPos = Components.STEERABLE.get(squad).getPosition();
-		Vector2 position = new Vector2(128, 128); // TODO dependant on world
-		// size
-		float angle = squadPos.angleRad(position);
-		position.add(MathUtils.cos(angle) + (Constants.unitRadius * 2), MathUtils.sin(angle) + (Constants.unitRadius * 2));
-		return createUnit(position, squad);
 	}
 
 	public static Entity createUnit (Vector2 position, Entity squad) {
@@ -114,6 +113,14 @@ public class EntityFactory {
 		stateMachineComponent.changeState(UnitState.IDLE);
 
 		engine.addEntity(entity);
+		return entity;
+	}
+
+	public static Entity createUnit(Vector2 position){
+		Entity entity = builder.createEntity(EntityCategory.SQUAD, position).physicsBody(BodyType.DynamicBody).circleSensor(30.0f)
+				.faction(Faction.FACTION0).target().filter(EntityCategory.SQUAD, 0, EntityCategory.SQUAD | EntityCategory.RESOURCE)
+				.steeringBehavior().stateMachine().getWithoutAdding();
+		
 		return entity;
 	}
 
