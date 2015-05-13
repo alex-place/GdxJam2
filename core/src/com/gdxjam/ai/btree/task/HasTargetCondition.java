@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 import com.gdxjam.components.Components;
-import com.gdxjam.components.UnitComponent;
 import com.gdxjam.components.TargetComponent;
 
 public class HasTargetCondition extends LeafTask<Entity> {

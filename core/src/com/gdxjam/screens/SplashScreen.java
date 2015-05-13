@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.gdxjam.Assets;
 import com.gdxjam.GameManager;
 import com.gdxjam.GameManager.GameConfig;
-import com.gdxjam.utils.Constants;
 
 public class SplashScreen extends AbstractScreen {
 

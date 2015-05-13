@@ -11,17 +11,13 @@ import com.gdxjam.components.Components;
 import com.gdxjam.components.FSMComponent;
 import com.gdxjam.components.SquadComponent;
 import com.gdxjam.components.TargetComponent;
-import com.gdxjam.systems.InputSystem;
-import com.gdxjam.utils.Constants;
 
 public class SquadEntityListener implements EntityListener{
 	
-	private InputSystem inputSystem;
 	private PooledEngine engine;
 	
-	public SquadEntityListener (PooledEngine engine, InputSystem inputSystem) {
+	public SquadEntityListener (PooledEngine engine) {
 		this.engine = engine;
-		this.inputSystem = inputSystem;
 	}
 
 	@Override
@@ -32,8 +28,6 @@ public class SquadEntityListener implements EntityListener{
 	@Override
 	public void entityRemoved (Entity entity) {
 		clearTarget(entity);
-		if(Components.FACTION.get(entity).getFaction() == Constants.playerFaction)
-			inputSystem.removeSquad(entity);
 	}
 	
 	public void clearTarget (Entity target) {

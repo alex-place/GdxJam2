@@ -11,8 +11,6 @@ import com.gdxjam.ecs.EntityManager;
 import com.gdxjam.input.DesktopGestureListener;
 import com.gdxjam.input.DeveloperInputProcessor;
 import com.gdxjam.systems.CameraSystem;
-import com.gdxjam.systems.GUISystem;
-import com.gdxjam.systems.InputSystem;
 import com.gdxjam.utils.WorldGenerator;
 import com.gdxjam.utils.WorldGenerator.WorldGeneratorParameter;
 
@@ -27,10 +25,8 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		engine = GameManager.initEngine();
-		createWorld(256, 256);;
-		
-		multiplexer = engine.getSystem(InputSystem.class).getMultiplexer();
-		multiplexer.addProcessor(engine.getSystem(GUISystem.class).getStage());
+		createWorld(256, 256);
+		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(new GestureDetector(
 				new DesktopGestureListener(engine)));
 
@@ -75,7 +71,6 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void resize(int width, int height) {
-		engine.getSystem(GUISystem.class).resize(width, height);
 	}
 
 	@Override

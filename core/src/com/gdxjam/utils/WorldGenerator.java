@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.gdxjam.Assets;
-import com.gdxjam.GameManager;
-import com.gdxjam.systems.SquadSystem;
-import com.gdxjam.systems.WaveSystem;
+import com.gdxjam.Assets; 
 
 /**
  * Generates world bounds Generates the game world by creating an asteroid field
@@ -52,7 +49,6 @@ public class WorldGenerator {
 			createBackground();
 		}
 		populateWorld();
-		generateSpawners();
 	}
 
 	public void createWorldBounds() {
@@ -66,40 +62,35 @@ public class WorldGenerator {
 
 	public void populateWorld() {
 		Vector2 center = new Vector2(width * 0.5f, height * 0.5f);
-		GameManager.getEngine().getSystem(SquadSystem.class).spawnMothership(center);
 
 		float distance = 16.0f;
 
-		float seperationAngle = 360.0f / (float)param.initalSquads;
+		float seperationAngle = 360.0f / (float) param.initalSquads;
 		// float initalAngle = rng.nextInt(359);
 		float initalAngle = 18.0f;
 
 		for (int i = 0; i < param.initalSquads; i++) {
-			Vector2 angleVec = new Vector2(distance, 0.0f).setAngle(initalAngle + seperationAngle * i);
+			Vector2 angleVec = new Vector2(distance, 0.0f).setAngle(initalAngle
+					+ seperationAngle * i);
 			Vector2 position = center.cpy().add(angleVec);
-//			WaveSystem.spawnSquad(position, Constants.playerFaction, param.squadMembers);
-			GameManager.getEngine().getSystem(SquadSystem.class).createPlayerSquad(position, Constants.playerFaction, param.squadMembers);
-		}
-	}
 
-	public void generateSpawners() {
-		WaveSystem.initalizeSpawns();
+		}
 	}
 
 	public void createBackground() {
-		EntityFactory.createBackgroundArt(new Vector2(0, 0),
-				Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,
-				Assets.space.background, 0);
+//		EntityFactory.createBackgroundArt(new Vector2(0, 0),
+//				Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,
+//				Assets.space.background, 0);
 
-		int planetCount = (int) param.numberOfPlanets.percent(rng.nextFloat());
-		for (int i = 0; i < planetCount; i++) {
-			float radius = param.planetRadius.percent(rng.nextFloat());
-			int index = (int) (Assets.space.planets.size * rng.nextFloat());
-			EntityFactory.createBackgroundArt(new Vector2(
-					Constants.VIEWPORT_WIDTH * rng.nextFloat(),
-					Constants.VIEWPORT_HEIGHT * rng.nextFloat()), radius,
-					radius, Assets.space.planets.get(index), 1);
-		}
+//		int planetCount = (int) param.numberOfPlanets.percent(rng.nextFloat());
+//		for (int i = 0; i < planetCount; i++) {
+//			float radius = param.planetRadius.percent(rng.nextFloat());
+//			int index = (int) (Assets.space.planets.size * rng.nextFloat());
+//			EntityFactory.createBackgroundArt(new Vector2(
+//					Constants.VIEWPORT_WIDTH * rng.nextFloat(),
+//					Constants.VIEWPORT_HEIGHT * rng.nextFloat()), radius,
+//					radius, Assets.space.planets.get(index), 1);
+//		}
 	}
 
 	public void generateAsteroidField() {
@@ -165,7 +156,6 @@ public class WorldGenerator {
 			Vector2 spawnPoint = new Vector2(length, 0);
 			spawnPoint.setAngle(angle);
 			spawnPoint.add(halfWidth, halfHeight);
-			WaveSystem.addSpawnPoint(spawnPoint);
 
 			worldSpokes.add(polygon);
 		}
