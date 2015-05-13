@@ -1,4 +1,3 @@
-
 package com.gdxjam;
 
 import com.badlogic.gdx.Gdx;
@@ -20,9 +19,11 @@ public class Assets implements Disposable {
 	public static boolean rebuildAtlas = false;
 	public static boolean drawDebugOutline = false;
 
+	public static boolean loaded = false;
+
 	public static AssetManager manager;
 
-	public static AssetManager getManager () {
+	public static AssetManager getManager() {
 		if (manager == null) {
 			manager = new AssetManager();
 		}
@@ -32,7 +33,6 @@ public class Assets implements Disposable {
 	public static final String TEXTURE_ATLAS_OBJECTS = "assets.atlas";
 	public static final String SKIN = "skin/uiskin.json";
 
-
 	public static AssetHotkey hotkey;
 	public static AssetFonts fonts;
 	public static AssetSpace space;
@@ -41,27 +41,28 @@ public class Assets implements Disposable {
 	public static AssetProjectile projectile;
 	public static AssetMusic music;
 	public static AssetSound sound;
-	
+
 	public static Skin skin;
 
-	public static void load () {
+	public static void load() {
 		getManager(); // Insure the manager exists
 		manager.load(TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
 		manager.load(SKIN, Skin.class);
 		loadSounds();
+		loaded = true;
 	}
 
-	public static void loadParticles () {
+	public static void loadParticles() {
 		manager.load("particles/explosion.p", ParticleEffect.class);
 	}
-	
-	public static void loadSounds(){
+
+	public static void loadSounds() {
 		manager.load("sound/boom.ogg", Sound.class);
 	}
 
-	public static void create () {
+	public static void create() {
 		TextureAtlas atlas = manager.get(TEXTURE_ATLAS_OBJECTS);
-		
+
 		skin = manager.get(SKIN);
 		projectile = new AssetProjectile(atlas);
 		hotkey = new AssetHotkey(atlas);
@@ -74,7 +75,7 @@ public class Assets implements Disposable {
 	}
 
 	@Override
-	public void dispose () {
+	public void dispose() {
 		manager.dispose();
 	}
 
@@ -82,7 +83,7 @@ public class Assets implements Disposable {
 		public final Array<AtlasRegion> motherships;
 		public final Array<AtlasRegion> ships;
 
-		public AssetSpacecraft (TextureAtlas atlas) {
+		public AssetSpacecraft(TextureAtlas atlas) {
 			motherships = atlas.findRegions("mothership");
 			ships = atlas.findRegions("ship");
 		}
@@ -92,7 +93,7 @@ public class Assets implements Disposable {
 
 		public final BitmapFont font;
 
-		public AssetFonts () {
+		public AssetFonts() {
 			font = new BitmapFont(Gdx.files.internal("fonts/space.fnt"));
 		}
 
@@ -101,7 +102,7 @@ public class Assets implements Disposable {
 	public static class AssetsUI {
 		public final Array<AtlasRegion> formationIcons;
 
-		public AssetsUI (TextureAtlas atlas) {
+		public AssetsUI(TextureAtlas atlas) {
 			this.formationIcons = atlas.findRegions("formation");
 		}
 	}
@@ -112,7 +113,7 @@ public class Assets implements Disposable {
 		public final Array<AtlasRegion> planets;
 		public final Array<AtlasRegion> asteroids;
 
-		public AssetSpace (TextureAtlas atlas) {
+		public AssetSpace(TextureAtlas atlas) {
 			background = atlas.findRegion("space");
 
 			planets = atlas.findRegions("planet");
@@ -126,7 +127,7 @@ public class Assets implements Disposable {
 		public AtlasRegion middle;
 		public AtlasRegion right;
 
-		public AssetHotkey (TextureAtlas atlas) {
+		public AssetHotkey(TextureAtlas atlas) {
 			left = atlas.findRegion("hotkeyleft");
 			button = atlas.createPatch("hotkey");
 			right = atlas.findRegion("hotkeyright");
@@ -138,7 +139,7 @@ public class Assets implements Disposable {
 	public static class AssetProjectile {
 		public final Array<AtlasRegion> projectiles;
 
-		public AssetProjectile (TextureAtlas atlas) {
+		public AssetProjectile(TextureAtlas atlas) {
 			projectiles = atlas.findRegions("projectile");
 		}
 	}
@@ -147,13 +148,13 @@ public class Assets implements Disposable {
 		public static final Array<String> menuTracks = new Array<String>();
 		public static final Array<String> gameTracks = new Array<String>();
 
-		public AssetMusic () {
+		public AssetMusic() {
 			menuTracks.addAll("menu.mp3");
 			gameTracks.addAll("stars.mp3");
 		}
 	}
-	
-	public static class AssetSound{
+
+	public static class AssetSound {
 		public final Sound boom = manager.get("sound/boom.ogg", Sound.class);
 	}
 

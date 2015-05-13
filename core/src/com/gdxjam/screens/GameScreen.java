@@ -2,22 +2,21 @@ package com.gdxjam.screens;
 
 import java.util.Random;
 
-import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.gdxjam.GameManager;
 import com.gdxjam.GameManager.GameConfig;
 import com.gdxjam.GameManager.GameConfig.BUILD;
+import com.gdxjam.InputManager;
 import com.gdxjam.ecs.EntityManager;
 import com.gdxjam.input.DesktopGestureListener;
 import com.gdxjam.input.DeveloperInputProcessor;
 import com.gdxjam.systems.CameraSystem;
 import com.gdxjam.utils.WorldGenerator;
-import com.gdxjam.utils.WorldGenerator.WorldGeneratorParameter;
 
 public class GameScreen extends AbstractScreen {
 
 	private EntityManager engine;
-	private InputMultiplexer multiplexer;
 
 	public GameScreen() {
 	}
@@ -25,26 +24,24 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		engine = GameManager.initEngine();
+
 		createWorld(256, 256);
-		multiplexer = new InputMultiplexer();
-		multiplexer.addProcessor(new GestureDetector(
+
+		InputManager.addProcessor(new GestureDetector(
 				new DesktopGestureListener(engine)));
 
 		if (GameConfig.build == BUILD.DEV) {
-			multiplexer.addProcessor(new DeveloperInputProcessor());
+			InputManager.addProcessor(new DeveloperInputProcessor());
 		}
+
+		Gdx.input.setInputProcessor(InputManager.getInput());
 
 	}
 
 	public void createWorld(int width, int height) {
 		long seed = new Random().nextLong();
-		WorldGeneratorParameter param = new WorldGeneratorParameter();
-		param.initalSquads = 5;
-		param.squadMembers = 9;
-		WorldGenerator generator = new WorldGenerator(width, height, seed,
-				param);
+		WorldGenerator generator = new WorldGenerator(width, height, seed);
 		generator.generate();
-
 		engine.getSystem(CameraSystem.class).getCamera().position.set(
 				width * 0.5f, height * 0.5f, 0);
 		engine.getSystem(CameraSystem.class).setWorldBounds(width, height);
