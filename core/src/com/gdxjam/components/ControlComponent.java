@@ -7,9 +7,14 @@ import com.badlogic.gdx.math.Vector2;
 public class ControlComponent extends Component {
 
 	ControlBehavior behavior;
-	
-	public ControlComponent(ControlBehavior behavior) {
+
+	private ControlComponent() {
+
+	}
+
+	public ControlComponent init(ControlBehavior behavior) {
 		this.behavior = behavior;
+		return this;
 	}
 
 	public void forward() {

@@ -23,11 +23,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gdxjam.Assets;
 import com.gdxjam.ai.state.UnitState;
+import com.gdxjam.behaviors.control.DefaultControlBehavior;
 import com.gdxjam.components.Components;
 import com.gdxjam.components.DecayComponent;
 import com.gdxjam.components.FSMComponent;
 import com.gdxjam.components.FactionComponent;
 import com.gdxjam.components.FactionComponent.Faction;
+import com.gdxjam.components.ControlComponent;
 import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.ParticleComponent;
@@ -153,6 +155,7 @@ public class EntityFactory {
 				.health(100)
 				.faction(faction)
 				.target()
+				.control()
 				.weapon(20, 1.0f, Constants.projectileRadius)
 				.sprite(Assets.spacecraft.ships.get(faction.ordinal()),
 						Constants.unitRadius * 2, Constants.unitRadius * 2)
@@ -168,7 +171,7 @@ public class EntityFactory {
 		FSMComponent stateMachineComponent = engine.createComponent(
 				FSMComponent.class).init(entity);
 		entity.add(stateMachineComponent);
-//		stateMachineComponent.changeState(UnitState.IDLE);
+		// stateMachineComponent.changeState(UnitState.IDLE);
 
 		engine.addEntity(entity);
 		return entity;
@@ -319,6 +322,12 @@ public class EntityFactory {
 
 			this.position = position;
 
+			return this;
+		}
+
+		public EntityBuilder control() {
+			entity.add(engine.createComponent(ControlComponent.class).init(
+					new DefaultControlBehavior(entity, engine)));
 			return this;
 		}
 
