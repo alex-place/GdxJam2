@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Disposable;
 import com.gdxjam.components.Components;
 import com.gdxjam.components.HealthComponent;
@@ -117,6 +119,7 @@ public class EntityRenderSystem extends SortedIteratingSystem implements Disposa
 				}
 				if (Components.PHYSICS.has(entity)) {
 					PhysicsComponent physics = Components.PHYSICS.get(entity);
+					
 					Vector2 pos = physics.getBody().getPosition();
 					sprite.setCenter(pos.x, pos.y);
 					sprite.setRotation((MathUtils.radiansToDegrees * physics.getBody().getAngle()) + spriteRotationOffset);

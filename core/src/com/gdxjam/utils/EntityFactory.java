@@ -82,16 +82,6 @@ public class EntityFactory {
 		return entity;
 	}
 
-	public static Entity createUnit(Entity squad) {
-		Vector2 squadPos = Components.STEERABLE.get(squad).getPosition();
-		Vector2 position = new Vector2(128, 128); // TODO dependant on world
-		// size
-		float angle = squadPos.angleRad(position);
-		position.add(MathUtils.cos(angle) + (Constants.unitRadius * 2),
-				MathUtils.sin(angle) + (Constants.unitRadius * 2));
-		return createUnit(position, squad);
-	}
-
 	public static Entity createAsteroid(Vector2 position, float radius) {
 		Entity entity = builder
 				.createEntity(EntityCategory.RESOURCE, position)
@@ -106,41 +96,6 @@ public class EntityFactory {
 				.faction(Faction.NONE)
 				.sprite(Assets.space.asteroids.random(), radius * 2, radius * 2)
 				.addToEngine();
-		return entity;
-	}
-
-	public static Entity createUnit(Vector2 position, Entity squad) {
-		SquadComponent squadComp = Components.SQUAD.get(squad);
-		Faction faction = Components.FACTION.get(squad).getFaction();
-
-		Entity entity = builder
-				.createEntity(EntityCategory.UNIT, position)
-				.physicsBody(BodyType.DynamicBody)
-				.circleCollider(Constants.unitRadius, 1.0f)
-				.damping(1, 0)
-				.steerable(Constants.unitRadius)
-				.steeringBehavior()
-				.health(100)
-				.faction(faction)
-				.target()
-				.weapon(20, 1.0f, Constants.projectileRadius)
-				.sprite(Assets.spacecraft.ships.get(faction.ordinal()),
-						Constants.unitRadius * 2, Constants.unitRadius * 2)
-				.getWithoutAdding();
-
-		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
-		UnitComponent unitComp = engine.createComponent(UnitComponent.class)
-				.init(squad, physicsComp.getBody());
-		entity.add(unitComp);
-		squadComp.addMember(entity);
-
-		Components.STEERABLE.get(entity).setIndependentFacing(true);
-		FSMComponent stateMachineComponent = engine.createComponent(
-				FSMComponent.class).init(entity);
-		entity.add(stateMachineComponent);
-		stateMachineComponent.changeState(UnitState.IDLE);
-
-		engine.addEntity(entity);
 		return entity;
 	}
 
@@ -162,72 +117,12 @@ public class EntityFactory {
 				.getWithoutAdding();
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
-		// UnitComponent unitComp =
-		// engine.createComponent(UnitComponent.class).init(squad,
-		// physicsComp.getBody());
-		// entity.add(unitComp);
 
 		Components.STEERABLE.get(entity).setIndependentFacing(true);
-		FSMComponent stateMachineComponent = engine.createComponent(
-				FSMComponent.class).init(entity);
-		entity.add(stateMachineComponent);
-		// stateMachineComponent.changeState(UnitState.IDLE);
 
 		engine.addEntity(entity);
 		return entity;
 
-	}
-
-	public static Entity createSquad(Vector2 position, Faction faction) {
-		Entity entity = builder
-				.createEntity(EntityCategory.SQUAD, position)
-				.physicsBody(BodyType.DynamicBody)
-				.circleSensor(30.0f)
-				.faction(faction)
-				.target()
-				.filter(EntityCategory.SQUAD, 0,
-						EntityCategory.SQUAD | EntityCategory.RESOURCE)
-				.steeringBehavior().stateMachine().getWithoutAdding();
-
-		SteerableComponent steerable = engine.createComponent(
-				SteerableComponent.class).init(
-				Components.PHYSICS.get(entity).getBody(), 30.0f);
-		SquadComponent squadComp = engine.createComponent(SquadComponent.class)
-				.init(steerable);
-		squadComp.targetLocation.getPosition().set(position);
-		entity.add(squadComp);
-
-		// A good rule of thumb is to make the maximum speed of the formation
-		// around
-		// half that of the members. We also give the anchor point far less
-		// acceleration.
-		steerable.setMaxLinearSpeed(SteerableComponent.MAX_LINEAR_SPEED / 2);
-		steerable
-				.setMaxLinearAcceleration(SteerableComponent.MAX_LINEAR_ACCELERATION / 10);
-
-		Arrive<Vector2> arriveSB = new Arrive<Vector2>(steerable)
-				.setTarget(squadComp.targetLocation).setTimeToTarget(0.001f)
-				.setDecelerationRadius(2f).setArrivalTolerance(0.0001f);
-		SteeringBehavior<Vector2> sb = arriveSB;
-
-		RadiusProximity<Vector2> proximity = new RadiusProximity<Vector2>(
-				steerable, squadComp.friendlyAgents, 3.0f);
-		Separation<Vector2> separationSB = new Separation<Vector2>(steerable,
-				proximity);
-
-		BlendedSteering<Vector2> blendedSteering = new BlendedSteering<Vector2>(
-				steerable) //
-				.setLimiter(NullLimiter.NEUTRAL_LIMITER) //
-				.add(separationSB, 10000f).add(arriveSB, 0.5f);
-		sb = blendedSteering;
-		Components.FSM.get(entity).changeState(SquadComponent.DEFAULT_STATE);
-
-		Components.STEERING_BEHAVIOR.get(entity).setBehavior(sb);
-
-		entity.add(steerable);
-
-		engine.addEntity(entity);
-		return entity;
 	}
 
 	public static Entity createProjectile(Vector2 position, Vector2 velocity,

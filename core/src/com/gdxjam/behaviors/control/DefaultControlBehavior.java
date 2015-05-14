@@ -2,12 +2,7 @@ package com.gdxjam.behaviors.control;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.steer.behaviors.Arrive;
-import com.badlogic.gdx.ai.steer.behaviors.BlendedSteering;
-import com.badlogic.gdx.ai.steer.behaviors.Separation;
-import com.badlogic.gdx.ai.steer.limiters.NullLimiter;
-import com.badlogic.gdx.ai.steer.proximities.RadiusProximity;
 import com.badlogic.gdx.math.Vector2;
 import com.gdxjam.components.Components;
 import com.gdxjam.components.ControlComponent.ControlBehavior;
@@ -24,6 +19,7 @@ public class DefaultControlBehavior implements ControlBehavior {
 
 	public DefaultControlBehavior(Entity entity, PooledEngine engine) {
 		this.entity = entity;
+		this.engine = engine;
 		steer = Components.STEERING_BEHAVIOR.get(entity);
 	}
 
@@ -31,7 +27,9 @@ public class DefaultControlBehavior implements ControlBehavior {
 	public void forward() {
 		try{
 		// move forward here
-		SteerableComponent steerable = engine.createComponent(
+		SteerableComponent steerable;
+		
+		steerable = engine.createComponent(
 				SteerableComponent.class).init(
 				Components.PHYSICS.get(entity).getBody(), 30.0f);
 
@@ -47,8 +45,6 @@ public class DefaultControlBehavior implements ControlBehavior {
 				.setTarget(new Location2(new Vector2(255, 255)))
 				.setTimeToTarget(0.001f).setDecelerationRadius(2f)
 				.setArrivalTolerance(0.0001f);
-
-		Components.FSM.get(entity).changeState(SquadComponent.DEFAULT_STATE);
 
 		Components.STEERING_BEHAVIOR.get(entity).setBehavior(arriveSB);
 

@@ -26,6 +26,7 @@ public class DesktopLauncher {
 		}
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.title = "Orion";
 		config.width = 1280;
 		config.height = 720;
 		config.addIcon("icon128.png", FileType.Internal);
