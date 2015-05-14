@@ -25,7 +25,7 @@ public class EntityManager extends PooledEngine implements Disposable {
 		initSystems();
 
 		// addEntityListener(Family.all(SquadComponent.class).get(),
-		//		new SquadEntityListener(this, getSystem(InputSystem.class)));
+		// new SquadEntityListener(this, getSystem(InputSystem.class)));
 		addEntityListener(Family.all(UnitComponent.class).get(),
 				new UnitEntityListener(this));
 		addEntityListener(Family.all(PhysicsComponent.class).get(),
@@ -41,8 +41,6 @@ public class EntityManager extends PooledEngine implements Disposable {
 				Constants.VIEWPORT_HEIGHT);
 		addSystem(cameraSystem);
 
-		addSystem(new PhysicsSystem());
-
 		// AI
 		addSystem(new SteeringSystem());
 		addSystem(new FSMSystem());
@@ -54,6 +52,7 @@ public class EntityManager extends PooledEngine implements Disposable {
 		// addSystem(inputSystem);
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());
+		addSystem(new PhysicsSystem());
 		addSystem(new ParticleSystem());
 		// addSystem(guiSystem);
 

@@ -40,6 +40,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable {
 	public void update(float deltaTime) {
 		super.update(deltaTime);
 		world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+		drawDebug();
 	}
 
 	public Body createBody(BodyDef def) {

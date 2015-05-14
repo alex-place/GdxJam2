@@ -117,6 +117,7 @@ public class EntityFactory {
 				.getWithoutAdding();
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
+		
 
 		Components.STEERABLE.get(entity).setIndependentFacing(true);
 
@@ -342,7 +343,13 @@ public class EntityFactory {
 			if (physics == null) {
 				physicsBody(DEFAULT_BODY);
 			}
-
+			
+			physics.getBody().createFixture(shape, density);
+			
+			shape = new CircleShape();
+			shape.setRadius(radius-1);
+			shape.setPosition(shape.getPosition().add(0, 1));
+			
 			physics.getBody().createFixture(shape, density);
 			return this;
 		}
