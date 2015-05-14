@@ -3,13 +3,13 @@ package com.gdxjam.input;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.InputProcessor;
-import com.gdxjam.components.Components;
-import com.gdxjam.components.SteerableComponent;
+import com.gdxjam.components.ControlComponent;
 
 public class EntityController implements InputProcessor {
 
 	Entity entity;
 	PooledEngine engine;
+	ControlComponent controller;
 
 	public EntityController(PooledEngine engine) {
 		this(engine, engine.createEntity());
@@ -17,6 +17,8 @@ public class EntityController implements InputProcessor {
 
 	public EntityController(PooledEngine engine, Entity entity) {
 		this.entity = entity;
+		controller = entity.getComponent(ControlComponent.class);
+
 	}
 
 	@Override
@@ -24,12 +26,16 @@ public class EntityController implements InputProcessor {
 
 		switch (keycode) {
 		case Keybinds.FORWARD:
+			controller.forward();
 			break;
 		case Keybinds.LEFT:
+			controller.left();
 			break;
 		case Keybinds.REVERSE:
+			controller.reverse();
 			break;
 		case Keybinds.RIGHT:
+			controller.right();
 			break;
 		default:
 			break;

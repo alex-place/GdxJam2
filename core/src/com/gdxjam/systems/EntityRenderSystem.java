@@ -86,19 +86,6 @@ public class EntityRenderSystem extends SortedIteratingSystem implements Disposa
 
 	@Override
 	protected void processEntity (Entity entity, float deltaTime) {
-		if(Components.SQUAD.has(entity)){
-//			Vector2 position = Components.STEERABLE.get(entity).getPosition();
-//			Gdx.gl20.glEnable(GL20.GL_BLEND);
-//			Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-//			shapeRenderer.setProjectionMatrix(cameraSystem.getCamera().combined);
-////			shapeRenderer.begin(ShapeType.Filled);
-//			shapeRenderer.setColor(new Color(0.0f, 0.0f, 1.0f, 0.25f));
-//			shapeRenderer.circle(position.x, position.y, 0.25f);
-////			shapeRenderer.end();
-//			Gdx.gl20.glDisable(GL20.GL_BLEND);
-			return;
-		}
-		
 		Sprite sprite = Components.SPRITE.get(entity).getSprite();
 		OrthographicCamera camera;
 		if(currentLayer >= 0){
