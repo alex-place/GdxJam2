@@ -12,6 +12,7 @@ import com.gdxjam.GameManager.GameConfig.BUILD;
 import com.gdxjam.InputManager;
 import com.gdxjam.ecs.EntityManager;
 import com.gdxjam.input.DesktopGestureListener;
+import com.gdxjam.input.DesktopInputProcessor;
 import com.gdxjam.input.DeveloperInputProcessor;
 import com.gdxjam.input.EntityController;
 import com.gdxjam.systems.CameraSystem;
@@ -33,6 +34,7 @@ public class GameScreen extends AbstractScreen {
 
 		InputManager.addProcessor(new GestureDetector(
 				new DesktopGestureListener(engine)));
+		InputManager.addProcessor(new DesktopInputProcessor(engine));
 
 		if (GameConfig.build == BUILD.DEV) {
 			InputManager.addProcessor(new DeveloperInputProcessor());
