@@ -47,7 +47,6 @@ import com.gdxjam.ecs.EntityCategory;
 import com.gdxjam.systems.ParticleSystem;
 import com.gdxjam.systems.ParticleSystem.ParticleType;
 import com.gdxjam.systems.PhysicsSystem;
-import com.gdxjam.utils.EntityFactory.PhysicsBuilder.FixtureBuilder;
 
 /** @author Torin Wiebelt (Twiebs) Creates Ashley entities using a builder */
 
@@ -61,7 +60,6 @@ public class EntityFactory {
 	private static EntityBuilder builder = new EntityBuilder();
 
 	private static PhysicsBuilder physicsBuilder = new PhysicsBuilder();
-	private static FixtureBuilder fixtureBuilder = new FixtureBuilder();
 
 	public static Entity createMothership(Vector2 position) {
 		Entity entity = builder
@@ -117,7 +115,6 @@ public class EntityFactory {
 				.getWithoutAdding();
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
-		
 
 		Components.STEERABLE.get(entity).setIndependentFacing(true);
 
@@ -222,8 +219,13 @@ public class EntityFactory {
 		}
 
 		public EntityBuilder control() {
+			control(30);
+			return this;
+		}
+
+		public EntityBuilder control(float radius) {
 			entity.add(engine.createComponent(ControlComponent.class).init(
-					new DefaultControlBehavior(entity, engine)));
+					new DefaultControlBehavior(entity, engine, radius)));
 			return this;
 		}
 
@@ -243,6 +245,7 @@ public class EntityFactory {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			def.position.set(position);
+			
 			Body body = physicsSystem.createBody(def);
 			body.setUserData(entity);
 
@@ -343,14 +346,22 @@ public class EntityFactory {
 			if (physics == null) {
 				physicsBody(DEFAULT_BODY);
 			}
+
 			
 			physics.getBody().createFixture(shape, density);
-			
+
 			shape = new CircleShape();
-			shape.setRadius(radius-1);
+			shape.setRadius(radius - 1);
 			shape.setPosition(shape.getPosition().add(0, 1));
 			
-			physics.getBody().createFixture(shape, density);
+
+			
+			FixtureDef fixture = new FixtureDef();
+			fixture.shape = shape;
+			fixture.density = density;
+			
+			physics.getBody().createFixture(fixture);
+			
 			return this;
 		}
 
@@ -447,38 +458,13 @@ public class EntityFactory {
 			return this;
 		}
 
-		public FixtureBuilder addFixture() {
-			return fixtureBuilder.reset(body);
-		}
+
 
 		public EntityBuilder getBody() {
 			return builder;
 		}
 
-		public static class FixtureBuilder {
-			private Body body;
-			private FixtureDef def = new FixtureDef();
-
-			public FixtureBuilder reset(Body body) {
-				this.body = body;
-				def = new FixtureDef();
-				return this;
-			}
-
-			public FixtureBuilder circle(float radius) {
-				CircleShape circle = new CircleShape();
-				circle.setRadius(radius);
-				def.shape = circle;
-				return this;
-			}
-
-			public PhysicsBuilder create() {
-				body.createFixture(def);
-				return physicsBuilder;
-			}
-
-		}
-
+//		
 	}
 
 }

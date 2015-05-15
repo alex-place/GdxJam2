@@ -6,11 +6,11 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.gdxjam.EntityManager;
 import com.gdxjam.GameManager;
 import com.gdxjam.GameManager.GameConfig;
 import com.gdxjam.GameManager.GameConfig.BUILD;
-import com.gdxjam.InputManager;
-import com.gdxjam.ecs.EntityManager;
+import com.gdxjam.InputSystem;
 import com.gdxjam.input.DesktopGestureListener;
 import com.gdxjam.input.DesktopInputProcessor;
 import com.gdxjam.input.DeveloperInputProcessor;
@@ -22,6 +22,7 @@ import com.gdxjam.utils.WorldGenerator;
 public class GameScreen extends AbstractScreen {
 
 	private EntityManager engine;
+	private InputSystem input;
 
 	public GameScreen() {
 	}
@@ -29,18 +30,19 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		engine = GameManager.initEngine();
+		input = engine.getSystem(InputSystem.class);
 
 		createWorld(256, 256);
 
-		InputManager.addProcessor(new GestureDetector(
-				new DesktopGestureListener(engine)));
-		InputManager.addProcessor(new DesktopInputProcessor(engine));
+		input.addProcessor(new GestureDetector(new DesktopGestureListener(
+				engine)));
+		input.addProcessor(new DesktopInputProcessor(engine));
 
 		if (GameConfig.build == BUILD.DEV) {
-			InputManager.addProcessor(new DeveloperInputProcessor());
+			input.addProcessor(new DeveloperInputProcessor());
 		}
 
-		Gdx.input.setInputProcessor(InputManager.getInput());
+		Gdx.input.setInputProcessor(input.getInput());
 
 	}
 
@@ -51,7 +53,7 @@ public class GameScreen extends AbstractScreen {
 
 		Entity player = generator.createUnit(Constants.playerFaction,
 				new Vector2(100, 100));
-		InputManager.addProcessor(new EntityController(engine, player));
+		input.addProcessor(new EntityController(engine, player));
 		engine.addEntity(player);
 
 		engine.getSystem(CameraSystem.class).getCamera().position.set(

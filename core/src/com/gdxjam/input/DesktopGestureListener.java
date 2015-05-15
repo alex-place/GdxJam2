@@ -47,6 +47,10 @@ public class DesktopGestureListener implements GestureListener {
 		if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
 			cameraSystem.translate(-deltaX * 0.05f, deltaY * 0.05f);
 		}
+		
+		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+			cameraSystem.translate(-deltaX * 0.05f, deltaY * 0.05f);
+		}
 		return false;
 	}
 

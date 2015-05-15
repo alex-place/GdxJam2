@@ -22,17 +22,25 @@ public class ControlComponent extends Component {
 	}
 
 	public void left() {
+		behavior.left();
 	}
 
 	public void reverse() {
+		behavior.reverse();
 	}
 
 	public void right() {
+		behavior.right();
 	}
 
 	public void lookAt(Vector2 position) {
+		behavior.lookAt(position);
 	}
 
+	public void update(){
+		behavior.update();
+	}
+	
 	public interface ControlBehavior {
 
 		public void forward();
@@ -46,6 +54,9 @@ public class ControlComponent extends Component {
 		public void lookAt(Vector2 position);
 
 		public Entity getEntity();
+		
+		public void update();
+
 
 	}
 

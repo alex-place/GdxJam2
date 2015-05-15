@@ -1,4 +1,4 @@
-package com.gdxjam.ecs;
+package com.gdxjam;
 
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
@@ -8,6 +8,10 @@ import com.badlogic.gdx.utils.Disposable;
 import com.gdxjam.components.PhysicsComponent;
 import com.gdxjam.components.ResourceComponent;
 import com.gdxjam.components.UnitComponent;
+import com.gdxjam.ecs.DebugEntityListener;
+import com.gdxjam.ecs.PhysicsEntityListener;
+import com.gdxjam.ecs.ResourceEntityListener;
+import com.gdxjam.ecs.UnitEntityListener;
 import com.gdxjam.systems.CameraSystem;
 import com.gdxjam.systems.DecaySystem;
 import com.gdxjam.systems.EntityRenderSystem;
@@ -41,6 +45,8 @@ public class EntityManager extends PooledEngine implements Disposable {
 				Constants.VIEWPORT_HEIGHT);
 		addSystem(cameraSystem);
 
+		addSystem(new PhysicsSystem());
+
 		// AI
 		addSystem(new SteeringSystem());
 		addSystem(new FSMSystem());
@@ -52,8 +58,9 @@ public class EntityManager extends PooledEngine implements Disposable {
 		// addSystem(inputSystem);
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());
-		addSystem(new PhysicsSystem());
 		addSystem(new ParticleSystem());
+
+		addSystem(new InputSystem());
 		// addSystem(guiSystem);
 
 		return this;

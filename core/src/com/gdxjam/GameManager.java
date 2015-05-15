@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.gdxjam.OrionPrefs.BooleanValue;
 import com.gdxjam.OrionPrefs.StringValue;
-import com.gdxjam.ecs.EntityManager;
 import com.gdxjam.screens.AbstractScreen;
 import com.gdxjam.utils.EntityFactory;
 import com.gdxjam.utils.EntityUtils;
@@ -15,7 +14,7 @@ public class GameManager {
 	private static final String TAG = "[" + GameManager.class.getSimpleName()
 			+ "]";
 
-	public static InputManager input;
+	public static InputSystem input;
 
 	private static Game game;
 	private static EntityManager engine;
@@ -25,7 +24,6 @@ public class GameManager {
 	public static void init(Game game) {
 		GameManager.game = game;
 		AudioManager.refresh();
-		InputManager.init();
 		refreshDisplayMode();
 
 		Gdx.app.setLogLevel(GameConfig.LOG_LEVEL);
