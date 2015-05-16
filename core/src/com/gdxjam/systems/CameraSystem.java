@@ -20,10 +20,10 @@ public class CameraSystem extends EntitySystem {
 	private Viewport viewport;
 	private Vector2 target;
 	boolean smooth = false;
-	
+
 	private float minZoom;
 	private float maxZoom;
-	
+
 	private float panScalar = 0.25f;
 	private float zoomScalar = 0.25f;
 
@@ -62,8 +62,7 @@ public class CameraSystem extends EntitySystem {
 	public void update(float deltaTime) {
 		super.update(deltaTime);
 		if (smooth && target != null) {
-			camera.position.add(camera.position.cpy().scl(-1)
-					.add(target.x, target.y, 0).scl(0.04f));
+			camera.position.set(target.x, target.y, camera.zoom);
 		}
 	}
 
@@ -92,34 +91,38 @@ public class CameraSystem extends EntitySystem {
 		clamp();
 		updateCameras();
 	}
-	
-	private void updateCameras(){
+
+	private void updateCameras() {
 		camera.update();
-		
+
 		for (Entry<ParalaxLayer> entry : paralaxLayers.entries()) {
 			float coeffeciant = entry.value.coeffeciant;
 			float zoom = 1.0f + (camera.zoom * coeffeciant);
-			float x = ((camera.position.x / worldBounds.width) * camera.viewportWidth * coeffeciant) + (camera.viewportWidth * 0.5f);
-			float y = ((camera.position.y / worldBounds.height) * camera.viewportHeight * coeffeciant) + (camera.viewportHeight * 0.5f);
+			float x = ((camera.position.x / worldBounds.width)
+					* camera.viewportWidth * coeffeciant)
+					+ (camera.viewportWidth * 0.5f);
+			float y = ((camera.position.y / worldBounds.height)
+					* camera.viewportHeight * coeffeciant)
+					+ (camera.viewportHeight * 0.5f);
 			OrthographicCamera camera = entry.value.getCamera();
 			camera.position.set(x, y, 0);
 			camera.zoom = zoom;
 			camera.update();
-			}
+		}
 	}
 
-	private void clamp(){
-		if(clampToBounds){
+	private void clamp() {
+		if (clampToBounds) {
 			camera.zoom = MathUtils.clamp(camera.zoom, maxZoom, minZoom);
-			
+
 			float xMin = (camera.viewportWidth * camera.zoom * 0.5f);
-			float xMax = worldBounds.width - xMin; 
+			float xMax = worldBounds.width - xMin;
 			float yMin = (camera.viewportHeight * camera.zoom * 0.5f);
 			float yMax = worldBounds.height - yMin;
-			
+
 			float x = MathUtils.clamp(camera.position.x, xMin, xMax);
 			float y = MathUtils.clamp(camera.position.y, yMin, yMax);
-			
+
 			camera.position.set(x, y, 0);
 		}
 	}

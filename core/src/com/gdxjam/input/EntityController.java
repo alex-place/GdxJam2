@@ -82,17 +82,16 @@ public class EntityController implements InputProcessor, Updateable {
 	@Override
 	public void update() {
 		if (Gdx.input.isKeyPressed(Keybinds.FORWARD)) {
-			controller.forward();
+			controller.forward(Gdx.graphics.getDeltaTime());
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.REVERSE)) {
-			controller.reverse();
+			controller.reverse(Gdx.graphics.getDeltaTime());
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.LEFT)) {
-			controller.left();
+			controller.left(Gdx.graphics.getDeltaTime());
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.RIGHT)) {
-			controller.right();
+			controller.right(Gdx.graphics.getDeltaTime());
 		}
-		controller.update();
 	}
 }

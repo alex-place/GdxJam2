@@ -351,8 +351,7 @@ public class EntityFactory {
 			physics.getBody().createFixture(shape, density);
 
 			shape = new CircleShape();
-			shape.setRadius(radius - 1);
-			shape.setPosition(shape.getPosition().add(0, 1));
+			shape.setRadius(radius + 1);
 			
 
 			
@@ -360,7 +359,7 @@ public class EntityFactory {
 			fixture.shape = shape;
 			fixture.density = density;
 			
-			physics.getBody().createFixture(fixture);
+			physics.getBody().createFixture(shape, density);
 			
 			return this;
 		}

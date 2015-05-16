@@ -10,13 +10,20 @@ import com.gdxjam.components.ControlComponent.ControlBehavior;
 import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 
+/**
+ * The default implementation of a player controlled unit
+ * 
+ * @author alex-place
+ * */
 public class DefaultControlBehavior implements ControlBehavior {
 
 	PooledEngine engine;
 	Entity entity;
 	SteeringBehaviorComponent steer;
 	SteerableComponent steerable;
+	float speed = 50;
 
+	// TODO make parameters (or a param class) for ship classes (speed...)
 	public DefaultControlBehavior(Entity entity, PooledEngine engine,
 			float radius) {
 		this.entity = entity;
@@ -28,31 +35,29 @@ public class DefaultControlBehavior implements ControlBehavior {
 		steerable.setMaxLinearSpeed(5);
 	}
 
+	float rotation = steerable.getOrientation();
+
 	@Override
-	public void forward() {
-		float rotation = steerable.getOrientation();
-		float speed = 500;
+	public void forward(float delta) {
+		rotation = steerable.getOrientation();
 		Vector2 direction = new Vector2(MathUtils.cos(rotation),
 				MathUtils.sin(rotation));
 		if (direction.len() > 0) {
 			direction.nor();
 		}
-		Vector2 velocity = new Vector2(direction.x * speed, direction.y * speed);
-//		if(steerable. > steerable.getMaxLinearSpeed())
+		Vector2 velocity = new Vector2(direction.x * speed * delta, direction.y
+				* speed * delta);
 		steerable.getBody().applyForce(velocity,
 				steerable.getBody().getWorldCenter(), true);
-
 		entity.add(steerable);
-
-		// engine.addEntity(entity);
 	}
 
 	@Override
-	public void left() {
+	public void left(float delta) {
 	}
 
 	@Override
-	public void reverse() {
+	public void reverse(float delta) {
 		// move forward here
 		float rotation = steerable.getOrientation();
 		float speed = 5 * Gdx.graphics.getDeltaTime();
@@ -61,8 +66,8 @@ public class DefaultControlBehavior implements ControlBehavior {
 		if (direction.len() > 0) {
 			direction.nor();
 		}
-		Vector2 velocity = new Vector2(-direction.x * speed, -direction.y
-				* speed);
+		Vector2 velocity = new Vector2(-direction.x * speed * delta,
+				-direction.y * speed * delta);
 		steerable.getBody().applyForce(velocity,
 				steerable.getBody().getWorldCenter(), true);
 
@@ -72,10 +77,9 @@ public class DefaultControlBehavior implements ControlBehavior {
 	}
 
 	@Override
-	public void right() {
-	}
+	public void right(float delta) {
 
-	float speed = 100;
+	}
 
 	@Override
 	public void lookAt(Vector2 position) {
@@ -88,10 +92,7 @@ public class DefaultControlBehavior implements ControlBehavior {
 	@Override
 	public Entity getEntity() {
 		// TODO Auto-generated method stub
-		return null;
+		return entity;
 	}
 
-	@Override
-	public void update() {
-	}
 }

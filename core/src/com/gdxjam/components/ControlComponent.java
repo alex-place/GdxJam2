@@ -17,46 +17,39 @@ public class ControlComponent extends Component {
 		return this;
 	}
 
-	public void forward() {
-		behavior.forward();
+	public void forward(float delta) {
+		behavior.forward(delta);
 	}
 
-	public void left() {
-		behavior.left();
+	public void left(float delta) {
+		behavior.left(delta);
 	}
 
-	public void reverse() {
-		behavior.reverse();
+	public void reverse(float delta) {
+		behavior.reverse(delta);
 	}
 
-	public void right() {
-		behavior.right();
+	public void right(float delta) {
+		behavior.right(delta);
 	}
 
 	public void lookAt(Vector2 position) {
 		behavior.lookAt(position);
 	}
 
-	public void update(){
-		behavior.update();
-	}
-	
 	public interface ControlBehavior {
 
-		public void forward();
+		public void forward(float delta);
 
-		public void left();
+		public void left(float delta);
 
-		public void reverse();
+		public void reverse(float delta);
 
-		public void right();
+		public void right(float delta);
 
 		public void lookAt(Vector2 position);
 
 		public Entity getEntity();
-		
-		public void update();
-
 
 	}
 
