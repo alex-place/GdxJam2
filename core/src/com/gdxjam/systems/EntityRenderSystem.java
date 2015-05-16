@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,14 +15,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.gdxjam.components.Components;
 import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.PhysicsComponent;
-import com.gdxjam.components.ResourceComponent;
 import com.gdxjam.components.SpriteComponent;
 import com.gdxjam.components.SquadComponent;
 
@@ -35,6 +35,10 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
 	private CameraSystem cameraSystem;
+	private Box2DDebugRenderer renderer;
+	private World world;
+	public static boolean debug = true;
+
 	private int currentLayer = -10;
 
 	// Used for log / debug
@@ -70,6 +74,16 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 	public void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
 		cameraSystem = engine.getSystem(CameraSystem.class);
+		renderer = new Box2DDebugRenderer();
+		world = engine.getSystem(PhysicsSystem.class).getWorld();
+
+	}
+
+	public void drawDebug() {
+		if (renderer == null) {
+			renderer = new Box2DDebugRenderer();
+		}
+		renderer.render(world, cameraSystem.getCamera().combined);
 	}
 
 	@Override
@@ -86,8 +100,11 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 		batch.end();
 		shapeRenderer.end();
 
+		drawDebug();
+
 		// Displays the amount of entities that are being drawn
-		// Gdx.app.debug(TAG, "drawn entities: " + drawnEntities);
+		Gdx.app.debug(TAG, "drawn entities: " + drawnEntities);
+
 	}
 
 	@Override
@@ -159,6 +176,9 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 	@Override
 	public void dispose() {
 		batch.dispose();
+		renderer.dispose();
+		shapeRenderer.dispose();
+
 	}
 
 }

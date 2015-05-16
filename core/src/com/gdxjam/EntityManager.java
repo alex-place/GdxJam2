@@ -55,13 +55,11 @@ public class EntityManager extends PooledEngine implements Disposable {
 
 		addSystem(new DecaySystem());
 
-		// addSystem(inputSystem);
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());
 		addSystem(new ParticleSystem());
 
 		addSystem(new InputSystem());
-		// addSystem(guiSystem);
 
 		return this;
 	}

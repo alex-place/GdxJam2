@@ -3,7 +3,6 @@ package com.gdxjam;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.gdxjam.OrionPrefs.BooleanValue;
 import com.gdxjam.OrionPrefs.StringValue;
 import com.gdxjam.screens.AbstractScreen;

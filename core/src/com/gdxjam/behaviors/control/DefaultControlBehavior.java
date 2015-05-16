@@ -2,7 +2,6 @@ package com.gdxjam.behaviors.control;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.gdxjam.components.Components;
@@ -21,7 +20,8 @@ public class DefaultControlBehavior implements ControlBehavior {
 	Entity entity;
 	SteeringBehaviorComponent steer;
 	SteerableComponent steerable;
-	float speed = 50;
+	float speed = 500;
+	float rotation;
 
 	// TODO make parameters (or a param class) for ship classes (speed...)
 	public DefaultControlBehavior(Entity entity, PooledEngine engine,
@@ -34,8 +34,6 @@ public class DefaultControlBehavior implements ControlBehavior {
 		steerable.setIndependentFacing(true);
 		steerable.setMaxLinearSpeed(5);
 	}
-
-	float rotation = steerable.getOrientation();
 
 	@Override
 	public void forward(float delta) {
@@ -58,9 +56,7 @@ public class DefaultControlBehavior implements ControlBehavior {
 
 	@Override
 	public void reverse(float delta) {
-		// move forward here
-		float rotation = steerable.getOrientation();
-		float speed = 5 * Gdx.graphics.getDeltaTime();
+		rotation = steerable.getOrientation();
 		Vector2 direction = new Vector2(MathUtils.cos(rotation),
 				MathUtils.sin(rotation));
 		if (direction.len() > 0) {
@@ -70,10 +66,7 @@ public class DefaultControlBehavior implements ControlBehavior {
 				-direction.y * speed * delta);
 		steerable.getBody().applyForce(velocity,
 				steerable.getBody().getWorldCenter(), true);
-
 		entity.add(steerable);
-
-		// engine.addEntity(entity);
 	}
 
 	@Override

@@ -3,12 +3,6 @@ package com.gdxjam.utils;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ai.steer.SteeringBehavior;
-import com.badlogic.gdx.ai.steer.behaviors.Arrive;
-import com.badlogic.gdx.ai.steer.behaviors.BlendedSteering;
-import com.badlogic.gdx.ai.steer.behaviors.Separation;
-import com.badlogic.gdx.ai.steer.limiters.NullLimiter;
-import com.badlogic.gdx.ai.steer.proximities.RadiusProximity;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -22,14 +16,13 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gdxjam.Assets;
-import com.gdxjam.ai.state.UnitState;
 import com.gdxjam.behaviors.control.DefaultControlBehavior;
 import com.gdxjam.components.Components;
+import com.gdxjam.components.ControlComponent;
 import com.gdxjam.components.DecayComponent;
 import com.gdxjam.components.FSMComponent;
 import com.gdxjam.components.FactionComponent;
 import com.gdxjam.components.FactionComponent.Faction;
-import com.gdxjam.components.ControlComponent;
 import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.ParticleComponent;
@@ -37,11 +30,9 @@ import com.gdxjam.components.PhysicsComponent;
 import com.gdxjam.components.ProjectileComponent;
 import com.gdxjam.components.ResourceComponent;
 import com.gdxjam.components.SpriteComponent;
-import com.gdxjam.components.SquadComponent;
 import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 import com.gdxjam.components.TargetComponent;
-import com.gdxjam.components.UnitComponent;
 import com.gdxjam.components.WeaponComponent;
 import com.gdxjam.ecs.EntityCategory;
 import com.gdxjam.systems.ParticleSystem;
@@ -245,7 +236,7 @@ public class EntityFactory {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			def.position.set(position);
-			
+
 			Body body = physicsSystem.createBody(def);
 			body.setUserData(entity);
 
@@ -347,20 +338,18 @@ public class EntityFactory {
 				physicsBody(DEFAULT_BODY);
 			}
 
-			
 			physics.getBody().createFixture(shape, density);
 
 			shape = new CircleShape();
-			shape.setRadius(radius + 1);
-			
+			shape.setRadius(radius - 2);
+			shape.setPosition(new Vector2(2, 0));
 
-			
 			FixtureDef fixture = new FixtureDef();
 			fixture.shape = shape;
 			fixture.density = density;
-			
+
 			physics.getBody().createFixture(shape, density);
-			
+
 			return this;
 		}
 
@@ -457,13 +446,11 @@ public class EntityFactory {
 			return this;
 		}
 
-
-
 		public EntityBuilder getBody() {
 			return builder;
 		}
 
-//		
+		//
 	}
 
 }

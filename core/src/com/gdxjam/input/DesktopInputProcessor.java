@@ -2,8 +2,6 @@ package com.gdxjam.input;
 
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.gdxjam.systems.CameraSystem;
 
 public class DesktopInputProcessor implements InputProcessor {

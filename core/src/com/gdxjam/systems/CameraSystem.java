@@ -63,6 +63,7 @@ public class CameraSystem extends EntitySystem {
 		super.update(deltaTime);
 		if (smooth && target != null) {
 			camera.position.set(target.x, target.y, camera.zoom);
+			camera.update();
 		}
 	}
 
