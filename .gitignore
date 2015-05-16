@@ -31,8 +31,8 @@ com_crashlytics_export_strings.xml
 
 ## Eclipse
 .classpath
-.metadata
 .project
+.metadata
 **/bin/
 tmp/
 *.tmp
@@ -62,57 +62,3 @@ build/
 
 ## OS Specific
 .DS_Store
-
-*.pydevproject
-.metadata
-.gradle
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-
-# Eclipse Core
-
-# External tool builders
-.externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# CDT-specific
-.cproject
-
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
-
-# PDT-specific
-.buildpath
-
-# sbteclipse plugin
-.target
-
-# TeXlipse plugin
-.texlipse
-
-.gradle
-build/
-
-
-thumbs.db
-
-# Ignore Gradle GUI config
-gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-#ignore screenshot folder
-screenshots/
-
-robovm.xml
-ios/robovm.xml
