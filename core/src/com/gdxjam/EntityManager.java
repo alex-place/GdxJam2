@@ -67,7 +67,6 @@ public class EntityManager extends PooledEngine implements Disposable {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-		// getSystem(PhysicsSystem.class).drawDebug();
 	}
 
 	@Override
