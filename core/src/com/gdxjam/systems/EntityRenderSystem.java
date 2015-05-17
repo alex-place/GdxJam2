@@ -103,7 +103,7 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 		drawDebug();
 
 		// Displays the amount of entities that are being drawn
-		Gdx.app.debug(TAG, "drawn entities: " + drawnEntities);
+//		Gdx.app.debug(TAG, "drawn entities: " + drawnEntities);
 
 	}
 

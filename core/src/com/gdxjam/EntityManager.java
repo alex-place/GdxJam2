@@ -13,6 +13,7 @@ import com.gdxjam.ecs.PhysicsEntityListener;
 import com.gdxjam.ecs.ResourceEntityListener;
 import com.gdxjam.ecs.UnitEntityListener;
 import com.gdxjam.systems.CameraSystem;
+import com.gdxjam.systems.ClientSystem;
 import com.gdxjam.systems.DecaySystem;
 import com.gdxjam.systems.EntityRenderSystem;
 import com.gdxjam.systems.FSMSystem;
@@ -54,6 +55,8 @@ public class EntityManager extends PooledEngine implements Disposable {
 		addSystem(new HealthSystem());
 
 		addSystem(new DecaySystem());
+
+		addSystem(new ClientSystem());
 
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());
