@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.gdxjam.OrionPrefs.BooleanValue;
 import com.gdxjam.OrionPrefs.StringValue;
 import com.gdxjam.screens.AbstractScreen;
+import com.gdxjam.systems.InputSystem;
 import com.gdxjam.utils.EntityFactory;
 import com.gdxjam.utils.EntityUtils;
 

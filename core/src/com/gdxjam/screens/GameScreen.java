@@ -10,13 +10,13 @@ import com.gdxjam.EntityManager;
 import com.gdxjam.GameManager;
 import com.gdxjam.GameManager.GameConfig;
 import com.gdxjam.GameManager.GameConfig.BUILD;
-import com.gdxjam.InputSystem;
 import com.gdxjam.components.Components;
 import com.gdxjam.input.DesktopGestureListener;
 import com.gdxjam.input.DesktopInputProcessor;
 import com.gdxjam.input.DeveloperInputProcessor;
 import com.gdxjam.input.EntityController;
 import com.gdxjam.systems.CameraSystem;
+import com.gdxjam.systems.InputSystem;
 import com.gdxjam.utils.Constants;
 import com.gdxjam.utils.WorldGenerator;
 

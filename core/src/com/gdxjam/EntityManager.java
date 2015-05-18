@@ -18,6 +18,7 @@ import com.gdxjam.systems.DecaySystem;
 import com.gdxjam.systems.EntityRenderSystem;
 import com.gdxjam.systems.FSMSystem;
 import com.gdxjam.systems.HealthSystem;
+import com.gdxjam.systems.InputSystem;
 import com.gdxjam.systems.ParticleSystem;
 import com.gdxjam.systems.PhysicsSystem;
 import com.gdxjam.systems.SteeringSystem;
