@@ -18,6 +18,7 @@ import com.gdxjam.systems.DecaySystem;
 import com.gdxjam.systems.EntityRenderSystem;
 import com.gdxjam.systems.FSMSystem;
 import com.gdxjam.systems.HealthSystem;
+import com.gdxjam.systems.InputSystem;
 import com.gdxjam.systems.ParticleSystem;
 import com.gdxjam.systems.PhysicsSystem;
 import com.gdxjam.systems.SteeringSystem;
@@ -42,9 +43,10 @@ public class EntityManager extends PooledEngine implements Disposable {
 	}
 
 	private EntityManager initSystems() {
-		CameraSystem cameraSystem = new CameraSystem(Constants.VIEWPORT_WIDTH,
-				Constants.VIEWPORT_HEIGHT);
-		addSystem(cameraSystem);
+		addSystem(new InputSystem());
+
+		addSystem(new CameraSystem(Constants.VIEWPORT_WIDTH,
+				Constants.VIEWPORT_HEIGHT));
 
 		addSystem(new PhysicsSystem());
 
@@ -61,8 +63,6 @@ public class EntityManager extends PooledEngine implements Disposable {
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());
 		addSystem(new ParticleSystem());
-
-		addSystem(new InputSystem());
 
 		return this;
 	}

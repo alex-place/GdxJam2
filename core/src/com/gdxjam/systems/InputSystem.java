@@ -1,4 +1,4 @@
-package com.gdxjam;
+package com.gdxjam.systems;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;

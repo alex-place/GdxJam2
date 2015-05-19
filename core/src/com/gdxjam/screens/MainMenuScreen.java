@@ -37,20 +37,19 @@ public class MainMenuScreen extends AbstractScreen {
 		add("GameScreen", new GameScreen());
 		add("Credits", new CreditsScreen());
 		addExit();
-		
+
 		final Skin skin = Assets.skin;
-		
+
 		TextButton optionsButton = new TextButton("Options", skin);
-		optionsButton.addListener(new ChangeListener(){
+		optionsButton.addListener(new ChangeListener() {
 			@Override
-			public void changed (ChangeEvent event, Actor actor) {
+			public void changed(ChangeEvent event, Actor actor) {
 				OptionsDialog dialog = new OptionsDialog(skin);
 				dialog.show(stage);
 			}
 		});
-		
+
 		table.add(optionsButton);
-		
 
 		stage.addActor(table);
 
