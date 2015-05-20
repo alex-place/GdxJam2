@@ -1,4 +1,3 @@
-
 package com.gdxjam.screens;
 
 import com.badlogic.gdx.Gdx;
@@ -36,7 +35,7 @@ public class NewGameScreen extends AbstractScreen {
 	WorldSize size;
 
 	@Override
-	public void show () {
+	public void show() {
 		selected = Faction.FACTION0;
 		size = WorldSize.MEDIUM;
 		stage = new Stage();
@@ -49,12 +48,21 @@ public class NewGameScreen extends AbstractScreen {
 		label.setFontScale(2);
 		label.setAlignment(Align.top);
 
-		/** Moved descriptions into the faction enum with the names already there. Removes need to hardcode any faction related
-		 * elements. Creation of new factions should be as simple as draging 3 new asset files into the folder and creating an entry
-		 * in the faction enum for them */
+		/**
+		 * Moved descriptions into the faction enum with the names already
+		 * there. Removes need to hardcode any faction related elements.
+		 * Creation of new factions should be as simple as draging 3 new
+		 * asset files into the folder and creating an entry in the faction
+		 * enum for them
+		 */
 
 		Table factionTable = new Table();
-		for (int i = 0; i < Faction.values().length - 1; i++) { // Length - 1 to ingore the neutral faction
+		for (int i = 0; i < Faction.values().length - 1; i++) { // Length -
+												// 1 to
+												// ingore
+												// the
+												// neutral
+												// faction
 			factionTable.add(createFactionButton(Faction.values()[i]));
 		}
 
@@ -74,7 +82,7 @@ public class NewGameScreen extends AbstractScreen {
 		worldSize.addListener(new ChangeListener() {
 
 			@Override
-			public void changed (ChangeEvent event, Actor actor) {
+			public void changed(ChangeEvent event, Actor actor) {
 				System.out.println(worldSize.getSelected());
 
 				if (worldSize.getSelected().equalsIgnoreCase("small")) {
@@ -94,7 +102,7 @@ public class NewGameScreen extends AbstractScreen {
 		TextButton start = new TextButton("Start", textStyle);
 		start.addListener(new ClickListener() {
 			@Override
-			public void clicked (InputEvent event, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
 				start(selected);
@@ -104,7 +112,7 @@ public class NewGameScreen extends AbstractScreen {
 		TextButton back = new TextButton("Back", textStyle);
 		back.addListener(new ClickListener() {
 			@Override
-			public void clicked (InputEvent event, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
 				GameManager.setScreen(new MainMenuScreen());
@@ -128,13 +136,14 @@ public class NewGameScreen extends AbstractScreen {
 
 	}
 
-	// Creates the faction buttons using the faction enum. Removes need to hard code the buttons
+	// Creates the faction buttons using the faction enum. Removes need to
+	// hard code the buttons
 
-	public ImageButton createFactionButton (final Faction faction) {
+	public ImageButton createFactionButton(final Faction faction) {
 		ImageButton button = newImageButton(Assets.spacecraft.ships.get(faction.ordinal()));
 		button.addListener(new ClickListener() {
 			@Override
-			public void clicked (InputEvent event, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				showFaction(faction);
 				selected = faction;
@@ -144,28 +153,28 @@ public class NewGameScreen extends AbstractScreen {
 	}
 
 	// Now uses the parameters in the faction enum rather than constants
-	public void showFaction (Faction faction) {
+	public void showFaction(Faction faction) {
 		name.setText(faction.name);
 		description.setText(faction.description);
 	}
 
-	public ImageButton newImageButton (TextureRegion region) {
+	public ImageButton newImageButton(TextureRegion region) {
 		TextureRegionDrawable drawable = new TextureRegionDrawable(region);
 		return new ImageButton(drawable);
 	}
 
-	public void start (Faction faction) {
+	public void start(Faction faction) {
 		Constants.playerFaction = faction;
 		GameManager.setScreen(new GameScreen());
 	}
 
 	@Override
-	public void resize (int width, int height) {
+	public void resize(int width, int height) {
 		stage.getViewport().update(width, height);
 	}
 
 	@Override
-	public void render (float delta) {
+	public void render(float delta) {
 		super.render(delta);
 		stage.act();
 		stage.draw();
@@ -173,19 +182,19 @@ public class NewGameScreen extends AbstractScreen {
 	}
 
 	@Override
-	public void pause () {
+	public void pause() {
 	}
 
 	@Override
-	public void resume () {
+	public void resume() {
 	}
 
 	@Override
-	public void hide () {
+	public void hide() {
 	}
 
 	@Override
-	public void dispose () {
+	public void dispose() {
 		stage.dispose();
 	}
 

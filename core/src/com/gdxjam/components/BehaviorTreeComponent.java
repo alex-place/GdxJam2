@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -13,21 +12,21 @@ public class BehaviorTreeComponent extends Component implements Poolable {
 	private BehaviorTree<Entity> btree;
 
 	/** Can only be created by PooledEngine */
-	private BehaviorTreeComponent () {
+	private BehaviorTreeComponent() {
 		// private constructor
 	}
 
-	public void createTestTree (Entity entity) {
+	public void createTestTree(Entity entity) {
 		BehaviorTreeParser<Entity> parser = new BehaviorTreeParser<Entity>(BehaviorTreeParser.DEBUG_HIGH);
 		btree = parser.parse(Gdx.files.internal("btree/squad.tree"), entity);
 	}
 
-	public void step () {
+	public void step() {
 		btree.step();
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 		// TODO Auto-generated method stub
 
 	}

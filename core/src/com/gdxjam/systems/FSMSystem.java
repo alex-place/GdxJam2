@@ -9,19 +9,19 @@ import com.gdxjam.components.FSMComponent;
 
 public class FSMSystem extends IteratingSystem {
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public FSMSystem() {
-        super(Family.all(FSMComponent.class).get());
-    }
+		super(Family.all(FSMComponent.class).get());
+	}
 
-    @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-   	 //Updates the entities finite state machine
-   	 Components.FSM.get(entity).update();
-    }
-    
- 	@Override
- 	public boolean checkProcessing () {
- 		return !GameManager.isPaused();
- 	}
+	@Override
+	protected void processEntity(Entity entity, float deltaTime) {
+		// Updates the entities finite state machine
+		Components.FSM.get(entity).update();
+	}
+
+	@Override
+	public boolean checkProcessing() {
+		return !GameManager.isPaused();
+	}
 }

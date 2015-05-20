@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -11,18 +10,18 @@ public class ResourceComponent extends Component implements Poolable {
 	public int value;
 
 	/** Can only be created by PooledEngine */
-	private ResourceComponent () {
+	private ResourceComponent() {
 		// private constructor
 	}
 
-	public ResourceComponent init (int amount) {
+	public ResourceComponent init(int amount) {
 		capactiy = new Range(0, amount);
 		this.value = amount;
 		return this;
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 		value = 0;
 	}
 

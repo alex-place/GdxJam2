@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -9,21 +8,21 @@ public class ProjectileComponent extends Component implements Poolable {
 	private int damage;
 
 	/** Can only be created by PooledEngine */
-	private ProjectileComponent () {
+	private ProjectileComponent() {
 		// private constructor
 	}
 
-	public ProjectileComponent init (int damage) {
+	public ProjectileComponent init(int damage) {
 		this.damage = damage;
 		return this;
 	}
 
-	public int getDamage () {
+	public int getDamage() {
 		return damage;
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 
 	}
 

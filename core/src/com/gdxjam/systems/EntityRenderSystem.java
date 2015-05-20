@@ -24,10 +24,8 @@ import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.PhysicsComponent;
 import com.gdxjam.components.SpriteComponent;
 
-public class EntityRenderSystem extends SortedIteratingSystem implements
-		Disposable {
-	private static final String TAG = "["
-			+ EntityRenderSystem.class.getSimpleName() + "]";
+public class EntityRenderSystem extends SortedIteratingSystem implements Disposable {
+	private static final String TAG = "[" + EntityRenderSystem.class.getSimpleName() + "]";
 	private static final int spriteRotationOffset = -0;
 	private static final float healthBarHeight = 0.15f;
 
@@ -45,25 +43,22 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 	private static int drawnEntities = 0;
 
 	public EntityRenderSystem() {
-		super(Family.one(SpriteComponent.class).get(),
-				new Comparator<Entity>() {
+		super(Family.one(SpriteComponent.class).get(), new Comparator<Entity>() {
 
-					@Override
-					public int compare(Entity e1, Entity e2) {
-						if (Components.PARALAX.has(e1)
-								&& Components.PARALAX.has(e2)) {
-							ParalaxComponent p1 = Components.PARALAX.get(e1);
-							ParalaxComponent p2 = Components.PARALAX.get(e2);
-							return p1.layer < p2.layer ? 1 : 0;
-						} else if (Components.PARALAX.has(e1)
-								|| Components.PARALAX.has(e2)) {
-							return Components.PARALAX.has(e1) ? -1 : 1;
-						} else {
-							return 0;
-						}
+			@Override
+			public int compare(Entity e1, Entity e2) {
+				if (Components.PARALAX.has(e1) && Components.PARALAX.has(e2)) {
+					ParalaxComponent p1 = Components.PARALAX.get(e1);
+					ParalaxComponent p2 = Components.PARALAX.get(e2);
+					return p1.layer < p2.layer ? 1 : 0;
+				} else if (Components.PARALAX.has(e1) || Components.PARALAX.has(e2)) {
+					return Components.PARALAX.has(e1) ? -1 : 1;
+				} else {
+					return 0;
+				}
 
-					}
-				});
+			}
+		});
 
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
@@ -118,18 +113,14 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 		}
 
 		// Only renderer if the sprite is in the fustrum of the camera
-		if (cullFustrum
-				&& !camera.frustum.boundsInFrustum(sprite.getX(),
-						sprite.getY(), 0.0f, sprite.getWidth() * 0.5f,
-						sprite.getHeight() * 0.5f, 0.0f)) {
+		if (cullFustrum && !camera.frustum.boundsInFrustum(sprite.getX(), sprite.getY(), 0.0f, sprite.getWidth() * 0.5f, sprite.getHeight() * 0.5f, 0.0f)) {
 			return;
 		}
 
 		if (Components.PARALAX.has(entity)) {
 			ParalaxComponent paralaxComp = Components.PARALAX.get(entity);
 			if (currentLayer != paralaxComp.layer) {
-				batch.setProjectionMatrix(cameraSystem
-						.getParalaxCamera(paralaxComp.layer).combined);
+				batch.setProjectionMatrix(cameraSystem.getParalaxCamera(paralaxComp.layer).combined);
 				currentLayer = paralaxComp.layer;
 			}
 
@@ -144,28 +135,23 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 
 				Vector2 pos = physics.getBody().getPosition();
 				sprite.setCenter(pos.x, pos.y);
-				sprite.setRotation((MathUtils.radiansToDegrees * physics
-						.getBody().getAngle()) + spriteRotationOffset);
+				sprite.setRotation((MathUtils.radiansToDegrees * physics.getBody().getAngle()) + spriteRotationOffset);
 			}
 		}
 
 		sprite.draw(batch);
 
-		// NOTE: If an entity has health but no sprite this will not get drawn
+		// NOTE: If an entity has health but no sprite this will not get
+		// drawn
 		if (Components.HEALTH.has(entity)) {
 			HealthComponent healthComp = Components.HEALTH.get(entity);
 			if (healthComp.value < healthComp.max) {
-				float percent = (float) healthComp.value
-						/ (float) healthComp.max;
+				float percent = (float) healthComp.value / (float) healthComp.max;
 				// shapeRenderer.begin(ShapeType.Filled);
 				shapeRenderer.setColor(Color.RED);
-				shapeRenderer.rect(sprite.getX(),
-						sprite.getY() + sprite.getHeight(), sprite.getWidth(),
-						healthBarHeight);
+				shapeRenderer.rect(sprite.getX(), sprite.getY() + sprite.getHeight(), sprite.getWidth(), healthBarHeight);
 				shapeRenderer.setColor(Color.GREEN);
-				shapeRenderer.rect(sprite.getX(),
-						sprite.getY() + sprite.getHeight(), sprite.getWidth()
-								* percent, healthBarHeight);
+				shapeRenderer.rect(sprite.getX(), sprite.getY() + sprite.getHeight(), sprite.getWidth() * percent, healthBarHeight);
 				// shapeRenderer.end();
 			}
 		}

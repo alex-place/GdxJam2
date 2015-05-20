@@ -35,8 +35,7 @@ public class GameScreen extends AbstractScreen {
 
 		createWorld(1024, 1024);
 
-		input.addProcessor(new GestureDetector(new DesktopGestureListener(
-				engine)));
+		input.addProcessor(new GestureDetector(new DesktopGestureListener(engine)));
 		input.addProcessor(new DesktopInputProcessor(engine));
 
 		if (GameConfig.build == BUILD.DEV) {
@@ -52,13 +51,11 @@ public class GameScreen extends AbstractScreen {
 		WorldGenerator generator = new WorldGenerator(width, height, seed);
 		generator.generate();
 
-		Entity player = generator.createUnit(Constants.playerFaction,
-				new Vector2(100, 100));
+		Entity player = generator.createUnit(Constants.playerFaction, new Vector2(100, 100));
 		input.addProcessor(new EntityController(engine, player));
 		engine.addEntity(player);
 
-		engine.getSystem(CameraSystem.class).smoothFollow(
-				Components.PHYSICS.get(player).getBody().getPosition());
+		engine.getSystem(CameraSystem.class).smoothFollow(Components.PHYSICS.get(player).getBody().getPosition());
 		engine.getSystem(CameraSystem.class).setWorldBounds(width, height);
 
 	}

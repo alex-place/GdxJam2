@@ -9,33 +9,33 @@ import com.gdxjam.GameManager;
 import com.gdxjam.components.Components;
 import com.gdxjam.components.DecayComponent;
 
-public class DecaySystem extends IteratingSystem{
-	
+public class DecaySystem extends IteratingSystem {
+
 	private PooledEngine engine;
 
-	public DecaySystem () {
+	public DecaySystem() {
 		super(Family.all(DecayComponent.class).get());
 	}
-	
+
 	@Override
-	public void addedToEngine (Engine engine) {
+	public void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
 		this.engine = (PooledEngine) engine;
 	}
 
 	@Override
-	protected void processEntity (Entity entity, float deltaTime) {
+	protected void processEntity(Entity entity, float deltaTime) {
 		DecayComponent decayComp = Components.DECAY.get(entity);
-		
-		if(decayComp.elapsed >= decayComp.decayTime)
+
+		if (decayComp.elapsed >= decayComp.decayTime)
 			engine.removeEntity(entity);
-		 else
+		else
 			decayComp.elapsed += deltaTime;
 	}
-	
+
 	@Override
-	public boolean checkProcessing () {
+	public boolean checkProcessing() {
 		return !GameManager.isPaused();
 	}
-	
+
 }

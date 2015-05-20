@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -14,29 +13,29 @@ public class FSMComponent extends Component implements Telegraph {
 	private DefaultStateMachine<Entity> stateMachine;
 
 	/** Can only be created by PooledEngine */
-	private FSMComponent () {
+	private FSMComponent() {
 		// private constructor
 	}
 
-	public FSMComponent init (Entity entity) {
+	public FSMComponent init(Entity entity) {
 		stateMachine = new DefaultStateMachine<Entity>(entity);
 		return this;
 	}
 
-	public void update () {
+	public void update() {
 		stateMachine.update();
 	}
 
-	public void changeState (State<Entity> state) {
+	public void changeState(State<Entity> state) {
 		stateMachine.changeState(state);
 	}
 
-	public StateMachine<Entity> getStateMachine () {
+	public StateMachine<Entity> getStateMachine() {
 		return stateMachine;
 	}
 
 	@Override
-	public boolean handleMessage (Telegram msg) {
+	public boolean handleMessage(Telegram msg) {
 		return stateMachine.handleMessage(msg);
 	}
 }

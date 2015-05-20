@@ -32,8 +32,7 @@ public class CameraSystem extends EntitySystem {
 
 	public CameraSystem(float viewportWidth, float viewportHeight) {
 		camera = new OrthographicCamera(viewportWidth, viewportHeight);
-		viewport = new ScalingViewport(Scaling.stretch, viewportWidth,
-				viewportHeight, camera);
+		viewport = new ScalingViewport(Scaling.stretch, viewportWidth, viewportHeight, camera);
 
 		addParalaxLayer(0, 0.0f);
 		addParalaxLayer(1, 0.10f);
@@ -48,8 +47,7 @@ public class CameraSystem extends EntitySystem {
 	}
 
 	public void addParalaxLayer(int layerIndex, float paralaxCoeffeciant) {
-		ParalaxLayer layer = new ParalaxLayer(layerIndex, paralaxCoeffeciant,
-				camera.viewportWidth, camera.viewportHeight);
+		ParalaxLayer layer = new ParalaxLayer(layerIndex, paralaxCoeffeciant, camera.viewportWidth, camera.viewportHeight);
 		paralaxLayers.put(layerIndex, layer);
 	}
 
@@ -99,12 +97,8 @@ public class CameraSystem extends EntitySystem {
 		for (Entry<ParalaxLayer> entry : paralaxLayers.entries()) {
 			float coeffeciant = entry.value.coeffeciant;
 			float zoom = 1.0f + (camera.zoom * coeffeciant);
-			float x = ((camera.position.x / worldBounds.width)
-					* camera.viewportWidth * coeffeciant)
-					+ (camera.viewportWidth * 0.5f);
-			float y = ((camera.position.y / worldBounds.height)
-					* camera.viewportHeight * coeffeciant)
-					+ (camera.viewportHeight * 0.5f);
+			float x = ((camera.position.x / worldBounds.width) * camera.viewportWidth * coeffeciant) + (camera.viewportWidth * 0.5f);
+			float y = ((camera.position.y / worldBounds.height) * camera.viewportHeight * coeffeciant) + (camera.viewportHeight * 0.5f);
 			OrthographicCamera camera = entry.value.getCamera();
 			camera.position.set(x, y, 0);
 			camera.zoom = zoom;
@@ -161,8 +155,7 @@ public class CameraSystem extends EntitySystem {
 		private float coeffeciant;
 		private OrthographicCamera camera;
 
-		public ParalaxLayer(int index, float coeffeciant, float viewportWidth,
-				float viewportHeight) {
+		public ParalaxLayer(int index, float coeffeciant, float viewportWidth, float viewportHeight) {
 			this.index = index;
 			this.coeffeciant = coeffeciant;
 

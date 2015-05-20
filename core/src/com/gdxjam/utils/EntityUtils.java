@@ -8,8 +8,7 @@ import com.gdxjam.components.FactionComponent.Faction;
 
 public class EntityUtils {
 
-	private static final String TAG = "[" + EntityUtils.class.getSimpleName()
-			+ "]";
+	private static final String TAG = "[" + EntityUtils.class.getSimpleName() + "]";
 	private static PooledEngine engine;
 
 	public static void setEngine(PooledEngine engine) {
@@ -24,10 +23,8 @@ public class EntityUtils {
 	 * @return true if they are the same faction
 	 */
 	public static boolean isSameFaction(Entity entityA, Entity entityB) {
-		if (!Components.FACTION.has(entityA)
-				|| !Components.FACTION.has(entityB)) {
-			Gdx.app.error(TAG,
-					"entity faction comparision is missing faction component");
+		if (!Components.FACTION.has(entityA) || !Components.FACTION.has(entityB)) {
+			Gdx.app.error(TAG, "entity faction comparision is missing faction component");
 			return false;
 		}
 

@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.ComponentMapper;
@@ -15,8 +14,7 @@ public class Components {
 
 	// AI
 	public static final ComponentMapper<BehaviorTreeComponent> BTREE = ComponentMapper.getFor(BehaviorTreeComponent.class);
-	public static final ComponentMapper<SteeringBehaviorComponent> STEERING_BEHAVIOR = ComponentMapper
-		.getFor(SteeringBehaviorComponent.class);
+	public static final ComponentMapper<SteeringBehaviorComponent> STEERING_BEHAVIOR = ComponentMapper.getFor(SteeringBehaviorComponent.class);
 	public static final ComponentMapper<SteerableComponent> STEERABLE = ComponentMapper.getFor(SteerableComponent.class);
 	public static final ComponentMapper<FSMComponent> FSM = ComponentMapper.getFor(FSMComponent.class);
 

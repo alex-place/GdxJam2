@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -11,28 +10,28 @@ public class SpriteComponent extends Component implements Poolable {
 	private Sprite sprite;
 
 	/** Can only be created by PooledEngine */
-	private SpriteComponent () {
+	private SpriteComponent() {
 		// private constructor
 	}
 
-	public SpriteComponent init (TextureRegion region, float x, float y, float width, float height) {
+	public SpriteComponent init(TextureRegion region, float x, float y, float width, float height) {
 		sprite = new Sprite(region);
 		sprite.setBounds(x, y, width, height);
 		sprite.setOriginCenter();
 		return this;
 	}
 
-	public SpriteComponent init (Sprite sprite) {
+	public SpriteComponent init(Sprite sprite) {
 		this.sprite = sprite;
 		return this;
 	}
 
-	public Sprite getSprite () {
+	public Sprite getSprite() {
 		return sprite;
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 		sprite = null;
 	}
 

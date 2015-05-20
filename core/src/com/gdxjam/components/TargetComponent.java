@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -10,25 +9,25 @@ public class TargetComponent extends Component implements Poolable {
 	private Entity target;
 
 	/** Can only be created by PooledEngine */
-	private TargetComponent () {
+	private TargetComponent() {
 		// private constructor
 	}
 
-	public TargetComponent init (Entity target) {
+	public TargetComponent init(Entity target) {
 		this.target = target;
 		return this;
 	}
 
-	public void setTarget (Entity entity) {
+	public void setTarget(Entity entity) {
 		this.target = entity;
 	}
 
-	public Entity getTarget () {
+	public Entity getTarget() {
 		return target;
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 		target = null;
 	}
 

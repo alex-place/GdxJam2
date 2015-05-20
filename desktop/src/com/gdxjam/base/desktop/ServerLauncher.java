@@ -8,7 +8,7 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.gdxjam.Assets;
 import com.gdxjam.Main;
 
-public class DesktopLauncher {
+public class ServerLauncher {
 
 	public static void main(String[] arg) {
 
@@ -32,7 +32,7 @@ public class DesktopLauncher {
 		config.addIcon("icon32.png", FileType.Internal);
 		config.addIcon("icon16.png", FileType.Internal);
 
-		new LwjglApplication(new Main(false), config);
+		new LwjglApplication(new Main(true), config);
 
 	}
 }

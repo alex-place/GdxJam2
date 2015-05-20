@@ -1,4 +1,4 @@
-package com.gdxjam.ecs;
+package com.gdxjam.utils;
 
 public class EntityCategory {
 

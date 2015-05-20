@@ -50,8 +50,6 @@ public class DesktopInputProcessor implements InputProcessor {
 		return false;
 	}
 
-	
-
 	@Override
 	public boolean scrolled(int amount) {
 		cameraSystem.zoom(amount * 0.1f);

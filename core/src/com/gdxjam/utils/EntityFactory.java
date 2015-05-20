@@ -34,7 +34,6 @@ import com.gdxjam.components.SpriteComponent;
 import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 import com.gdxjam.components.TargetComponent;
-import com.gdxjam.ecs.EntityCategory;
 import com.gdxjam.systems.ParticleSystem;
 import com.gdxjam.systems.ParticleSystem.ParticleType;
 import com.gdxjam.systems.PhysicsSystem;
@@ -43,8 +42,7 @@ import com.gdxjam.systems.PhysicsSystem;
 
 public class EntityFactory {
 
-	private static final String TAG = "[" + EntityFactory.class.getSimpleName()
-			+ "]";
+	private static final String TAG = "[" + EntityFactory.class.getSimpleName() + "]";
 
 	private static PooledEngine engine;
 	private static PhysicsSystem physicsSystem;
@@ -53,20 +51,9 @@ public class EntityFactory {
 	private static PhysicsBuilder physicsBuilder = new PhysicsBuilder();
 
 	public static Entity createUnit(Faction faction, Vector2 position) {
-		Entity entity = builder
-				.createEntity(EntityCategory.UNIT, position)
-				.physicsBody(BodyType.DynamicBody)
-				.circleCollider(Constants.unitRadius, 1.0f)
-				.damping(1.5f, 1.0f)
-				.steerable(Constants.unitRadius)
-				.steeringBehavior()
-				.health(100)
-				.faction(faction)
-				.target()
-				.control()
-				.sprite(Assets.spacecraft.ships.get(faction.ordinal()),
-						Constants.unitRadius * 2, Constants.unitRadius * 2)
-				.getWithoutAdding();
+		Entity entity = builder.createEntity(EntityCategory.UNIT, position).physicsBody(BodyType.DynamicBody).circleCollider(Constants.unitRadius, 1.0f)
+				.damping(1.5f, 1.0f).steerable(Constants.unitRadius).steeringBehavior().health(100).faction(faction).target().control()
+				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2).getWithoutAdding();
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
 
@@ -76,36 +63,22 @@ public class EntityFactory {
 		return entity;
 
 	}
-	
-	public static Entity createGun(Vector2 position){
-		Entity entity = builder
-				.createEntity(EntityCategory.GUN, position)
-				.physicsBody(BodyType.DynamicBody)
-				.circleCollider(Constants.unitRadius, 0.5f)
+
+	public static Entity createGun(Vector2 position) {
+		Entity entity = builder.createEntity(EntityCategory.GUN, position).physicsBody(BodyType.DynamicBody).circleCollider(Constants.unitRadius, 0.5f)
 				.getWithoutAdding();
 		return entity;
 	}
-	
-	public static Entity createProjectile(Vector2 position, Vector2 velocity,
-			float radius, Faction faction, int damage) {
-		Entity entity = builder
-				.createEntity(EntityCategory.PROJECTILE, position)
-				.physicsBody(BodyType.DynamicBody)
-				.circleSensor(radius)
-				.filter(EntityCategory.PROJECTILE,
-						0,
-						EntityCategory.UNIT | EntityCategory.RESOURCE
-								| EntityCategory.MOTHERSHIP)
-				.faction(faction)
-				.sprite(Assets.projectile.projectiles.get(faction.ordinal()),
-						radius * 2, radius * 2).getWithoutAdding();
 
-		ProjectileComponent projectileComp = engine.createComponent(
-				ProjectileComponent.class).init(damage);
+	public static Entity createProjectile(Vector2 position, Vector2 velocity, float radius, Faction faction, int damage) {
+		Entity entity = builder.createEntity(EntityCategory.PROJECTILE, position).physicsBody(BodyType.DynamicBody).circleSensor(radius)
+				.filter(EntityCategory.PROJECTILE, 0, EntityCategory.UNIT | EntityCategory.RESOURCE | EntityCategory.MOTHERSHIP).faction(faction)
+				.sprite(Assets.projectile.projectiles.get(faction.ordinal()), radius * 2, radius * 2).getWithoutAdding();
+
+		ProjectileComponent projectileComp = engine.createComponent(ProjectileComponent.class).init(damage);
 		entity.add(projectileComp);
 
-		entity.add(engine.createComponent(DecayComponent.class).init(
-				Constants.projectileDecayTime));
+		entity.add(engine.createComponent(DecayComponent.class).init(Constants.projectileDecayTime));
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
 		physicsComp.getBody().setBullet(true);
@@ -117,15 +90,12 @@ public class EntityFactory {
 	}
 
 	public static Entity createParticle(Vector2 position, ParticleType type) {
-		Entity entity = builder.createEntity(EntityCategory.GRAPHICS, position)
-				.particle(type).addToEngine();
+		Entity entity = builder.createEntity(EntityCategory.GRAPHICS, position).particle(type).addToEngine();
 		return entity;
 	}
 
 	public static Entity createBoundry(Vector2 start, Vector2 end) {
-		Entity entity = builder
-				.createEntity(EntityCategory.WALL, new Vector2(0, 0))
-				.physicsBody(BodyType.StaticBody).getWithoutAdding();
+		Entity entity = builder.createEntity(EntityCategory.WALL, new Vector2(0, 0)).physicsBody(BodyType.StaticBody).getWithoutAdding();
 
 		FixtureDef def = new FixtureDef();
 		EdgeShape edge = new EdgeShape();
@@ -138,13 +108,10 @@ public class EntityFactory {
 		return entity;
 	}
 
-	public static Entity createBackgroundArt(Vector2 position, float width,
-			float height, TextureRegion region, int layer) {
-		Entity entity = builder.createEntity(EntityCategory.GRAPHICS, position)
-				.sprite(region, width, height).getWithoutAdding();
+	public static Entity createBackgroundArt(Vector2 position, float width, float height, TextureRegion region, int layer) {
+		Entity entity = builder.createEntity(EntityCategory.GRAPHICS, position).sprite(region, width, height).getWithoutAdding();
 
-		entity.add(engine.createComponent(ParalaxComponent.class).init(
-				position.x, position.y, width, height, layer));
+		entity.add(engine.createComponent(ParalaxComponent.class).init(position.x, position.y, width, height, layer));
 
 		engine.addEntity(entity);
 		return entity;
@@ -154,7 +121,8 @@ public class EntityFactory {
 	 * Called when the GameManager first initializes a new engine
 	 * 
 	 * @param engine
-	 *            The engine that the factory will use to create its entities
+	 *              The engine that the factory will use to create its
+	 *              entities
 	 */
 	public static void setEngine(PooledEngine engine) {
 		EntityFactory.engine = engine;
@@ -162,8 +130,8 @@ public class EntityFactory {
 	}
 
 	/**
-	 * Creates an entity from the engine when first instantiated Exit builder by
-	 * calling addToEngine() or getWithoutAdding()
+	 * Creates an entity from the engine when first instantiated Exit builder
+	 * by calling addToEngine() or getWithoutAdding()
 	 */
 
 	public static class EntityBuilder {
@@ -187,16 +155,13 @@ public class EntityFactory {
 		}
 
 		public EntityBuilder control(float radius) {
-			entity.add(engine.createComponent(ControlComponent.class).init(
-					new DefaultControlBehavior(entity, engine, radius)));
+			entity.add(engine.createComponent(ControlComponent.class).init(new DefaultControlBehavior(entity, engine, radius)));
 			return this;
 		}
 
 		public EntityBuilder particle(ParticleType type) {
-			PooledEffect effect = engine.getSystem(ParticleSystem.class)
-					.createEffect(position, type);
-			entity.add(engine.createComponent(ParticleComponent.class).init(
-					effect));
+			PooledEffect effect = engine.getSystem(ParticleSystem.class).createEffect(position, type);
+			entity.add(engine.createComponent(ParticleComponent.class).init(effect));
 			return this;
 		}
 
@@ -212,8 +177,7 @@ public class EntityFactory {
 			Body body = physicsSystem.createBody(def);
 			body.setUserData(entity);
 
-			PhysicsComponent physics = engine.createComponent(
-					PhysicsComponent.class).init(body);
+			PhysicsComponent physics = engine.createComponent(PhysicsComponent.class).init(body);
 			entity.add(physics);
 			return this;
 		}
@@ -230,22 +194,19 @@ public class EntityFactory {
 		}
 
 		public EntityBuilder stateMachine() {
-			FSMComponent stateMachineComp = engine.createComponent(
-					FSMComponent.class).init(entity);
+			FSMComponent stateMachineComp = engine.createComponent(FSMComponent.class).init(entity);
 			entity.add(stateMachineComp);
 			return this;
 		}
 
 		public EntityBuilder steeringBehavior() {
-			SteeringBehaviorComponent behaviorComp = engine
-					.createComponent(SteeringBehaviorComponent.class);
+			SteeringBehaviorComponent behaviorComp = engine.createComponent(SteeringBehaviorComponent.class);
 			entity.add(behaviorComp);
 			return this;
 		}
 
 		public EntityBuilder resource(int amount) {
-			ResourceComponent resourceComp = engine.createComponent(
-					ResourceComponent.class).init(amount);
+			ResourceComponent resourceComp = engine.createComponent(ResourceComponent.class).init(amount);
 			entity.add(resourceComp);
 
 			return this;
@@ -257,8 +218,7 @@ public class EntityFactory {
 			return this;
 		}
 
-		public EntityBuilder filter(int categoryBits, int groupIndex,
-				int maskBits) {
+		public EntityBuilder filter(int categoryBits, int groupIndex, int maskBits) {
 			entity.flags = categoryBits;
 
 			Filter filter = new Filter();
@@ -267,8 +227,7 @@ public class EntityFactory {
 			filter.maskBits = (short) maskBits;
 
 			// TODO make EntityBuilder filter beter
-			Components.PHYSICS.get(entity).getBody().getFixtureList().get(0)
-					.setFilterData(filter);
+			Components.PHYSICS.get(entity).getBody().getFixtureList().get(0).setFilterData(filter);
 			return this;
 		}
 
@@ -278,14 +237,12 @@ public class EntityFactory {
 		}
 
 		public EntityBuilder gunport(Vector2 origin) {
-			entity.add(engine.createComponent(GunportComponent.class).init(
-					origin));
+			entity.add(engine.createComponent(GunportComponent.class).init(origin));
 			return this;
 		}
 
 		public EntityBuilder faction(Faction faction) {
-			entity.add(engine.createComponent(FactionComponent.class).init(
-					faction));
+			entity.add(engine.createComponent(FactionComponent.class).init(faction));
 			return this;
 		}
 
@@ -295,8 +252,7 @@ public class EntityFactory {
 				Gdx.app.error(TAG, "cannot create a steerable without physics!");
 				return this;
 			}
-			SteerableComponent steerable = engine.createComponent(
-					SteerableComponent.class).init(physics.getBody(), radius);
+			SteerableComponent steerable = engine.createComponent(SteerableComponent.class).init(physics.getBody(), radius);
 			entity.add(steerable);
 			return this;
 		}
@@ -346,8 +302,7 @@ public class EntityFactory {
 			if (Components.PHYSICS.has(entity)) {
 				body = Components.PHYSICS.get(entity).getBody();
 			} else {
-				Gdx.app.error(TAG,
-						"can not add range sensor : entity does not have a physics component!");
+				Gdx.app.error(TAG, "can not add range sensor : entity does not have a physics component!");
 				return this;
 			}
 
@@ -358,10 +313,8 @@ public class EntityFactory {
 			}
 
 			for (int i = 0; i < 7; i++) {
-				float angle = (i / 6.0f * arc * MathUtils.degRad)
-						- (90 * MathUtils.degRad);
-				vertices[i + 1].set(range * MathUtils.cos(angle), range
-						* MathUtils.sin(angle));
+				float angle = (i / 6.0f * arc * MathUtils.degRad) - (90 * MathUtils.degRad);
+				vertices[i + 1].set(range * MathUtils.cos(angle), range * MathUtils.sin(angle));
 			}
 
 			PolygonShape poly = new PolygonShape();
@@ -376,19 +329,15 @@ public class EntityFactory {
 		}
 
 		public EntityBuilder health(int value) {
-			HealthComponent health = engine
-					.createComponent(HealthComponent.class);
+			HealthComponent health = engine.createComponent(HealthComponent.class);
 			health.max = value;
 			health.value = value;
 			entity.add(health);
 			return this;
 		}
 
-		public EntityBuilder sprite(TextureRegion region, float width,
-				float height) {
-			SpriteComponent spriteComp = engine.createComponent(
-					SpriteComponent.class).init(region, position.x, position.y,
-					width, height);
+		public EntityBuilder sprite(TextureRegion region, float width, float height) {
+			SpriteComponent spriteComp = engine.createComponent(SpriteComponent.class).init(region, position.x, position.y, width, height);
 			entity.add(spriteComp);
 			return this;
 		}
@@ -407,8 +356,7 @@ public class EntityFactory {
 	public static class PhysicsBuilder {
 		private Body body;
 
-		public PhysicsBuilder reset(BodyType type, Vector2 position,
-				Entity entity) {
+		public PhysicsBuilder reset(BodyType type, Vector2 position, Entity entity) {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			def.position.set(position);

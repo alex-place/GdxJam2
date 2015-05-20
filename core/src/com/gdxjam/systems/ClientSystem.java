@@ -1,72 +1,42 @@
 package com.gdxjam.systems;
 
-import java.io.IOException;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Listener.ThreadedListener;
-import com.gdxjam.net.AddPlayer;
-import com.gdxjam.net.ClientListener;
-import com.gdxjam.net.RemovePlayer;
-import com.gdxjam.net.SomeRequest;
-import com.gdxjam.net.SomeResponse;
-import com.gdxjam.net.UpdatePlayer;
+import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.math.Vector2;
+import com.gdxjam.net.GameClient;
+import com.gdxjam.net.Network.AddPlayer;
+import com.gdxjam.net.Network.RemovePlayer;
 
 public class ClientSystem extends EntitySystem {
 
-	private Client client;
-	Entity player;
+	private GameClient client;
+	private Entity entity;
 
-	public ClientSystem() {
-	}
-
-	public void addPlayer(Entity player) {
-		this.player = player;
+	public synchronized void addPlayer(Entity entity) {
+		this.entity = entity;
 	}
 
 	@Override
-	public void addedToEngine(Engine engine) {
+	public synchronized void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
-		client = new Client();
-
-		Kryo kryo = client.getKryo();
-		kryo.register(SomeRequest.class);
-		kryo.register(SomeResponse.class);
-		kryo.register(AddPlayer.class);
-		kryo.register(UpdatePlayer.class);
-		kryo.register(RemovePlayer.class);
-
-		client.start();
-		client.addListener(new ClientListener(engine));
-
-		try {
-			client.connect(5000, "127.0.0.1", 54555, 54777);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		SomeRequest request = new SomeRequest();
-		request.text = "Here is the request";
-		client.sendTCP(request);
-
-		client.sendTCP(new AddPlayer(player));
-
+		client = new GameClient();
+		if (entity != null)
+			client.sendMessage(new AddPlayer(new Vector2(100, 100), entity.getId()));
+		else
+			System.err.println("You must add a player to the system before starting the game.");
 	}
 
 	@Override
-	public void update(float deltaTime) {
+	public synchronized void update(float deltaTime) {
 		super.update(deltaTime);
-		if (player != null)
-			client.sendUDP(new UpdatePlayer(player));
+		// client.sendMessage(new UpdatePlayer());
 	}
 
 	@Override
-	public void removedFromEngine(Engine engine) {
+	public synchronized void removedFromEngine(Engine engine) {
 		super.removedFromEngine(engine);
+		client.sendMessage(new RemovePlayer(entity.getId()));
 	}
-
 }

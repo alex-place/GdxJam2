@@ -17,8 +17,7 @@ public class CreditsScreen extends AbstractScreen {
 		stage = new Stage();
 		table = new Table();
 		table.setFillParent(true);
-		LabelStyle labelStyle = new LabelStyle(Assets.fonts.font, new Color(1,
-				1, 1, 1));
+		LabelStyle labelStyle = new LabelStyle(Assets.fonts.font, new Color(1, 1, 1, 1));
 
 		Label label = new Label("Credits", labelStyle);
 

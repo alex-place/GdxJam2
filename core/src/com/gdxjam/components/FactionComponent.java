@@ -16,8 +16,7 @@ public class FactionComponent extends Component {
 		/**
 		 * Industrialist- Gray and Orange
 		 * */
-		FACTION2("Industrialist", "But I think its working so you know."), NONE(
-				"Neutral", "You will never see this");
+		FACTION2("Industrialist", "But I think its working so you know."), NONE("Neutral", "You will never see this");
 
 		public String name;
 		public String description;
