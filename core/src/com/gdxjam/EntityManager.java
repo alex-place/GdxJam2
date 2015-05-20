@@ -10,8 +10,6 @@ import com.gdxjam.components.ResourceComponent;
 import com.gdxjam.components.UnitComponent;
 import com.gdxjam.ecs.DebugEntityListener;
 import com.gdxjam.ecs.PhysicsEntityListener;
-import com.gdxjam.ecs.ResourceEntityListener;
-import com.gdxjam.ecs.UnitEntityListener;
 import com.gdxjam.systems.CameraSystem;
 import com.gdxjam.systems.ClientSystem;
 import com.gdxjam.systems.DecaySystem;
@@ -32,13 +30,10 @@ public class EntityManager extends PooledEngine implements Disposable {
 
 		// addEntityListener(Family.all(SquadComponent.class).get(),
 		// new SquadEntityListener(this, getSystem(InputSystem.class)));
-		addEntityListener(Family.all(UnitComponent.class).get(),
-				new UnitEntityListener(this));
+
 		addEntityListener(Family.all(PhysicsComponent.class).get(),
 				new PhysicsEntityListener(getSystem(PhysicsSystem.class)));
 
-		addEntityListener(Family.all(ResourceComponent.class).get(),
-				new ResourceEntityListener(this));
 		addEntityListener(new DebugEntityListener());
 	}
 
@@ -58,7 +53,7 @@ public class EntityManager extends PooledEngine implements Disposable {
 
 		addSystem(new DecaySystem());
 
-		addSystem(new ClientSystem());
+		//addSystem(new ClientSystem());
 
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());

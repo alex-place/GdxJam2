@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 public class Components {
 
 	// Entity types
-	public static final ComponentMapper<SquadComponent> SQUAD = ComponentMapper.getFor(SquadComponent.class);
 	public static final ComponentMapper<UnitComponent> UNIT = ComponentMapper.getFor(UnitComponent.class);
 	public static final ComponentMapper<ResourceComponent> RESOURCE = ComponentMapper.getFor(ResourceComponent.class);
 	public static final ComponentMapper<ProjectileComponent> PROJECTILE = ComponentMapper.getFor(ProjectileComponent.class);
@@ -30,7 +29,6 @@ public class Components {
 
 	public static final ComponentMapper<DecayComponent> DECAY = ComponentMapper.getFor(DecayComponent.class);
 	public static final ComponentMapper<TargetComponent> TARGET = ComponentMapper.getFor(TargetComponent.class);
-	public static final ComponentMapper<WeaponComponent> WEAPON = ComponentMapper.getFor(WeaponComponent.class);
 	public static final ComponentMapper<HealthComponent> HEALTH = ComponentMapper.getFor(HealthComponent.class);
 
 }

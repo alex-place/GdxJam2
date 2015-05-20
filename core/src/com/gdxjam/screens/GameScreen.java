@@ -33,7 +33,7 @@ public class GameScreen extends AbstractScreen {
 		engine = GameManager.initEngine();
 		input = engine.getSystem(InputSystem.class);
 
-		createWorld(256, 256);
+		createWorld(1024, 1024);
 
 		input.addProcessor(new GestureDetector(new DesktopGestureListener(
 				engine)));

@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
-import com.gdxjam.GameContactListener;
 import com.gdxjam.GameManager;
 
 public class PhysicsSystem extends EntitySystem implements Disposable {

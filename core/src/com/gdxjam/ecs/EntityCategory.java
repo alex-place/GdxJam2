@@ -9,5 +9,6 @@ public class EntityCategory {
 	public static final short MOTHERSHIP = 0x0010;
 	public static final short WALL = 0x0020;
 	public static final short GRAPHICS = 0x0040;
+	public static final short GUN = 0x00080;
 	
 }
