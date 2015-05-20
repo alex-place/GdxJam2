@@ -57,7 +57,7 @@ public class EntityFactory {
 				.createEntity(EntityCategory.UNIT, position)
 				.physicsBody(BodyType.DynamicBody)
 				.circleCollider(Constants.unitRadius, 1.0f)
-				.damping(1, 0)
+				.damping(1.5f, 1.0f)
 				.steerable(Constants.unitRadius)
 				.steeringBehavior()
 				.health(100)
@@ -76,7 +76,16 @@ public class EntityFactory {
 		return entity;
 
 	}
-
+	
+	public static Entity createGun(Vector2 position){
+		Entity entity = builder
+				.createEntity(EntityCategory.GUN, position)
+				.physicsBody(BodyType.DynamicBody)
+				.circleCollider(Constants.unitRadius, 0.5f)
+				.getWithoutAdding();
+		return entity;
+	}
+	
 	public static Entity createProjectile(Vector2 position, Vector2 velocity,
 			float radius, Faction faction, int damage) {
 		Entity entity = builder

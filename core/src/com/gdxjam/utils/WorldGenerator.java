@@ -40,6 +40,7 @@ public class WorldGenerator {
 		EntityFactory.createBoundry(new Vector2(width, height), new Vector2(
 				width, 0));
 		EntityFactory.createBoundry(new Vector2(width, 0), new Vector2(0, 0));
+
 	}
 
 	public void createBackground() {
