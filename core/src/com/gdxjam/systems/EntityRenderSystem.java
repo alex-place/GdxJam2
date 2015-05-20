@@ -23,7 +23,6 @@ import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.PhysicsComponent;
 import com.gdxjam.components.SpriteComponent;
-import com.gdxjam.components.SquadComponent;
 
 public class EntityRenderSystem extends SortedIteratingSystem implements
 		Disposable {
@@ -46,7 +45,7 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 	private static int drawnEntities = 0;
 
 	public EntityRenderSystem() {
-		super(Family.one(SpriteComponent.class, SquadComponent.class).get(),
+		super(Family.one(SpriteComponent.class).get(),
 				new Comparator<Entity>() {
 
 					@Override
@@ -103,7 +102,7 @@ public class EntityRenderSystem extends SortedIteratingSystem implements
 		drawDebug();
 
 		// Displays the amount of entities that are being drawn
-//		Gdx.app.debug(TAG, "drawn entities: " + drawnEntities);
+		// Gdx.app.debug(TAG, "drawn entities: " + drawnEntities);
 
 	}
 

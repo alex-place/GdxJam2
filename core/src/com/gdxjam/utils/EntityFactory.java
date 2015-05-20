@@ -23,6 +23,7 @@ import com.gdxjam.components.DecayComponent;
 import com.gdxjam.components.FSMComponent;
 import com.gdxjam.components.FactionComponent;
 import com.gdxjam.components.FactionComponent.Faction;
+import com.gdxjam.components.GunportComponent;
 import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.ParticleComponent;
@@ -33,7 +34,6 @@ import com.gdxjam.components.SpriteComponent;
 import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 import com.gdxjam.components.TargetComponent;
-import com.gdxjam.components.WeaponComponent;
 import com.gdxjam.ecs.EntityCategory;
 import com.gdxjam.systems.ParticleSystem;
 import com.gdxjam.systems.ParticleSystem.ParticleType;
@@ -52,42 +52,6 @@ public class EntityFactory {
 
 	private static PhysicsBuilder physicsBuilder = new PhysicsBuilder();
 
-	public static Entity createMothership(Vector2 position) {
-		Entity entity = builder
-				.createEntity(EntityCategory.MOTHERSHIP | EntityCategory.SQUAD,
-						position)
-				.physicsBody(BodyType.StaticBody)
-				.circleCollider(Constants.mothershipRadius, 1.0f)
-				.sprite(Assets.spacecraft.motherships.get(Constants.playerFaction
-						.ordinal()), Constants.mothershipRadius * 2,
-						Constants.mothershipRadius * 2)
-				.faction(Constants.playerFaction)
-				.health(10000)
-				.steerable(Constants.mothershipRadius)
-				.filter(EntityCategory.MOTHERSHIP, 0, EntityCategory.PROJECTILE)
-				.steeringBehavior().weapon(55, 2.0f, 1).target().stateMachine()
-				.addToEngine();
-
-		return entity;
-	}
-
-	public static Entity createAsteroid(Vector2 position, float radius) {
-		Entity entity = builder
-				.createEntity(EntityCategory.RESOURCE, position)
-				.physicsBody(BodyType.StaticBody)
-				.circleCollider(radius, 50.0f)
-				.filter(EntityCategory.RESOURCE,
-						0,
-						EntityCategory.PROJECTILE | EntityCategory.SQUAD
-								| EntityCategory.UNIT)
-				.resource((int) (Constants.baseAsteroidResourceAmt * radius))
-				.steerable(radius)
-				.faction(Faction.NONE)
-				.sprite(Assets.space.asteroids.random(), radius * 2, radius * 2)
-				.addToEngine();
-		return entity;
-	}
-
 	public static Entity createUnit(Faction faction, Vector2 position) {
 		Entity entity = builder
 				.createEntity(EntityCategory.UNIT, position)
@@ -100,7 +64,6 @@ public class EntityFactory {
 				.faction(faction)
 				.target()
 				.control()
-				.weapon(20, 1.0f, Constants.projectileRadius)
 				.sprite(Assets.spacecraft.ships.get(faction.ordinal()),
 						Constants.unitRadius * 2, Constants.unitRadius * 2)
 				.getWithoutAdding();
@@ -305,10 +268,9 @@ public class EntityFactory {
 			return this;
 		}
 
-		public EntityBuilder weapon(int damage, float attackSpeed,
-				float projectileRadius) {
-			entity.add(engine.createComponent(WeaponComponent.class).init(
-					damage, attackSpeed, projectileRadius));
+		public EntityBuilder gunport(Vector2 origin) {
+			entity.add(engine.createComponent(GunportComponent.class).init(
+					origin));
 			return this;
 		}
 
