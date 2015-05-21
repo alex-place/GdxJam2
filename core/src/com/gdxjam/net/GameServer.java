@@ -18,13 +18,20 @@ public class GameServer {
 	public GameServer() throws IOException {
 		Log.set(Log.LEVEL_DEBUG);
 
-		server = new Server();
+		server = new Server() {
+
+			@Override
+			protected Connection newConnection() {
+				return new ClientConnection();
+			}
+
+		};
 
 		// For consistency, the classes to be sent over the network are
 		// registered by the same method for both the client and server.
 		Network.register(server);
 
-		server.addListener(new ThreadedListener(new Listener() {
+		server.addListener(new Listener() {
 			public void received(Connection c, Object message) {
 
 				if (message instanceof AddPlayer) {
@@ -50,10 +57,10 @@ public class GameServer {
 				System.out.println("Player id: " + c.getID() + " dc'ed - return time " + c.getReturnTripTime());
 
 			}
-		}));
+		});
 
-		server.bind(1881, 1881);
-		new Thread(server).start();
+		server.bind(1881, 1882);
+		server.start();
 	}
 
 	protected void logInfo(String string) {
@@ -69,5 +76,17 @@ public class GameServer {
 
 	public void sendMessage(Object message) {
 		server.sendToAllTCP(message);
+	}
+
+	public class ClientConnection extends Connection {
+
+		public ClientConnection() {
+		}
+
+	}
+
+	public static void main(String[] args) throws IOException {
+		Log.set(Log.LEVEL_DEBUG);
+		new GameServer();
 	}
 }

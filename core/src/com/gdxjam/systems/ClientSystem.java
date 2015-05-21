@@ -1,13 +1,11 @@
 package com.gdxjam.systems;
 
+import java.io.IOException;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.math.Vector2;
 import com.gdxjam.net.GameClient;
-import com.gdxjam.net.Network.AddPlayer;
-import com.gdxjam.net.Network.RemovePlayer;
 
 public class ClientSystem extends EntitySystem {
 
@@ -23,17 +21,12 @@ public class ClientSystem extends EntitySystem {
 	public synchronized void init(Entity entity) {
 		this.entity = entity;
 
-		client = new GameClient();
-		client.connectLocal();
-		if (entity != null) {
-			client.sendMessage(new AddPlayer(new Vector2(100, 100), entity.getId()));
-			System.out.println("Creating this clients player id:" + entity.getId());
-			if (client.getClient().isConnected()) {
-
-			}
-
-		} else
-			System.err.println("You must add a player to the system before starting the game.");
+		try {
+			client = new GameClient();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -44,7 +37,6 @@ public class ClientSystem extends EntitySystem {
 	@Override
 	public synchronized void removedFromEngine(Engine engine) {
 		super.removedFromEngine(engine);
-		client.sendMessage(new RemovePlayer(entity.getId()));
 		System.out.println("Removing this clients player id:" + entity.getId());
 
 	}
