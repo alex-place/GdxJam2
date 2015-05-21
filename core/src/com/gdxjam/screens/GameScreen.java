@@ -16,6 +16,7 @@ import com.gdxjam.input.DesktopInputProcessor;
 import com.gdxjam.input.DeveloperInputProcessor;
 import com.gdxjam.input.EntityController;
 import com.gdxjam.systems.CameraSystem;
+import com.gdxjam.systems.ClientSystem;
 import com.gdxjam.systems.InputSystem;
 import com.gdxjam.utils.Constants;
 import com.gdxjam.utils.WorldGenerator;
@@ -54,6 +55,9 @@ public class GameScreen extends AbstractScreen {
 		Entity player = generator.createUnit(Constants.playerFaction, new Vector2(100, 100));
 		input.addProcessor(new EntityController(engine, player));
 		engine.addEntity(player);
+
+		if (!GameManager.isServer)
+			engine.getSystem(ClientSystem.class).init(player);
 
 		engine.getSystem(CameraSystem.class).smoothFollow(Components.PHYSICS.get(player).getBody().getPosition());
 		engine.getSystem(CameraSystem.class).setWorldBounds(width, height);

@@ -14,17 +14,26 @@ public class ClientSystem extends EntitySystem {
 	private GameClient client;
 	private Entity entity;
 
-	public synchronized void addPlayer(Entity entity) {
-		this.entity = entity;
-	}
-
 	@Override
 	public synchronized void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
+
+	}
+
+	public synchronized void init(Entity entity) {
+		this.entity = entity;
+
 		client = new GameClient();
-		if (entity != null)
+		client.connectLocal();
+		if (entity != null) {
 			client.sendMessage(new AddPlayer(new Vector2(100, 100), entity.getId()));
-		else
+			System.out.println("Creating this clients player id:" + entity.getId());
+			if (client.getClient().isConnected()) {
+				System.out.println("DERPING");
+
+			}
+
+		} else
 			System.err.println("You must add a player to the system before starting the game.");
 	}
 
@@ -38,5 +47,7 @@ public class ClientSystem extends EntitySystem {
 	public synchronized void removedFromEngine(Engine engine) {
 		super.removedFromEngine(engine);
 		client.sendMessage(new RemovePlayer(entity.getId()));
+		System.out.println("Removing this clients player id:" + entity.getId());
+
 	}
 }

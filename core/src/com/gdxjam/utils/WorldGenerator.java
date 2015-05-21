@@ -53,7 +53,6 @@ public class WorldGenerator {
 			int index = (int) (MathUtils.random(Assets.space.planets.size));
 			if (index == Assets.space.planets.size)
 				index--;
-			System.out.print(index);
 			EntityFactory.createBackgroundArt(new Vector2(Constants.VIEWPORT_WIDTH * MathUtils.random(), Constants.VIEWPORT_HEIGHT * MathUtils.random()),
 					planetRadius, planetRadius, Assets.space.planets.get(index), 1);
 		}

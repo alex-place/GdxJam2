@@ -21,6 +21,8 @@ public class Network {
 		kryo.register(Vector2.class);
 		kryo.register(ArrayList.class);
 		kryo.register(Entity.class);
+		kryo.register(AddPlayer.class);
+		kryo.register(RemovePlayer.class);
 
 	}
 

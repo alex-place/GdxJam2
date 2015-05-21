@@ -83,8 +83,6 @@ public class NewGameScreen extends AbstractScreen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println(worldSize.getSelected());
-
 				if (worldSize.getSelected().equalsIgnoreCase("small")) {
 					Constants.worldSize = WorldSize.SMALL;
 

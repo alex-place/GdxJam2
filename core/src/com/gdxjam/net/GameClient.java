@@ -18,7 +18,7 @@ public class GameClient {
 
 	public GameClient() { // final GameMap game,
 		client = new Client();
-		client.start();
+		new Thread(client).start();
 		// InetAddress found = client.discoverHost(Network.portUdp, 5000);
 		// System.out.println(found.toString());
 
@@ -47,17 +47,16 @@ public class GameClient {
 
 	protected void handleConnect(Connection connection) {
 		remoteIP = connection.getRemoteAddressTCP().toString();
-		Color color = new Color(random.nextFloat() * 0.5f + 0.5f, random.nextFloat() * 0.5f + 0.5f, random.nextFloat() * 0.5f + 0.5f, 1);
 		client.updateReturnTripTime();
 	}
 
 	public void connectLocal() {
-		connect("localhost");
+		connect("127.0.0.1");
 	}
 
 	public void connect(String host) {
 		try {
-			client.connect(5000, host, Network.port, Network.portUdp);// ,
+			client.connect(0, host, Network.port, Network.portUdp);// ,
 													// Network.portUdp);
 		} catch (IOException e) {
 			// e.printStackTrace();
@@ -103,6 +102,10 @@ public class GameClient {
 	public void shutdown() {
 		client.stop();
 		client.close();
+	}
+
+	public Client getClient() {
+		return client;
 	}
 
 }
