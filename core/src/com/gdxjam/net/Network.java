@@ -10,10 +10,6 @@ import com.esotericsoftware.kryonet.FrameworkMessage.Ping;
 
 public class Network {
 
-	static public final int port = 6464;
-	static public final int portUdp = 6466;
-	static public final int version = 13;
-
 	// This registers objects that are going to be sent over the network.
 	static public void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();

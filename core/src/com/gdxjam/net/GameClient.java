@@ -1,32 +1,28 @@
 package com.gdxjam.net;
 
 import java.io.IOException;
-import java.util.Random;
 
-import com.badlogic.gdx.graphics.Color;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Listener.ThreadedListener;
 import com.esotericsoftware.minlog.Log;
+import com.gdxjam.net.Network.AddPlayer;
 
 public class GameClient {
 
 	private Client client;
 	public String remoteIP;
 
-	private Random random = new Random();
-
 	public GameClient() { // final GameMap game,
 		client = new Client();
 		new Thread(client).start();
-		// InetAddress found = client.discoverHost(Network.portUdp, 5000);
-		// System.out.println(found.toString());
 
 		// For consistency, the classes to be sent over the network are
 		// registered by the same method for both the client and server.
 		Network.register(client);
 
-		client.addListener(new Listener() {
+		client.addListener(new ThreadedListener(new Listener() {
 			public void connected(Connection connection) {
 				handleConnect(connection);
 			}
@@ -38,7 +34,7 @@ public class GameClient {
 			public void disconnected(Connection connection) {
 				handleDisonnect(connection);
 			}
-		});
+		}));
 
 	}
 
@@ -56,20 +52,16 @@ public class GameClient {
 
 	public void connect(String host) {
 		try {
-			client.connect(0, host, Network.port, Network.portUdp);// ,
-													// Network.portUdp);
+			client.connect(10000, "127.0.0.1", 1881, 1881);// ,
+			System.out.println("Client connected " + client.isConnected()); // Network.portUdp);
 		} catch (IOException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			logInfo("Can't connect to " + host);
 		}
 	}
 
 	private void logInfo(String string) {
 		Log.info(string);
-	}
-
-	public void tick() {
-		// nothing to do
 	}
 
 	public void sendMessage(Object message) {
@@ -86,10 +78,8 @@ public class GameClient {
 
 	public void handleMessage(int playerId, Object message) {
 
-		// if (message instanceof LogMessage) {
-		// LogMessage msg = (LogMessage) message;
-		// map.setStatus(msg.message);
-		// } else
+		if (message instanceof AddPlayer) {
+		}
 
 	}
 

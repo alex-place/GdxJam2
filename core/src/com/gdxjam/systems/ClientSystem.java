@@ -29,7 +29,6 @@ public class ClientSystem extends EntitySystem {
 			client.sendMessage(new AddPlayer(new Vector2(100, 100), entity.getId()));
 			System.out.println("Creating this clients player id:" + entity.getId());
 			if (client.getClient().isConnected()) {
-				System.out.println("DERPING");
 
 			}
 
@@ -40,7 +39,6 @@ public class ClientSystem extends EntitySystem {
 	@Override
 	public synchronized void update(float deltaTime) {
 		super.update(deltaTime);
-		// client.sendMessage(new UpdatePlayer());
 	}
 
 	@Override
