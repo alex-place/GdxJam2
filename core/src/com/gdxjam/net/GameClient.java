@@ -14,13 +14,13 @@ public class GameClient {
 
 	public GameClient() throws IOException { // final GameMap game,
 		client = new Client();
-		client.start();
+		new Thread(client).start();
 
 		// For consistency, the classes to be sent over the network are
 		// registered by the same method for both the client and server.
 		Network.register(client);
 
-		client.addListener(new ThreadedListener(new Listener() {
+		client.addListener(new Listener() {
 			public void connected(Connection connection) {
 				System.out.print("Client connected");
 			}
@@ -33,9 +33,8 @@ public class GameClient {
 				System.out.print("Client disconnected");
 				System.exit(0);
 			}
-		}));
+		});
 
-		client.setTimeout(0);
 		client.connect(5000, "192.168.1.5", 1881, 1882);
 
 	}
