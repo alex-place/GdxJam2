@@ -22,7 +22,9 @@ public class Main extends Game {
 		 * 
 		 * @author alex-place
 		 * */
-		open("D :\\");
+		//open("D :\\");
+		
+		
 		GameManager.isServer = isServer;
 		GameManager.init(this);
 		GameManager.setScreen(new SplashScreen());

@@ -23,21 +23,14 @@ public class Network {
 	}
 
 	static public class AddPlayer {
-		Vector2 position;
-		long id;
+		public Vector2 position;
+		public long id;
 
-		public AddPlayer(Vector2 position, long id) {
-			this.position = position;
-			this.id = id;
-		}
 	}
 
 	static public class RemovePlayer {
-		long id;
+		public long id;
 
-		public RemovePlayer(long id) {
-			this.id = id;
-		}
 	}
 
 }

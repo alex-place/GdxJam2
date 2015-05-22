@@ -37,10 +37,11 @@ public class GameServer {
 				if (message instanceof AddPlayer) {
 					AddPlayer player = (AddPlayer) message;
 					System.out.println("Player added " + player.id + " " + player.position.x + " " + player.position.y);
-
+					server.sendToAllExceptTCP(c.getID(), player);
 				} else if (message instanceof RemovePlayer) {
 					RemovePlayer player = (RemovePlayer) message;
 					System.out.println("Player removed " + player.id);
+					server.sendToAllExceptTCP(c.getID(), player);
 
 				} else if ((message instanceof Ping) || (message instanceof KeepAlive)) {
 					System.out.println("Ping or KeepAlive message recieved");
@@ -76,6 +77,7 @@ public class GameServer {
 
 	public void sendMessage(Object message) {
 		server.sendToAllTCP(message);
+
 	}
 
 	public class ClientConnection extends Connection {
