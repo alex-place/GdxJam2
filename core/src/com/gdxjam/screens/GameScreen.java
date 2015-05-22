@@ -1,5 +1,6 @@
 package com.gdxjam.screens;
 
+import java.io.IOException;
 import java.util.Random;
 
 import com.badlogic.ashley.core.Entity;
@@ -57,7 +58,12 @@ public class GameScreen extends AbstractScreen {
 		engine.addEntity(player);
 
 		if (!GameManager.isServer)
-			engine.getSystem(ClientSystem.class).init(player);
+			try {
+				engine.getSystem(ClientSystem.class).init(player);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		engine.getSystem(CameraSystem.class).smoothFollow(Components.PHYSICS.get(player).getBody().getPosition());
 		engine.getSystem(CameraSystem.class).setWorldBounds(width, height);

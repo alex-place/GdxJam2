@@ -19,18 +19,25 @@ public class Network {
 		kryo.register(Entity.class);
 		kryo.register(AddPlayer.class);
 		kryo.register(RemovePlayer.class);
+		kryo.register(UpdatePlayer.class);
 
 	}
 
 	static public class AddPlayer {
-		public Vector2 position;
-		public long id;
+		protected long uuid;
+		protected float x, y;
+		protected float rotation;
 
 	}
 
 	static public class RemovePlayer {
-		public long id;
+		protected long uuid;
+	}
 
+	static public class UpdatePlayer {
+		protected long uuid;
+		protected float x, y;
+		protected float rotation;
 	}
 
 }

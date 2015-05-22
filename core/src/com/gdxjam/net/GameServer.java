@@ -6,11 +6,11 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive;
 import com.esotericsoftware.kryonet.FrameworkMessage.Ping;
 import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Listener.ThreadedListener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.gdxjam.net.Network.AddPlayer;
 import com.gdxjam.net.Network.RemovePlayer;
+import com.gdxjam.net.Network.UpdatePlayer;
 
 public class GameServer {
 	Server server;
@@ -36,15 +36,23 @@ public class GameServer {
 
 				if (message instanceof AddPlayer) {
 					AddPlayer player = (AddPlayer) message;
-					System.out.println("Player added " + player.id + " " + player.position.x + " " + player.position.y);
 					server.sendToAllExceptTCP(c.getID(), player);
+					Log.debug("Player: " + player.uuid + " connected @ x: " + player.x + " y : " + player.y + " angle: " + player.rotation);
 				} else if (message instanceof RemovePlayer) {
 					RemovePlayer player = (RemovePlayer) message;
-					System.out.println("Player removed " + player.id);
 					server.sendToAllExceptTCP(c.getID(), player);
+					Log.debug("Player: " + player.uuid + " disconnected!");
+					c.close();
 
-				} else if ((message instanceof Ping) || (message instanceof KeepAlive)) {
-					System.out.println("Ping or KeepAlive message recieved");
+				} else if (message instanceof UpdatePlayer) {
+					UpdatePlayer player = (UpdatePlayer) message;
+					server.sendToAllExceptTCP(c.getID(), player);
+					//Log.debug("Player: " + player.uuid + " connected @ x: " + player.x + " y : " + player.y + " angle: " + player.rotation);
+
+				}
+
+				else if ((message instanceof Ping) || (message instanceof KeepAlive)) {
+
 				}
 
 				else {
@@ -55,7 +63,6 @@ public class GameServer {
 			}
 
 			public void disconnected(Connection c) {
-				System.out.println("Player id: " + c.getID() + " dc'ed - return time " + c.getReturnTripTime());
 
 			}
 		});

@@ -29,4 +29,7 @@ public class Components {
 	public static final ComponentMapper<TargetComponent> TARGET = ComponentMapper.getFor(TargetComponent.class);
 	public static final ComponentMapper<HealthComponent> HEALTH = ComponentMapper.getFor(HealthComponent.class);
 
+	// Networking
+	public static final ComponentMapper<IdentifyingComponent> ID = ComponentMapper.getFor(IdentifyingComponent.class);
+
 }
