@@ -6,6 +6,7 @@ import java.util.Random;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.gdxjam.EntityManager;
 import com.gdxjam.GameManager;
@@ -20,6 +21,7 @@ import com.gdxjam.systems.CameraSystem;
 import com.gdxjam.systems.ClientSystem;
 import com.gdxjam.systems.InputSystem;
 import com.gdxjam.utils.Constants;
+import com.gdxjam.utils.EntityFactory;
 import com.gdxjam.utils.WorldGenerator;
 
 public class GameScreen extends AbstractScreen {
@@ -53,7 +55,7 @@ public class GameScreen extends AbstractScreen {
 		WorldGenerator generator = new WorldGenerator(width, height, seed);
 		generator.generate();
 
-		Entity player = generator.createUnit(Constants.playerFaction, new Vector2(100, 100));
+		Entity player = EntityFactory.createPlayer(Constants.playerFaction, new Vector2(100, 100), MathUtils.random(0, Long.MAX_VALUE - 1));
 		input.addProcessor(new EntityController(engine, player));
 		engine.addEntity(player);
 
@@ -61,7 +63,8 @@ public class GameScreen extends AbstractScreen {
 			try {
 				engine.getSystem(ClientSystem.class).init(player);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}
 

@@ -38,17 +38,20 @@ public class GameServer {
 					AddPlayer player = (AddPlayer) message;
 					server.sendToAllExceptTCP(c.getID(), player);
 					Log.debug("Player: " + player.uuid + " connected @ x: " + player.x + " y : " + player.y + " angle: " + player.rotation);
+					return;
 				} else if (message instanceof RemovePlayer) {
 					RemovePlayer player = (RemovePlayer) message;
 					server.sendToAllExceptTCP(c.getID(), player);
 					Log.debug("Player: " + player.uuid + " disconnected!");
 					c.close();
-
+					return;
 				} else if (message instanceof UpdatePlayer) {
 					UpdatePlayer player = (UpdatePlayer) message;
 					server.sendToAllExceptTCP(c.getID(), player);
-					//Log.debug("Player: " + player.uuid + " connected @ x: " + player.x + " y : " + player.y + " angle: " + player.rotation);
-
+					// Log.debug("Player: " + player.uuid +
+					// " connected @ x: " + player.x + " y : " +
+					// player.y + " angle: " + player.rotation);
+					return;
 				}
 
 				else if ((message instanceof Ping) || (message instanceof KeepAlive)) {

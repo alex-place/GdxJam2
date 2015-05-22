@@ -1,14 +1,12 @@
 package com.gdxjam.net;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -29,7 +27,7 @@ public class GameClient {
 	private Entity entity;
 	private float x, y;
 
-	private Array<Entity> players = new Array<Entity>();
+	private HashMap<Long, Entity> players = new HashMap<Long, Entity>();
 
 	public GameClient() throws IOException { // final GameMap game,
 		client = new Client();
@@ -42,11 +40,14 @@ public class GameClient {
 		client.addListener(new Listener() {
 			public void connected(Connection connection) {
 				AddPlayer player = new AddPlayer();
-				entity.add(engine.createComponent(IdentifyingComponent.class).init(MathUtils.random(0, Long.MAX_VALUE - 1)));
+				entity.add(engine.createComponent(IdentifyingComponent.class).init(connection.getID()));
 				player.uuid = entity.getComponent(IdentifyingComponent.class).getUuid();
 				player.x = entity.getComponent(PhysicsComponent.class).getBody().getPosition().x;
 				player.y = entity.getComponent(PhysicsComponent.class).getBody().getPosition().y;
 				player.rotation = entity.getComponent(PhysicsComponent.class).getBody().getAngle();
+
+				players.put(entity.getComponent(IdentifyingComponent.class).getUuid(), entity);
+
 				client.sendTCP(player);
 			}
 
@@ -61,7 +62,7 @@ public class GameClient {
 			}
 		});
 
-		client.connect(5000, "192.168.1.5", 1881, 1882);
+		client.connect(5000, "localhost", 1881, 1882);
 
 	}
 
@@ -69,20 +70,36 @@ public class GameClient {
 
 		if (message instanceof AddPlayer) {
 			AddPlayer player = (AddPlayer) message;
-			Entity e = EntityFactory.createUnit(Faction.FACTION2, new Vector2(player.x, player.y));
-			e.add(engine.createComponent(IdentifyingComponent.class).init(MathUtils.random(0, Long.MAX_VALUE - 1)));
-			players.add(e);
-			Log.debug("Player 007 added!");
 
+			if (players.containsKey(player.uuid)) {
+				// Do nothing
+			} else {
+
+				Entity e = EntityFactory.createShip(Faction.FACTION2, new Vector2(player.x, player.y), player.uuid);
+				players.put(e.getComponent(IdentifyingComponent.class).getUuid(), e);
+				e.add(engine.createComponent(IdentifyingComponent.class).init(MathUtils.random(0, Long.MAX_VALUE - 1)));
+				Log.debug("Player" + player.uuid + "added!");
+
+				AddPlayer reply = new AddPlayer();
+				reply.uuid = entity.getComponent(IdentifyingComponent.class).getUuid();
+				reply.x = entity.getComponent(PhysicsComponent.class).getBody().getPosition().x;
+				reply.y = entity.getComponent(PhysicsComponent.class).getBody().getPosition().y;
+				reply.rotation = entity.getComponent(PhysicsComponent.class).getBody().getAngle();
+
+				connection.sendTCP(reply);
+				Log.debug("Returning true found a match already!");
+
+			}
 		}
 
-		if (message instanceof UpdatePlayer) {
+		else if (message instanceof UpdatePlayer) {
+			Log.debug("derping");
+
 			UpdatePlayer player = (UpdatePlayer) message;
-			for (Entity e : players) {
-//				if(e.getId() == )
-//				TODO loop through our players to find this one and update
-			
-			}
+			Entity e = players.get(player.uuid);
+			SteerableComponent steer = e.getComponent(SteerableComponent.class);
+			steer.getBody().setTransform(new Vector2(player.x, player.y), player.rotation);
+			Log.debug("derping");
 		}
 
 		else if (message instanceof RemovePlayer) {

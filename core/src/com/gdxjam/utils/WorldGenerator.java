@@ -30,10 +30,6 @@ public class WorldGenerator {
 		createWorldBounds();
 	}
 
-	public Entity createUnit(Faction faction, Vector2 position) {
-		return EntityFactory.createUnit(faction, position);
-	}
-
 	public void createWorldBounds() {
 		EntityFactory.createBoundry(new Vector2(0, 0), new Vector2(0, height));
 		EntityFactory.createBoundry(new Vector2(0, height), new Vector2(width, height));

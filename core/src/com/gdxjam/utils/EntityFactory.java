@@ -25,6 +25,7 @@ import com.gdxjam.components.FactionComponent;
 import com.gdxjam.components.FactionComponent.Faction;
 import com.gdxjam.components.GunportComponent;
 import com.gdxjam.components.HealthComponent;
+import com.gdxjam.components.IdentifyingComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.ParticleComponent;
 import com.gdxjam.components.PhysicsComponent;
@@ -50,10 +51,26 @@ public class EntityFactory {
 
 	private static PhysicsBuilder physicsBuilder = new PhysicsBuilder();
 
-	public static Entity createUnit(Faction faction, Vector2 position) {
+	public static Entity createShip(Faction faction, Vector2 position, long uuid) {
 		Entity entity = builder.createEntity(EntityCategory.UNIT, position).physicsBody(BodyType.DynamicBody).circleCollider(Constants.unitRadius, 1.0f)
-				.damping(1.5f, 1.0f).steerable(Constants.unitRadius).steeringBehavior().health(100).faction(faction).target().control()
-				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2).getWithoutAdding();
+				.damping(1.5f, 1.0f).steerable(Constants.unitRadius).steeringBehavior().health(100).faction(faction).target()
+				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2).setUUID(uuid)
+				.getWithoutAdding();
+
+		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
+
+		Components.STEERABLE.get(entity).setIndependentFacing(true);
+
+		engine.addEntity(entity);
+		return entity;
+
+	}
+
+	public static Entity createPlayer(Faction faction, Vector2 position, long uuid) {
+		Entity entity = builder.createEntity(EntityCategory.UNIT, position).physicsBody(BodyType.DynamicBody).circleCollider(Constants.unitRadius, 1.0f)
+				.damping(1.5f, 1.0f).steerable(Constants.unitRadius).steeringBehavior().health(100).faction(faction).target()
+				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2).setUUID(uuid).control()
+				.getWithoutAdding();
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
 
@@ -265,7 +282,12 @@ public class EntityFactory {
 				physicsBody(DEFAULT_BODY);
 			}
 
-			physics.getBody().createFixture(shape, density);
+			FixtureDef def = new FixtureDef();
+			def.shape = shape;
+			def.density = density;
+			def.isSensor = true;
+
+			physics.getBody().createFixture(def);
 
 			shape = new CircleShape();
 			shape.setRadius(radius - 2);
@@ -274,10 +296,19 @@ public class EntityFactory {
 			FixtureDef fixture = new FixtureDef();
 			fixture.shape = shape;
 			fixture.density = density;
+			fixture.isSensor = true;
 
 			physics.getBody().createFixture(shape, density);
 
 			return this;
+		}
+
+		public EntityBuilder setUUID(long uuid) {
+
+			entity.add(engine.createComponent(IdentifyingComponent.class).init(uuid));
+
+			return this;
+
 		}
 
 		public EntityBuilder circleSensor(float radius) {

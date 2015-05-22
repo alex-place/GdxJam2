@@ -6,6 +6,8 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.PooledEngine;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.minlog.Log;
 import com.gdxjam.net.GameClient;
 
 public class ClientSystem extends EntitySystem {
@@ -24,6 +26,7 @@ public class ClientSystem extends EntitySystem {
 	public void update(float deltaTime) {
 		super.update(deltaTime);
 		client.update();
+		Log.set(Log.LEVEL_DEBUG);
 	}
 
 	@Override
