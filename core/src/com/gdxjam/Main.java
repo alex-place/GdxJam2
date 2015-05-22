@@ -22,7 +22,7 @@ public class Main extends Game {
 		 * 
 		 * @author alex-place
 		 * */
-		//open("D :\\");
+		//open("E :\\");
 		
 		
 		GameManager.isServer = isServer;
