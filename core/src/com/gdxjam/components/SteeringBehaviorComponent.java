@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -11,25 +10,25 @@ public class SteeringBehaviorComponent extends Component implements Poolable {
 	private SteeringBehavior<Vector2> behavior;
 
 	/** Can only be created by PooledEngine */
-	private SteeringBehaviorComponent () {
+	private SteeringBehaviorComponent() {
 		// private constructor
 	}
 
-	public SteeringBehaviorComponent init (SteeringBehavior<Vector2> behavior) {
+	public SteeringBehaviorComponent init(SteeringBehavior<Vector2> behavior) {
 		setBehavior(behavior);
 		return this;
 	}
 
-	public void setBehavior (SteeringBehavior<Vector2> behavior) {
+	public void setBehavior(SteeringBehavior<Vector2> behavior) {
 		this.behavior = behavior;
 	}
 
-	public SteeringBehavior<Vector2> getBehavior () {
+	public SteeringBehavior<Vector2> getBehavior() {
 		return behavior;
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 		behavior = null;
 	}
 

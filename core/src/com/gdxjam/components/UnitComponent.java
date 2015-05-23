@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -17,31 +16,31 @@ public class UnitComponent extends Component implements FormationMember<Vector2>
 	private Location2 targetLocation = new Location2();
 
 	/** Can only be created by PooledEngine */
-	private UnitComponent () {
+	private UnitComponent() {
 		// private constructor
 	}
 
-	public UnitComponent init (Entity squad, Body body) {
+	public UnitComponent init(Entity squad, Body body) {
 		this.squad = squad;
 		this.body = body;
 		return this;
 	}
 
-	public Entity getSquad () {
+	public Entity getSquad() {
 		return squad;
 	}
 
-	public Body getBody () {
+	public Body getBody() {
 		return body;
 	}
 
 	@Override
-	public Location<Vector2> getTargetLocation () {
+	public Location<Vector2> getTargetLocation() {
 		return targetLocation;
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 
 	}
 }

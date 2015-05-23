@@ -67,8 +67,7 @@ public class EntityController implements InputProcessor, Updateable {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		mouse = cameraSystem.getCamera().unproject(
-				new Vector3(screenX, screenY, 0));
+		mouse = cameraSystem.getCamera().unproject(new Vector3(screenX, screenY, 0));
 		controller.lookAt(new Vector2(mouse.x, mouse.y));
 		return false;
 	}

@@ -6,8 +6,6 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
 import com.gdxjam.components.PhysicsComponent;
-import com.gdxjam.components.ResourceComponent;
-import com.gdxjam.components.UnitComponent;
 import com.gdxjam.ecs.DebugEntityListener;
 import com.gdxjam.ecs.PhysicsEntityListener;
 import com.gdxjam.systems.CameraSystem;
@@ -19,6 +17,7 @@ import com.gdxjam.systems.HealthSystem;
 import com.gdxjam.systems.InputSystem;
 import com.gdxjam.systems.ParticleSystem;
 import com.gdxjam.systems.PhysicsSystem;
+import com.gdxjam.systems.ServerSystem;
 import com.gdxjam.systems.SteeringSystem;
 import com.gdxjam.utils.Constants;
 
@@ -31,8 +30,7 @@ public class EntityManager extends PooledEngine implements Disposable {
 		// addEntityListener(Family.all(SquadComponent.class).get(),
 		// new SquadEntityListener(this, getSystem(InputSystem.class)));
 
-		addEntityListener(Family.all(PhysicsComponent.class).get(),
-				new PhysicsEntityListener(getSystem(PhysicsSystem.class)));
+		addEntityListener(Family.all(PhysicsComponent.class).get(), new PhysicsEntityListener(getSystem(PhysicsSystem.class)));
 
 		addEntityListener(new DebugEntityListener());
 	}
@@ -40,8 +38,7 @@ public class EntityManager extends PooledEngine implements Disposable {
 	private EntityManager initSystems() {
 		addSystem(new InputSystem());
 
-		addSystem(new CameraSystem(Constants.VIEWPORT_WIDTH,
-				Constants.VIEWPORT_HEIGHT));
+		addSystem(new CameraSystem(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT));
 
 		addSystem(new PhysicsSystem());
 
@@ -53,7 +50,13 @@ public class EntityManager extends PooledEngine implements Disposable {
 
 		addSystem(new DecaySystem());
 
-		//addSystem(new ClientSystem());
+		/**
+		 * Running game as a server and client not recommended at the moment
+		 **/
+		if (GameManager.isServer)
+			addSystem(new ServerSystem());
+		else if (!GameManager.isServer)
+			addSystem(new ClientSystem());
 
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());

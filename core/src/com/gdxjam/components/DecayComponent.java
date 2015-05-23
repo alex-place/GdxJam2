@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -10,17 +9,17 @@ public class DecayComponent extends Component implements Poolable {
 	public float decayTime;
 
 	/** Can only be created by PooledEngine */
-	private DecayComponent () {
+	private DecayComponent() {
 		// private constructor
 	}
 
-	public DecayComponent init (float decayTime) {
+	public DecayComponent init(float decayTime) {
 		this.decayTime = decayTime;
 		return this;
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 		elapsed = 0;
 	}
 

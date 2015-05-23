@@ -1,7 +1,7 @@
-package com.gdxjam.ecs;
+package com.gdxjam.utils;
 
 public class EntityCategory {
-	
+
 	public static final short UNIT = 0x0001;
 	public static final short SQUAD = 0x0002;
 	public static final short RESOURCE = 0x0004;
@@ -10,5 +10,4 @@ public class EntityCategory {
 	public static final short WALL = 0x0020;
 	public static final short GRAPHICS = 0x0040;
 	public static final short GUN = 0x00080;
-	
 }

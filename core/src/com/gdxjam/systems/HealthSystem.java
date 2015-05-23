@@ -11,9 +11,9 @@ import com.gdxjam.AudioManager;
 import com.gdxjam.GameManager;
 import com.gdxjam.components.Components;
 import com.gdxjam.components.HealthComponent;
-import com.gdxjam.ecs.EntityCategory;
 import com.gdxjam.screens.GameOverScreen;
 import com.gdxjam.systems.ParticleSystem.ParticleType;
+import com.gdxjam.utils.EntityCategory;
 import com.gdxjam.utils.EntityFactory;
 
 public class HealthSystem extends IteratingSystem {
@@ -36,7 +36,7 @@ public class HealthSystem extends IteratingSystem {
 
 		if (health.value <= health.min) {
 
-			if((entity.flags & EntityCategory.MOTHERSHIP) > 0){
+			if ((entity.flags & EntityCategory.MOTHERSHIP) > 0) {
 				GameManager.setScreen(new GameOverScreen());
 			}
 			engine.removeEntity(entity);
@@ -48,9 +48,9 @@ public class HealthSystem extends IteratingSystem {
 		health.value = MathUtils.clamp(health.value, health.min, health.max);
 
 	}
-	
+
 	@Override
-	public boolean checkProcessing () {
+	public boolean checkProcessing() {
 		return !GameManager.isPaused();
 	}
 

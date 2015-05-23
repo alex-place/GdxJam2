@@ -1,4 +1,3 @@
-
 package com.gdxjam.components;
 
 import com.badlogic.ashley.core.Component;
@@ -11,12 +10,12 @@ public class HealthComponent extends Component implements Poolable {
 	public int value = 100;
 
 	/** Can only be created by PooledEngine */
-	private HealthComponent () {
+	private HealthComponent() {
 		// private constructor
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 		value = 100;
 	}
 

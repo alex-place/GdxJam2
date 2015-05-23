@@ -12,32 +12,33 @@ import com.gdxjam.components.Components;
 import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 
-public class SteeringSystem extends IteratingSystem{
-	
+public class SteeringSystem extends IteratingSystem {
+
 	private static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
 
 	public SteeringSystem() {
 		super(Family.all(SteeringBehaviorComponent.class).one(SteerableComponent.class).get());
 	}
-	
+
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		SteeringBehavior<Vector2> behavior = Components.STEERING_BEHAVIOR.get(entity).getBehavior();
 		SteerableComponent steerable = Components.STEERABLE.get(entity);
-		
-		if(behavior == null) return;
-		if(steerable.getBody() == null) return;	//We shouldn't need this
+
+		if (behavior == null)
+			return;
+		if (steerable.getBody() == null)
+			return; // We shouldn't need this
 		behavior.calculateSteering(steeringOutput);
 		boolean anyAccelerations = false;
 		Body body = steerable.getBody();
-		
+
 		if (!steeringOutput.linear.isZero()) {
 			Vector2 force = steeringOutput.linear.scl(deltaTime);
 			body.applyForceToCenter(force, true);
 			anyAccelerations = true;
 		}
 
-		
 		// Update orientation and angular velocity
 		if (steerable.isIndependentFacing()) {
 			if (steeringOutput.angular != 0) {
@@ -45,13 +46,20 @@ public class SteeringSystem extends IteratingSystem{
 				anyAccelerations = true;
 			}
 		}
-		
+
 		else {
 			// If we haven't got any velocity, then we can do nothing.
 			Vector2 linVel = body.getLinearVelocity();
 			if (!linVel.isZero(steerable.getZeroLinearSpeedThreshold())) {
 				float newOrientation = steerable.vectorToAngle(linVel);
-				body.setAngularVelocity((newOrientation - steerable.getAngularVelocity()) * deltaTime); // this is superfluous if independentFacing is always true
+				body.setAngularVelocity((newOrientation - steerable.getAngularVelocity()) * deltaTime); // this
+																			// is
+																			// superfluous
+																			// if
+																			// independentFacing
+																			// is
+																			// always
+																			// true
 				body.setTransform(body.getPosition(), newOrientation);
 			}
 		}
@@ -62,7 +70,7 @@ public class SteeringSystem extends IteratingSystem{
 			float currentSpeedSquare = velocity.len2();
 			float maxLinearSpeed = steerable.getMaxLinearSpeed();
 			if (currentSpeedSquare > maxLinearSpeed * maxLinearSpeed) {
-				body.setLinearVelocity(velocity.scl(maxLinearSpeed / (float)Math.sqrt(currentSpeedSquare)));
+				body.setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
 			}
 
 			// Cap the angular speed
@@ -72,9 +80,9 @@ public class SteeringSystem extends IteratingSystem{
 			}
 		}
 	}
-	
+
 	@Override
-	public boolean checkProcessing () {
+	public boolean checkProcessing() {
 		return !GameManager.isPaused();
 	}
 

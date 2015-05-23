@@ -9,8 +9,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 import com.gdxjam.utils.Location2;
 import com.gdxjam.utils.Vector2Utils;
 
-public class SteerableComponent extends Component implements
-		Steerable<Vector2>, Poolable {
+public class SteerableComponent extends Component implements Steerable<Vector2>, Poolable {
 
 	public static final float MAX_LINEAR_SPEED = 15f;
 	public static final float MAX_LINEAR_ACCELERATION = 100;

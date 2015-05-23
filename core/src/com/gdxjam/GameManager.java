@@ -11,13 +11,13 @@ import com.gdxjam.utils.EntityFactory;
 import com.gdxjam.utils.EntityUtils;
 
 public class GameManager {
-	private static final String TAG = "[" + GameManager.class.getSimpleName()
-			+ "]";
+	private static final String TAG = "[" + GameManager.class.getSimpleName() + "]";
 
 	public static InputSystem input;
 
 	private static Game game;
 	private static EntityManager engine;
+	public static boolean isServer;
 
 	private static boolean paused = false;
 
@@ -42,10 +42,8 @@ public class GameManager {
 	}
 
 	public static void refreshDisplayMode() {
-		boolean fullscreen = OrionPrefs
-				.getBoolean(BooleanValue.GRAPHICS_FULLSCREEN);
-		String resolution = OrionPrefs
-				.getString(StringValue.GRAPHICS_RESOLUTION);
+		boolean fullscreen = OrionPrefs.getBoolean(BooleanValue.GRAPHICS_FULLSCREEN);
+		String resolution = OrionPrefs.getString(StringValue.GRAPHICS_RESOLUTION);
 		int width = Integer.valueOf(resolution.split("x")[0]);
 		int height = Integer.valueOf(resolution.split("x")[1]);
 		Gdx.graphics.setDisplayMode(width, height, fullscreen);
@@ -103,8 +101,7 @@ public class GameManager {
 			DEV, RELEASE;
 		}
 
-		public static String[] SUPPORTED_RESOLUTIONS = { "1280x720",
-				"1920x1080", };
+		public static String[] SUPPORTED_RESOLUTIONS = { "1280x720", "1920x1080", };
 
 		public static final BUILD build = BUILD.DEV;
 		private static final int LOG_LEVEL = Application.LOG_DEBUG;
