@@ -6,7 +6,6 @@ import java.util.Random;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.gdxjam.EntityManager;
 import com.gdxjam.GameManager;
@@ -55,12 +54,15 @@ public class GameScreen extends AbstractScreen {
 		WorldGenerator generator = new WorldGenerator(width, height, seed);
 		generator.generate();
 
-		Entity player = EntityFactory.createPlayer(Constants.playerFaction, new Vector2(100, 100), MathUtils.random(0, Long.MAX_VALUE - 1));
+		Entity player = EntityFactory.createPlayer(Constants.playerFaction, new Vector2(100, 100), 100l);
 		input.addProcessor(new EntityController(engine, player));
 		engine.addEntity(player);
+		
+		Entity astroid = EntityFactory.createAsteroid(new Vector2(50,50), 5);
+		engine.addEntity(astroid);
 
 		if (!GameManager.isServer)
-			try {
+		try {
 				engine.getSystem(ClientSystem.class).init(player);
 			} catch (IOException e) {
 				e.printStackTrace();

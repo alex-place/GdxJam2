@@ -26,6 +26,7 @@ import com.gdxjam.components.FactionComponent.Faction;
 import com.gdxjam.components.GunportComponent;
 import com.gdxjam.components.HealthComponent;
 import com.gdxjam.components.IdentifyingComponent;
+//import com.gdxjam.components.IdentifyingComponent;
 import com.gdxjam.components.ParalaxComponent;
 import com.gdxjam.components.ParticleComponent;
 import com.gdxjam.components.PhysicsComponent;
@@ -103,6 +104,15 @@ public class EntityFactory {
 		physicsComp.getBody().setTransform(position, velocity.angle());
 
 		engine.addEntity(entity);
+		return entity;
+	}
+	
+	public static Entity createAsteroid (Vector2 position, float radius) {
+		Entity entity = builder.createEntity(EntityCategory.RESOURCE, position).physicsBody(BodyType.StaticBody)
+			.circleCollider(radius, 50.0f)
+			.filter(EntityCategory.RESOURCE, 0, EntityCategory.PROJECTILE | EntityCategory.SQUAD | EntityCategory.UNIT)
+			.resource((int)(Constants.baseAsteroidResourceAmt * radius)).steerable(radius).faction(Faction.NONE)
+			.sprite(Assets.space.asteroids.random(), radius * 2, radius * 2).addToEngine();
 		return entity;
 	}
 
@@ -302,6 +312,35 @@ public class EntityFactory {
 
 			return this;
 		}
+/* Working on this not done yet but had to go - Nate
+		public EntityBuilder polygonCollider(Vector2[] points, float density) {
+			PolygonShape shape = new PolygonShape();
+			shape.set(points);
+			PhysicsComponent physics = Components.PHYSICS.get(entity);
+			if (physics == null) {
+				physicsBody(DEFAULT_BODY);
+			}
+
+			FixtureDef def = new FixtureDef();
+			def.shape = shape;
+			def.density = density;
+			def.isSensor = true;
+
+			physics.getBody().createFixture(def);
+
+			shape = new PolygonShape();
+			shape.set(points);
+
+			FixtureDef fixture = new FixtureDef();
+			fixture.shape = shape;
+			fixture.density = density;
+			fixture.isSensor = true;
+
+			physics.getBody().createFixture(shape, density);
+
+			return this;
+		}
+*/
 
 		public EntityBuilder setUUID(long uuid) {
 
