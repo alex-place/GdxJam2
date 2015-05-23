@@ -312,9 +312,9 @@ public class EntityFactory {
 
 			return this;
 		}
-/* Working on this not done yet but had to go - Nate
+// Working on this not done yet but had to go - Nate
 		public EntityBuilder polygonCollider(Vector2[] points, float density) {
-			PolygonShape shape = new PolygonShape();
+			PolygonShape shape = new PolygonShape(); //
 			shape.set(points);
 			PhysicsComponent physics = Components.PHYSICS.get(entity);
 			if (physics == null) {
@@ -340,8 +340,36 @@ public class EntityFactory {
 
 			return this;
 		}
-*/
+		
+		public EntityBuilder boxCollider(float height, float width, float density) {
+			PolygonShape shape = new PolygonShape(); //
+			shape.setAsBox(height, width);
+			
+			PhysicsComponent physics = Components.PHYSICS.get(entity);
+			if (physics == null) {
+				physicsBody(DEFAULT_BODY);
+			}
 
+			FixtureDef def = new FixtureDef();
+			def.shape = shape;
+			def.density = density;
+			def.isSensor = true;
+
+			physics.getBody().createFixture(def);
+
+			shape = new PolygonShape();
+			shape.setAsBox(height, width);
+
+			FixtureDef fixture = new FixtureDef();
+			fixture.shape = shape;
+			fixture.density = density;
+			fixture.isSensor = true;
+
+			physics.getBody().createFixture(shape, density);
+
+			return this;
+		}
+		
 		public EntityBuilder setUUID(long uuid) {
 
 			entity.add(engine.createComponent(IdentifyingComponent.class).init(uuid));
