@@ -11,22 +11,22 @@ import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 
 /**
- * The default implementation of a player controlled unit
+ * This is the movement behavior for the " saucer" ship which i called a "Corvette"
+ * 
  * 
  * @author alex-place / Nate Baker
  * */
-public class DefaultControlBehavior implements ControlBehavior {
+public class FighterControlBehavior implements ControlBehavior {
 
 	PooledEngine engine;
 	Entity entity;
 	SteeringBehaviorComponent steer;
 	SteerableComponent steerable;
 	float speed = 150;
-	float rotation;
-	float rotationSpeed = 10.0f;
+	
 
 	// TODO make parameters (or a param class) for ship classes (speed...)
-	public DefaultControlBehavior(Entity entity, PooledEngine engine, float radius) {
+	public FighterControlBehavior(Entity entity, PooledEngine engine, float radius) {
 		this.entity = entity;
 		this.engine = engine;
 		steer = Components.STEERING_BEHAVIOR.get(entity);
@@ -37,39 +37,32 @@ public class DefaultControlBehavior implements ControlBehavior {
 
 	@Override
 	public void forward(float delta) {
-		rotation = steerable.getOrientation();
-		Vector2 direction = new Vector2(MathUtils.cos(rotation), MathUtils.sin(rotation));
-		if (direction.len() > 0) {
-			direction.nor();
-		}
-		Vector2 acceleration = new Vector2(direction.x * speed * delta, direction.y * speed * delta);
-		steerable.getBody().applyForce(acceleration, steerable.getBody().getWorldCenter(), true);
+		steerable.getBody().setLinearVelocity(new Vector2(0,0)); //remove all velocity to creat instant speed change. -Nate
+		steerable.getBody().applyForce(new Vector2(0, speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
 	public void reverse(float delta) {
-		rotation = steerable.getOrientation();
-		Vector2 direction = new Vector2(MathUtils.cos(rotation), MathUtils.sin(rotation));
-		if (direction.len() > 0) {
-			direction.nor();
-		}
-		Vector2 velocity = new Vector2(-direction.x * speed * delta, -direction.y * speed * delta);
-		steerable.getBody().applyForce(velocity, steerable.getBody().getWorldCenter(), true);
+		steerable.getBody().setLinearVelocity(new Vector2(0,0)); //remove all velocity to creat instant speed change. -Nate
+		steerable.getBody().applyForce(new Vector2(0, -speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
 	public void left(float delta) {
-		steerable.getBody().applyAngularImpulse(0.5f, true);
+		steerable.getBody().setLinearVelocity(new Vector2(0,0)); //remove all velocity to creat instant speed change. -Nate
+		steerable.getBody().applyForce(new Vector2(-speed * delta, 0), steerable.getBody().getWorldCenter(), true);
 
 	}
 
 	@Override
 	public void right(float delta) {
-		steerable.getBody().applyAngularImpulse(-0.5f, true);
+		steerable.getBody().setLinearVelocity(new Vector2(0,0)); //remove all velocity to creat instant speed change. -Nate
+		steerable.getBody().applyForce(new Vector2(speed * delta, 0), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
 	public void lookAt(Vector2 position) {
+		steerable.getBody(). 
 	}
 
 	@Override

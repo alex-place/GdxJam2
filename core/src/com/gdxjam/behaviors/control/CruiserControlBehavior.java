@@ -11,11 +11,11 @@ import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 
 /**
- * The default implementation of a player controlled unit
+ * The Cruiser is the "Astroids Style" movement
  * 
  * @author alex-place / Nate Baker
  * */
-public class DefaultControlBehavior implements ControlBehavior {
+public class CruiserControlBehavior implements ControlBehavior {
 
 	PooledEngine engine;
 	Entity entity;
@@ -26,7 +26,7 @@ public class DefaultControlBehavior implements ControlBehavior {
 	float rotationSpeed = 10.0f;
 
 	// TODO make parameters (or a param class) for ship classes (speed...)
-	public DefaultControlBehavior(Entity entity, PooledEngine engine, float radius) {
+	public CruiserControlBehavior(Entity entity, PooledEngine engine, float radius) {
 		this.entity = entity;
 		this.engine = engine;
 		steer = Components.STEERING_BEHAVIOR.get(entity);
