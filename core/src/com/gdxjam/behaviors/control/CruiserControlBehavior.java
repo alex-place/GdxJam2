@@ -15,7 +15,7 @@ import com.gdxjam.components.SteeringBehaviorComponent;
  * 
  * @author alex-place / Nate Baker
  * */
-public class CruiserControlBehavior implements ControlBehavior {
+public class CruiserControlBehavior extends DefaultControlBehavior {
 
 	PooledEngine engine;
 	Entity entity;
@@ -27,12 +27,7 @@ public class CruiserControlBehavior implements ControlBehavior {
 
 	// TODO make parameters (or a param class) for ship classes (speed...)
 	public CruiserControlBehavior(Entity entity, PooledEngine engine, float radius) {
-		this.entity = entity;
-		this.engine = engine;
-		steer = Components.STEERING_BEHAVIOR.get(entity);
-		steerable = engine.createComponent(SteerableComponent.class).init(Components.PHYSICS.get(entity).getBody(), radius);
-		steerable.setIndependentFacing(true);
-		steerable.setMaxLinearSpeed(5);
+		super(entity, engine, radius);
 	}
 
 	@Override
