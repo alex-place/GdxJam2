@@ -68,9 +68,18 @@ public class EntityFactory {
 	}
 
 	public static Entity createPlayer(Faction faction, Vector2 position, long uuid) {
-		Entity entity = builder.createEntity(EntityCategory.UNIT, position).physicsBody(BodyType.DynamicBody).circleCollider(Constants.unitRadius, 1.0f)
-				.damping(1.5f, 1.0f).steerable(Constants.unitRadius).steeringBehavior().health(100).faction(faction).target()
-				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2).setUUID(uuid).control()
+		Entity entity = 
+				builder.createEntity(EntityCategory.UNIT, position)
+				.physicsBody(BodyType.DynamicBody)
+				.circleCollider(Constants.unitRadius, 1.0f)
+				.damping(1.5f, 1.0f)
+				.steerable(Constants.unitRadius)
+				.steeringBehavior()
+				.health(100)
+				.faction(faction)
+				.target()
+				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2)
+				.setUUID(uuid).control()
 				.getWithoutAdding();
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);

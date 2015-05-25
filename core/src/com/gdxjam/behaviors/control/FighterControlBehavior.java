@@ -59,7 +59,14 @@ public class FighterControlBehavior extends DefaultControlBehavior {
 //this will have to be overridden in any case. Should be strafing but haven'r figured it up yet.
 	@Override
 	public void left(float delta) {
-		
+		rotation = steerable.getOrientation();
+		Vector2 direction = new Vector2(MathUtils.cos(rotation)+90, 0);
+		if (direction.len() > 0) {
+			direction.nor();
+		}
+
+		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), 
+				steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
