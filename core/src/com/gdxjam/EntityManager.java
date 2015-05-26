@@ -17,6 +17,7 @@ import com.gdxjam.systems.HealthSystem;
 import com.gdxjam.systems.InputSystem;
 import com.gdxjam.systems.ParticleSystem;
 import com.gdxjam.systems.PhysicsSystem;
+import com.gdxjam.systems.ServerSystem;
 import com.gdxjam.systems.SteeringSystem;
 import com.gdxjam.utils.Constants;
 
@@ -50,11 +51,11 @@ public class EntityManager extends PooledEngine implements Disposable {
 		addSystem(new DecaySystem());
 
 		/**
-		 * Running game as a server and client not recommended at the moment
+		 * Running game as a server and client is an experimental feature
 		 **/
-		if (!GameManager.isServer)
-			addSystem(new ClientSystem());
-
+		if (GameManager.isServer)
+			addSystem(new ServerSystem());
+		addSystem(new ClientSystem());
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());
 		addSystem(new ParticleSystem());

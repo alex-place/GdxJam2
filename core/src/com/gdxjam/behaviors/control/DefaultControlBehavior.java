@@ -21,7 +21,7 @@ public class DefaultControlBehavior implements ControlBehavior {
 	Entity entity;
 	SteeringBehaviorComponent steer;
 	SteerableComponent steerable;
-	float speed = 150;
+	float speed = 15000;
 	float rotation;
 	float rotationSpeed = 10.0f;
 
