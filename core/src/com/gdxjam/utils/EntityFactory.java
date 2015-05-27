@@ -16,7 +16,9 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gdxjam.Assets;
+import com.gdxjam.behaviors.control.CorvetteControlBehavior;
 import com.gdxjam.behaviors.control.DefaultControlBehavior;
+import com.gdxjam.behaviors.control.FighterControlBehavior;
 import com.gdxjam.components.Components;
 import com.gdxjam.components.ControlComponent;
 import com.gdxjam.components.DecayComponent;
@@ -191,7 +193,7 @@ public class EntityFactory {
 		}
 
 		public EntityBuilder control(float radius) {
-			entity.add(engine.createComponent(ControlComponent.class).init(new DefaultControlBehavior(entity, engine, radius)));
+			entity.add(engine.createComponent(ControlComponent.class).init(new FighterControlBehavior(entity, engine, radius)));
 			return this;
 		}
 

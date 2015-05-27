@@ -1,5 +1,7 @@
 package com.gdxjam;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Game;
 import com.gdxjam.screens.SplashScreen;
 

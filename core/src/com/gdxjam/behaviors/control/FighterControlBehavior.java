@@ -16,7 +16,7 @@ import com.gdxjam.components.SteeringBehaviorComponent;
  * 
  * @author alex-place / Nate Baker
  * */
-public class FighterControlBehavior extends DefaultControlBehavior {
+public class FighterControlBehavior implements ControlBehavior {
 
 	PooledEngine engine;
 	Entity entity;
@@ -30,7 +30,12 @@ public class FighterControlBehavior extends DefaultControlBehavior {
 
 	// TODO make parameters (or a param class) for ship classes (speed...)
 	public FighterControlBehavior(Entity entity, PooledEngine engine, float radius) {
-		super(entity, engine, radius);
+		this.entity = entity;
+		this.engine = engine;
+		steer = Components.STEERING_BEHAVIOR.get(entity);
+		steerable = engine.createComponent(SteerableComponent.class).init(Components.PHYSICS.get(entity).getBody(), radius);
+		steerable.setIndependentFacing(true);
+		steerable.setMaxLinearSpeed(5);
 	}
 // I will inherited this form DefaultControlBehavior if I don't need to change it.
 	@Override
