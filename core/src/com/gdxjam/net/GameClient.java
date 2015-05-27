@@ -29,7 +29,7 @@ public class GameClient {
 
 	private HashMap<Long, Entity> players = new HashMap<Long, Entity>();
 
-	public GameClient() throws IOException { // final GameMap game,
+	public GameClient(String ip) throws IOException { // final GameMap game,
 		client = new Client();
 		new Thread(client).start();
 
@@ -62,7 +62,7 @@ public class GameClient {
 			}
 		});
 
-		client.connect(5000, "localhost", 1881, 1882);
+		client.connect(5000, ip, 1881, 1882);
 
 	}
 
@@ -110,7 +110,7 @@ public class GameClient {
 
 	public static void main(String[] args) throws IOException {
 		Log.set(Log.LEVEL_DEBUG);
-		new GameClient();
+		new GameClient("localhost");
 	}
 
 	private Vector2 position;
