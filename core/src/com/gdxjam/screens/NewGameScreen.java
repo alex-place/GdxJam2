@@ -57,7 +57,8 @@ public class NewGameScreen extends AbstractScreen {
 		 */
 
 		Table factionTable = new Table();
-		for (int i = 0; i < Faction.values().length - 1; i++) { // Length -
+		for (int i = 0; i < Faction.values().length - 1; i++) { 
+												// Length -
 												// 1 to
 												// ingore
 												// the

@@ -18,6 +18,7 @@ import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.net.Network.AddPlayer;
 import com.gdxjam.net.Network.RemovePlayer;
 import com.gdxjam.net.Network.UpdatePlayer;
+import com.gdxjam.utils.Constants;
 import com.gdxjam.utils.EntityFactory;
 
 public class GameClient {
@@ -29,7 +30,7 @@ public class GameClient {
 
 	private HashMap<Long, Entity> players = new HashMap<Long, Entity>();
 
-	public GameClient(String ip) throws IOException { // final GameMap game,
+	public GameClient() throws IOException { // final GameMap game,
 		client = new Client();
 		new Thread(client).start();
 
@@ -62,7 +63,7 @@ public class GameClient {
 			}
 		});
 
-		client.connect(5000, ip, 1881, 1882);
+		client.connect(5000, Constants.getIP(), 1881, 1882);
 
 	}
 
@@ -110,7 +111,7 @@ public class GameClient {
 
 	public static void main(String[] args) throws IOException {
 		Log.set(Log.LEVEL_DEBUG);
-		new GameClient("localhost");
+		new GameClient();
 	}
 
 	private Vector2 position;

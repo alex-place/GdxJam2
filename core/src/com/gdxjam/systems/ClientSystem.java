@@ -41,7 +41,7 @@ public class ClientSystem extends EntitySystem {
 
 	public synchronized void init(Entity player) throws IOException {
 		this.player = player;
-		client = new GameClient("localhost");
+		client = new GameClient();
 		client.init(player, engine);
 	}
 

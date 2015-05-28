@@ -1,3 +1,4 @@
+//Fucking hell, who wrote this! -Nate
 package com.gdxjam.utils;
 
 import com.gdxjam.components.FactionComponent.Faction;
@@ -31,5 +32,14 @@ public class Constants {
 	public static WorldSize worldSize = WorldSize.MEDIUM;
 	public static Faction playerFaction = Faction.FACTION1;
 	public static Faction enemyFaction = Faction.FACTION0;
+	
+	private static String ip = "127.0.0.1";
+	
+	public static String getIP(){
+		return ip;
+	}
+	public static void setIP(String setIP){
+		ip = setIP;
+	}
 
 }

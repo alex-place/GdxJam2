@@ -31,6 +31,10 @@ public class ConnectNewGameScreen extends AbstractScreen {
 
 	Stage stage;
 	Table table;
+	Label description;
+	Label name;
+	Faction selected;
+	TextField ip;
 	final Skin skin = Assets.skin;
 
 	@Override
@@ -47,7 +51,39 @@ public class ConnectNewGameScreen extends AbstractScreen {
 		 * asset files into the folder and creating an entry in the faction
 		 * enum for them
 		 */
+		selected = Faction.FACTION0;
+		stage = new Stage();
+		table = new Table();
+		table.setFillParent(true);
+		table.defaults().pad(10);
+		LabelStyle labelStyle = new LabelStyle(Assets.fonts.font, new Color(1, 1, 1, 1));
 
+		Label label = new Label("Choose Your Faction", labelStyle);
+		label.setFontScale(2);
+		label.setAlignment(Align.top);
+
+		/**
+		 * Moved descriptions into the faction enum with the names already
+		 * there. Removes need to hardcode any faction related elements.
+		 * Creation of new factions should be as simple as draging 3 new
+		 * asset files into the folder and creating an entry in the faction
+		 * enum for them
+		 */
+
+		Table factionTable = new Table();
+		for (int i = 0; i < Faction.values().length - 1; i++) { 
+												// Length -
+												// 1 to
+												// ingore
+												// the
+												// neutral
+												// faction
+			factionTable.add(createFactionButton(Faction.values()[i]));
+		}
+
+		name = new Label("Faction Name", labelStyle);
+		description = new Label("Faction Description", labelStyle);
+		description.setAlignment(Align.center);
 
 
 		NinePatchDrawable draw = new NinePatchDrawable(Assets.hotkey.button);
@@ -57,15 +93,17 @@ public class ConnectNewGameScreen extends AbstractScreen {
 		textStyle.down = draw.tint(Color.DARK_GRAY);
 		textStyle.checked = draw;
 		textStyle.font = Assets.fonts.font;
-		TextField ip = new TextField("0.0.0.0", skin);
+		
+		ip = new TextField("0.0.0.0", skin);
 		ip.setAlignment(Align.center);
+		
 		TextButton connect = new TextButton("Connect", textStyle);
 		connect.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				GameManager.setScreen(new MainMenuScreen());
+				start();
 			}
 		});
 		
@@ -79,6 +117,13 @@ public class ConnectNewGameScreen extends AbstractScreen {
 			}
 		});
 
+		table.align(Align.top).add(label).colspan(3);
+		table.row();
+		table.add(factionTable).colspan(3);
+		table.row();
+		table.add(name).colspan(3);
+		table.row();
+		table.add(description).colspan(3);
 		table.row();
 		table.add(ip);
 		table.row();
@@ -107,6 +152,8 @@ public class ConnectNewGameScreen extends AbstractScreen {
 
 	// Now uses the parameters in the faction enum rather than constants
 	public void showFaction(Faction faction) {
+		name.setText(faction.name);
+		description.setText(faction.description);
 	}
 
 	public ImageButton newImageButton(TextureRegion region) {
@@ -114,8 +161,9 @@ public class ConnectNewGameScreen extends AbstractScreen {
 		return new ImageButton(drawable);
 	}
 
-	public void start(Faction faction) {
-		Constants.playerFaction = faction;
+
+	public void start() {
+		Constants.setIP(ip.getText()); //this need to check for a vaild ip first.
 		GameManager.setScreen(new GameScreen());
 	}
 
