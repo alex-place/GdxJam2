@@ -16,6 +16,7 @@ import com.gdxjam.input.DesktopGestureListener;
 import com.gdxjam.input.DesktopInputProcessor;
 import com.gdxjam.input.DeveloperInputProcessor;
 import com.gdxjam.input.EntityController;
+import com.gdxjam.net.GameServer;
 import com.gdxjam.systems.CameraSystem;
 import com.gdxjam.systems.ClientSystem;
 import com.gdxjam.systems.InputSystem;
@@ -60,7 +61,16 @@ public class GameScreen extends AbstractScreen {
 		
 		Entity astroid = EntityFactory.createAsteroid(new Vector2(50,50), 5);
 		engine.addEntity(astroid);
-
+		
+		if(Constants.getIP() == "127.0.0.1"){
+			try {
+				GameServer localServer = new GameServer();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		if (!GameManager.isServer)
 		try {
 				engine.getSystem(ClientSystem.class).init(player);
@@ -69,7 +79,6 @@ public class GameScreen extends AbstractScreen {
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}
-
 		engine.getSystem(CameraSystem.class).smoothFollow(Components.PHYSICS.get(player).getBody().getPosition());
 		engine.getSystem(CameraSystem.class).setWorldBounds(width, height);
 
