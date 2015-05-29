@@ -22,7 +22,7 @@ public class FighterControlBehavior implements ControlBehavior {
 	Entity entity;
 	SteeringBehaviorComponent steer;
 	SteerableComponent steerable;
-	float speed = 150;
+	float speed = 15000;
 	float rotation;
 	float rotationSpeed = 10.0f;
 
@@ -64,8 +64,8 @@ public class FighterControlBehavior implements ControlBehavior {
 //this will have to be overridden in any case. Should be strafing but haven'r figured it up yet.
 	@Override
 	public void left(float delta) {
-		rotation = steerable.getOrientation();
-		Vector2 direction = new Vector2(MathUtils.cos(rotation)+90, 0);
+		rotation = (float)(steerable.getOrientation()+Math.PI/2);
+		Vector2 direction = new Vector2(MathUtils.cos(rotation), MathUtils.sin(rotation));
 		if (direction.len() > 0) {
 			direction.nor();
 		}
@@ -76,6 +76,14 @@ public class FighterControlBehavior implements ControlBehavior {
 
 	@Override
 	public void right(float delta) {
+		rotation = (float)(steerable.getOrientation()-Math.PI/2);
+		Vector2 direction = new Vector2(MathUtils.cos(rotation), MathUtils.sin(rotation));
+		if (direction.len() > 0) {
+			direction.nor();
+		}
+
+		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), 
+				steerable.getBody().getWorldCenter(), true);
 	
 	}
 

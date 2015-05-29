@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gdxjam.Assets;
 import com.gdxjam.behaviors.control.CorvetteControlBehavior;
+import com.gdxjam.behaviors.control.CruiserControlBehavior;
 import com.gdxjam.behaviors.control.DefaultControlBehavior;
 import com.gdxjam.behaviors.control.FighterControlBehavior;
 import com.gdxjam.components.Components;
@@ -76,12 +77,13 @@ public class EntityFactory {
 				.circleCollider(Constants.unitRadius, 1.0f)
 				.damping(1.5f, 1.0f)
 				.steerable(Constants.unitRadius)
+				.faction(faction)
 				.steeringBehavior()
 				.health(100)
-				.faction(faction)
 				.target()
 				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2)
-				.setUUID(uuid).control()
+				.setUUID(uuid)
+				.control(faction)
 				.getWithoutAdding();
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
@@ -187,13 +189,21 @@ public class EntityFactory {
 			return this;
 		}
 
-		public EntityBuilder control() {
-			control(30);
+		public EntityBuilder control(Faction faction) {
+			control(30, faction);
 			return this;
 		}
 
-		public EntityBuilder control(float radius) {
-			entity.add(engine.createComponent(ControlComponent.class).init(new FighterControlBehavior(entity, engine, radius)));
+		public EntityBuilder control(float radius, Faction faction) {
+			if(faction == Faction.FACTION0){
+				entity.add(engine.createComponent(ControlComponent.class).init(new FighterControlBehavior(entity, engine, radius)));
+			}
+			if(faction == Faction.FACTION1){
+				entity.add(engine.createComponent(ControlComponent.class).init(new CruiserControlBehavior(entity, engine, radius)));
+			}
+			if(faction == Faction.FACTION2){
+				entity.add(engine.createComponent(ControlComponent.class).init(new CorvetteControlBehavior(entity, engine, radius)));
+			}
 			return this;
 		}
 
