@@ -3,17 +3,13 @@ package com.gdxjam.systems;
 import java.io.IOException;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.PooledEngine;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.minlog.Log;
 import com.gdxjam.net.GameClient;
 
 public class ClientSystem extends EntitySystem {
 
 	private GameClient client;
-	private Entity player;
 	private PooledEngine engine;
 
 	@Override
@@ -25,24 +21,23 @@ public class ClientSystem extends EntitySystem {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-		client.update();
-		Log.set(Log.LEVEL_DEBUG);
 	}
 
 	@Override
 	public void removedFromEngine(Engine engine) {
 		super.removedFromEngine(engine);
-		try {
-			client.disconnect();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		client.disconnect();
 	}
 
-	public synchronized void init(Entity player) throws IOException {
-		this.player = player;
-		client = new GameClient();
-		client.init(player, engine);
+	public synchronized void init() {
+		try {
+			client = new GameClient();
+			client.init(engine);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

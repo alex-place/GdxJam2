@@ -32,7 +32,7 @@ public class DesktopLauncher {
 		config.addIcon("icon32.png", FileType.Internal);
 		config.addIcon("icon16.png", FileType.Internal);
 
-		new LwjglApplication(new Main(false), config);
+		new LwjglApplication(new Main(), config);
 
 	}
 }

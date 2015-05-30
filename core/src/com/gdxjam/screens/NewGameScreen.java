@@ -23,7 +23,6 @@ import com.gdxjam.Assets;
 import com.gdxjam.GameManager;
 import com.gdxjam.components.FactionComponent.Faction;
 import com.gdxjam.utils.Constants;
-import com.gdxjam.utils.Constants.WorldSize;
 
 public class NewGameScreen extends AbstractScreen {
 
@@ -32,12 +31,10 @@ public class NewGameScreen extends AbstractScreen {
 	Label description;
 	Label name;
 	Faction selected;
-	WorldSize size;
 
 	@Override
 	public void show() {
 		selected = Faction.FACTION0;
-		size = WorldSize.MEDIUM;
 		stage = new Stage();
 		table = new Table();
 		table.setFillParent(true);
@@ -57,13 +54,13 @@ public class NewGameScreen extends AbstractScreen {
 		 */
 
 		Table factionTable = new Table();
-		for (int i = 0; i < Faction.values().length - 1; i++) { 
-												// Length -
-												// 1 to
-												// ingore
-												// the
-												// neutral
-												// faction
+		for (int i = 0; i < Faction.values().length - 1; i++) {
+			// Length -
+			// 1 to
+			// ingore
+			// the
+			// neutral
+			// faction
 			factionTable.add(createFactionButton(Faction.values()[i]));
 		}
 
@@ -78,25 +75,6 @@ public class NewGameScreen extends AbstractScreen {
 		textStyle.down = draw.tint(Color.DARK_GRAY);
 		textStyle.checked = draw;
 		textStyle.font = Assets.fonts.font;
-
-		final SelectBox<String> worldSize = new SelectBox<String>(Assets.skin);
-		worldSize.addListener(new ChangeListener() {
-
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				if (worldSize.getSelected().equalsIgnoreCase("small")) {
-					Constants.worldSize = WorldSize.SMALL;
-
-				} else if (worldSize.getSelected().equalsIgnoreCase("medium")) {
-					Constants.worldSize = WorldSize.MEDIUM;
-
-				} else if (worldSize.getSelected().equalsIgnoreCase("large")) {
-					Constants.worldSize = WorldSize.LARGE;
-
-				}
-			}
-		});
-		worldSize.setItems("Small", "Medium", "Large");
 
 		TextButton start = new TextButton("Start", textStyle);
 		start.addListener(new ClickListener() {
@@ -126,7 +104,6 @@ public class NewGameScreen extends AbstractScreen {
 		table.row();
 		table.add(description).colspan(3);
 		table.row();
-		table.add(worldSize).fill(0.8f, 1f);
 		table.add(start);
 		table.add(back);
 		stage.addActor(table);
@@ -163,7 +140,7 @@ public class NewGameScreen extends AbstractScreen {
 	}
 
 	public void start(Faction faction) {
-		Constants.playerFaction = faction;
+		GameManager.playerFaction = faction;
 		GameManager.setScreen(new GameScreen());
 	}
 

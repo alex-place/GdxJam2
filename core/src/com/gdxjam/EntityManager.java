@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.gdxjam.components.PhysicsComponent;
 import com.gdxjam.ecs.DebugEntityListener;
 import com.gdxjam.ecs.PhysicsEntityListener;
+import com.gdxjam.net.Network;
 import com.gdxjam.systems.CameraSystem;
 import com.gdxjam.systems.ClientSystem;
 import com.gdxjam.systems.DecaySystem;
@@ -53,8 +54,9 @@ public class EntityManager extends PooledEngine implements Disposable {
 		/**
 		 * Running game as a server and client is an experimental feature
 		 **/
-		if (GameManager.isServer)
+		if (Network.isServer) {
 			addSystem(new ServerSystem());
+		}
 		addSystem(new ClientSystem());
 		// Rendering happens last
 		addSystem(new EntityRenderSystem());

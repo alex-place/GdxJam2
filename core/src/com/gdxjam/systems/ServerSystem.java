@@ -13,12 +13,7 @@ public class ServerSystem extends EntitySystem {
 	Engine engine;
 
 	public ServerSystem() {
-		try {
-			Log.set(Log.LEVEL_DEBUG);
-			this.server = new GameServer();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	@Override
@@ -35,6 +30,15 @@ public class ServerSystem extends EntitySystem {
 	@Override
 	public void removedFromEngine(Engine engine) {
 		super.removedFromEngine(engine);
+	}
+
+	public void init() {
+		try {
+			Log.set(Log.LEVEL_DEBUG);
+			this.server = new GameServer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -1,10 +1,12 @@
 package com.gdxjam;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.gdxjam.OrionPrefs.BooleanValue;
 import com.gdxjam.OrionPrefs.StringValue;
+import com.gdxjam.components.FactionComponent.Faction;
 import com.gdxjam.screens.AbstractScreen;
 import com.gdxjam.systems.InputSystem;
 import com.gdxjam.utils.EntityFactory;
@@ -13,13 +15,16 @@ import com.gdxjam.utils.EntityUtils;
 public class GameManager {
 	private static final String TAG = "[" + GameManager.class.getSimpleName() + "]";
 
-	public static InputSystem input;
-
 	private static Game game;
 	private static EntityManager engine;
-	public static boolean isServer;
 
 	private static boolean paused = false;
+
+	private static Entity player;
+
+	public static InputSystem input;
+
+	public static Faction playerFaction;
 
 	public static void init(Game game) {
 		GameManager.game = game;
@@ -94,6 +99,14 @@ public class GameManager {
 		disposeEngine();
 		game.getScreen().dispose();
 		Gdx.app.exit();
+	}
+
+	public static Entity getPlayer() {
+		return player;
+	}
+
+	public static void setPlayer(Entity player) {
+		GameManager.player = player;
 	}
 
 	public static class GameConfig {

@@ -10,6 +10,9 @@ import com.esotericsoftware.kryonet.FrameworkMessage.Ping;
 
 public class Network {
 
+	private static String ip = "127.0.0.1";
+	public static boolean isServer = false;
+
 	// This registers objects that are going to be sent over the network.
 	static public void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
@@ -17,27 +20,15 @@ public class Network {
 		kryo.register(Vector2.class);
 		kryo.register(ArrayList.class);
 		kryo.register(Entity.class);
-		kryo.register(AddPlayer.class);
-		kryo.register(RemovePlayer.class);
-		kryo.register(UpdatePlayer.class);
 
 	}
 
-	static public class AddPlayer {
-		protected long uuid;
-		protected float x, y;
-		protected float rotation;
-
+	public static String getIP() {
+		return ip;
 	}
 
-	static public class RemovePlayer {
-		protected long uuid;
-	}
-
-	static public class UpdatePlayer {
-		protected long uuid;
-		protected float x, y;
-		protected float rotation;
+	public static void setIP(String ip) {
+		Network.ip = ip;
 	}
 
 }

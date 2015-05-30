@@ -8,9 +8,6 @@ import com.esotericsoftware.kryonet.FrameworkMessage.Ping;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import com.gdxjam.net.Network.AddPlayer;
-import com.gdxjam.net.Network.RemovePlayer;
-import com.gdxjam.net.Network.UpdatePlayer;
 
 public class GameServer {
 	Server server;
@@ -34,27 +31,7 @@ public class GameServer {
 		server.addListener(new Listener() {
 			public void received(Connection c, Object message) {
 
-				if (message instanceof AddPlayer) {
-					AddPlayer player = (AddPlayer) message;
-					server.sendToAllExceptTCP(c.getID(), player);
-					Log.debug("Player: " + player.uuid + " connected @ x: " + player.x + " y : " + player.y + " angle: " + player.rotation);
-					return;
-				} else if (message instanceof RemovePlayer) {
-					RemovePlayer player = (RemovePlayer) message;
-					server.sendToAllExceptTCP(c.getID(), player);
-					Log.debug("Player: " + player.uuid + " disconnected!");
-					c.close();
-					return;
-				} else if (message instanceof UpdatePlayer) {
-					UpdatePlayer player = (UpdatePlayer) message;
-					server.sendToAllExceptTCP(c.getID(), player);
-					// Log.debug("Player: " + player.uuid +
-					// " connected @ x: " + player.x + " y : " +
-					// player.y + " angle: " + player.rotation);
-					return;
-				}
-
-				else if ((message instanceof Ping) || (message instanceof KeepAlive)) {
+				if ((message instanceof Ping) || (message instanceof KeepAlive)) {
 
 				}
 

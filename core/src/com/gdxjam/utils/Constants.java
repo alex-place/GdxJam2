@@ -5,9 +5,6 @@ import com.gdxjam.components.FactionComponent.Faction;
 
 public class Constants {
 
-	public static enum WorldSize {
-		SMALL, MEDIUM, LARGE, CUSTOM;
-	}
 
 	public static final int maxSquads = 5;
 	public static final int maxSquadMembers = 20;
@@ -29,17 +26,9 @@ public class Constants {
 	public static final float VIEWPORT_WIDTH = 64;
 	public static final float VIEWPORT_HEIGHT = 36;
 
-	public static WorldSize worldSize = WorldSize.MEDIUM;
-	public static Faction playerFaction = Faction.FACTION1;
-	public static Faction enemyFaction = Faction.FACTION0;
+	public static final String localhost = "127.0.0.1";
 	
-	private static String ip = "127.0.0.1";
 	
-	public static String getIP(){
-		return ip;
-	}
-	public static void setIP(String setIP){
-		ip = setIP;
-	}
+	
 
 }

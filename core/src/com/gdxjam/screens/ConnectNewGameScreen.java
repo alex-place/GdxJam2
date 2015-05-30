@@ -3,29 +3,25 @@ package com.gdxjam.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gdxjam.Assets;
 import com.gdxjam.GameManager;
 import com.gdxjam.components.FactionComponent.Faction;
-import com.gdxjam.utils.Constants;
-import com.gdxjam.utils.Constants.WorldSize;
+import com.gdxjam.net.Network;
 
 public class ConnectNewGameScreen extends AbstractScreen {
 
@@ -94,7 +90,7 @@ public class ConnectNewGameScreen extends AbstractScreen {
 		textStyle.checked = draw;
 		textStyle.font = Assets.fonts.font;
 		
-		ip = new TextField("0.0.0.0", skin);
+		ip = new TextField("localhost", skin);
 		ip.setAlignment(Align.center);
 		
 		TextButton connect = new TextButton("Connect", textStyle);
@@ -163,7 +159,7 @@ public class ConnectNewGameScreen extends AbstractScreen {
 
 
 	public void start() {
-		Constants.setIP(ip.getText()); //this need to check for a vaild ip first.
+		Network.setIP(ip.getText()); //this need to check for a vaild ip first.
 		GameManager.setScreen(new GameScreen());
 	}
 
