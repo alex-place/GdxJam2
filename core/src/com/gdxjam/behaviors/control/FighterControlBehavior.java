@@ -58,7 +58,7 @@ public class FighterControlBehavior implements ControlBehavior {
 			direction.nor();
 		}
 
-		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), 
+		steerable.getBody().applyForce(new Vector2(direction.x * -speed * delta, direction.y * -speed * delta), 
 				steerable.getBody().getWorldCenter(), true);
 	}
 //this will have to be overridden in any case. Should be strafing but haven'r figured it up yet.
