@@ -17,6 +17,8 @@ public class Network {
 		kryo.register(ReplyAddPlayer.class);
 		kryo.register(Faction.class);
 		kryo.register(Vector2.class);
+		kryo.register(RequestUpdate.class);
+		kryo.register(ReplyUpdate.class);
 
 	}
 
@@ -40,6 +42,19 @@ public class Network {
 		Vector2 position;
 		long uuid;
 
+	}
+
+	public static class RequestUpdate {
+		long uuid;
+		Vector2 position;
+		float rotation;
+
+	}
+
+	public static class ReplyUpdate {
+		long uuid;
+		Vector2 position;
+		float rotation;
 	}
 
 }

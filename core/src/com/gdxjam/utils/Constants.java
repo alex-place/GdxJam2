@@ -1,10 +1,6 @@
-//Fucking hell, who wrote this! -Nate
 package com.gdxjam.utils;
 
-import com.gdxjam.components.FactionComponent.Faction;
-
 public class Constants {
-
 
 	public static final int maxSquads = 5;
 	public static final int maxSquadMembers = 20;
@@ -27,8 +23,5 @@ public class Constants {
 	public static final float VIEWPORT_HEIGHT = 36;
 
 	public static final String localhost = "127.0.0.1";
-	
-	
-	
 
 }

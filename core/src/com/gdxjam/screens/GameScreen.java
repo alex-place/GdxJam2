@@ -45,6 +45,7 @@ public class GameScreen extends AbstractScreen {
 		}
 
 		input.addProcessor(new EntityController(engine, GameManager.getPlayer()));
+		engine.getSystem(CameraSystem.class).smoothFollow(Components.PHYSICS.get(GameManager.getPlayer()).getBody().getPosition());
 
 		Gdx.input.setInputProcessor(input.getInput());
 

@@ -17,10 +17,6 @@ public class EntityController implements InputProcessor, Updateable {
 	ControlComponent controller;
 	CameraSystem cameraSystem;
 
-	public EntityController(PooledEngine engine) {
-		this(engine, engine.createEntity());
-	}
-
 	public EntityController(PooledEngine engine, Entity entity) {
 		this.entity = entity;
 		controller = entity.getComponent(ControlComponent.class);

@@ -105,7 +105,7 @@ public class GameManager {
 		return player;
 	}
 
-	public static void setPlayer(Entity player) {
+	public static synchronized void setPlayer(Entity player) {
 		GameManager.player = player;
 	}
 

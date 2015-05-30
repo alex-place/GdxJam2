@@ -21,6 +21,7 @@ public class ClientSystem extends EntitySystem {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
+		client.update();
 	}
 
 	@Override
@@ -32,7 +33,6 @@ public class ClientSystem extends EntitySystem {
 	public void init() {
 		try {
 			client = new GameClient();
-			client.init(engine);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
