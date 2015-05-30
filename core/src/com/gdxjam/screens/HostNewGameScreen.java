@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gdxjam.Assets;
 import com.gdxjam.GameManager;
 import com.gdxjam.components.FactionComponent.Faction;
+import com.gdxjam.net.Network;
 import com.gdxjam.utils.Constants;
 
 public class HostNewGameScreen extends AbstractScreen {
@@ -74,8 +75,6 @@ public class HostNewGameScreen extends AbstractScreen {
 		textStyle.down = draw.tint(Color.DARK_GRAY);
 		textStyle.checked = draw;
 		textStyle.font = Assets.fonts.font;
-
-		
 
 		TextButton start = new TextButton("Start", textStyle);
 		start.addListener(new ClickListener() {
@@ -142,6 +141,7 @@ public class HostNewGameScreen extends AbstractScreen {
 
 	public void start(Faction faction) {
 		GameManager.playerFaction = faction;
+		Network.isServer = true;
 		GameManager.setScreen(new GameScreen());
 	}
 

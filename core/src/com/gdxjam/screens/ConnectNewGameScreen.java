@@ -67,20 +67,19 @@ public class ConnectNewGameScreen extends AbstractScreen {
 		 */
 
 		Table factionTable = new Table();
-		for (int i = 0; i < Faction.values().length - 1; i++) { 
-												// Length -
-												// 1 to
-												// ingore
-												// the
-												// neutral
-												// faction
+		for (int i = 0; i < Faction.values().length - 1; i++) {
+			// Length -
+			// 1 to
+			// ingore
+			// the
+			// neutral
+			// faction
 			factionTable.add(createFactionButton(Faction.values()[i]));
 		}
 
 		name = new Label("Faction Name", labelStyle);
 		description = new Label("Faction Description", labelStyle);
 		description.setAlignment(Align.center);
-
 
 		NinePatchDrawable draw = new NinePatchDrawable(Assets.hotkey.button);
 
@@ -89,10 +88,10 @@ public class ConnectNewGameScreen extends AbstractScreen {
 		textStyle.down = draw.tint(Color.DARK_GRAY);
 		textStyle.checked = draw;
 		textStyle.font = Assets.fonts.font;
-		
-		ip = new TextField("localhost", skin);
+
+		ip = new TextField("127.0.0.1", skin);
 		ip.setAlignment(Align.center);
-		
+
 		TextButton connect = new TextButton("Connect", textStyle);
 		connect.addListener(new ClickListener() {
 			@Override
@@ -102,7 +101,7 @@ public class ConnectNewGameScreen extends AbstractScreen {
 				start();
 			}
 		});
-		
+
 		TextButton back = new TextButton("Back", textStyle);
 		back.addListener(new ClickListener() {
 			@Override
@@ -157,9 +156,10 @@ public class ConnectNewGameScreen extends AbstractScreen {
 		return new ImageButton(drawable);
 	}
 
-
 	public void start() {
-		Network.setIP(ip.getText()); //this need to check for a vaild ip first.
+		Network.setIP(ip.getText()); // this need to check for a vaild ip
+							// first.
+		Network.isServer = false;
 		GameManager.setScreen(new GameScreen());
 	}
 

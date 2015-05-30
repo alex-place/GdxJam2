@@ -2,11 +2,18 @@ package com.gdxjam.net;
 
 import java.io.IOException;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.gdxjam.GameManager;
+import com.gdxjam.components.Components;
+import com.gdxjam.net.Network.ReplyAddPlayer;
+import com.gdxjam.net.Network.RequestAddPlayer;
+import com.gdxjam.systems.CameraSystem;
+import com.gdxjam.utils.EntityFactory;
 
 public class GameClient {
 
@@ -23,7 +30,9 @@ public class GameClient {
 
 		client.addListener(new Listener() {
 			public void connected(Connection connection) {
-
+				RequestAddPlayer request = new RequestAddPlayer();
+				request.faction = GameManager.playerFaction;
+				client.sendTCP(request);
 			}
 
 			public void received(Connection connection, Object object) {
@@ -40,6 +49,15 @@ public class GameClient {
 	}
 
 	protected synchronized void handleRecieved(Connection connection, Object message) {
+		if (message instanceof ReplyAddPlayer) {
+			ReplyAddPlayer reply = (ReplyAddPlayer) message;
+			Entity e = EntityFactory.createPlayer(reply.faction, reply.position, reply.uuid);
+			if (GameManager.getPlayer() == null) {
+				GameManager.setPlayer(e);
+				engine.getSystem(CameraSystem.class).smoothFollow(Components.PHYSICS.get(GameManager.getPlayer()).getBody().getPosition());
+			}
+
+		}
 
 	}
 

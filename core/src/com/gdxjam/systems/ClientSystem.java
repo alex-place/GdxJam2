@@ -29,7 +29,7 @@ public class ClientSystem extends EntitySystem {
 		client.disconnect();
 	}
 
-	public synchronized void init() {
+	public void init() {
 		try {
 			client = new GameClient();
 			client.init(engine);

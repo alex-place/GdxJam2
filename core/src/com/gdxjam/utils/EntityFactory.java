@@ -18,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gdxjam.Assets;
 import com.gdxjam.behaviors.control.CorvetteControlBehavior;
 import com.gdxjam.behaviors.control.CruiserControlBehavior;
-import com.gdxjam.behaviors.control.DefaultControlBehavior;
 import com.gdxjam.behaviors.control.FighterControlBehavior;
 import com.gdxjam.components.Components;
 import com.gdxjam.components.ControlComponent;
@@ -55,11 +54,10 @@ public class EntityFactory {
 
 	private static PhysicsBuilder physicsBuilder = new PhysicsBuilder();
 
-	public static Entity createShip(Faction faction, Vector2 position, long uuid) {
+	public static Entity createShip(Faction faction, Vector2 position) {
 		Entity entity = builder.createEntity(EntityCategory.UNIT, position).physicsBody(BodyType.DynamicBody).circleCollider(Constants.unitRadius, 1.0f)
 				.damping(1.5f, 1.0f).steerable(Constants.unitRadius).steeringBehavior().health(100).faction(faction).target()
-				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2).setUUID(uuid)
-				.getWithoutAdding();
+				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2).getWithoutAdding();
 
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
 
@@ -70,27 +68,10 @@ public class EntityFactory {
 
 	}
 
-	public static Entity createPlayer(Faction faction, Vector2 position, long uuid) {
-		Entity entity = 
-				builder.createEntity(EntityCategory.UNIT, position)
-				.physicsBody(BodyType.DynamicBody)
-				.circleCollider(Constants.unitRadius, 1.0f)
-				.damping(1.5f, 1.0f)
-				.steerable(Constants.unitRadius)
-				.faction(faction)
-				.steeringBehavior()
-				.health(100)
-				.target()
-				.sprite(Assets.spacecraft.ships.get(faction.ordinal()), Constants.unitRadius * 2, Constants.unitRadius * 2)
-				.setUUID(uuid)
-				.control(faction)
-				.getWithoutAdding();
-
-		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
-
-		Components.STEERABLE.get(entity).setIndependentFacing(true);
-
-		engine.addEntity(entity);
+	public static Entity createPlayer(Faction faction, Vector2 position, long count) {
+		Entity entity = EntityFactory.createShip(faction, position);
+		builder.entity = entity;
+		builder.control(faction).uuid(count);
 		return entity;
 
 	}
@@ -119,13 +100,12 @@ public class EntityFactory {
 		engine.addEntity(entity);
 		return entity;
 	}
-	
-	public static Entity createAsteroid (Vector2 position, float radius) {
-		Entity entity = builder.createEntity(EntityCategory.RESOURCE, position).physicsBody(BodyType.StaticBody)
-			.circleCollider(radius, 50.0f)
-			.filter(EntityCategory.RESOURCE, 0, EntityCategory.PROJECTILE | EntityCategory.SQUAD | EntityCategory.UNIT)
-			.resource((int)(Constants.baseAsteroidResourceAmt * radius)).steerable(radius).faction(Faction.NONE)
-			.sprite(Assets.space.asteroids.random(), radius * 2, radius * 2).addToEngine();
+
+	public static Entity createAsteroid(Vector2 position, float radius) {
+		Entity entity = builder.createEntity(EntityCategory.RESOURCE, position).physicsBody(BodyType.StaticBody).circleCollider(radius, 50.0f)
+				.filter(EntityCategory.RESOURCE, 0, EntityCategory.PROJECTILE | EntityCategory.SQUAD | EntityCategory.UNIT)
+				.resource((int) (Constants.baseAsteroidResourceAmt * radius)).steerable(radius).faction(Faction.NONE)
+				.sprite(Assets.space.asteroids.random(), radius * 2, radius * 2).addToEngine();
 		return entity;
 	}
 
@@ -195,13 +175,13 @@ public class EntityFactory {
 		}
 
 		public EntityBuilder control(float radius, Faction faction) {
-			if(faction == Faction.FACTION0){
+			if (faction == Faction.FACTION0) {
 				entity.add(engine.createComponent(ControlComponent.class).init(new FighterControlBehavior(entity, engine, radius)));
 			}
-			if(faction == Faction.FACTION1){
+			if (faction == Faction.FACTION1) {
 				entity.add(engine.createComponent(ControlComponent.class).init(new CruiserControlBehavior(entity, engine, radius)));
 			}
-			if(faction == Faction.FACTION2){
+			if (faction == Faction.FACTION2) {
 				entity.add(engine.createComponent(ControlComponent.class).init(new CorvetteControlBehavior(entity, engine, radius)));
 			}
 			return this;
@@ -333,7 +313,8 @@ public class EntityFactory {
 
 			return this;
 		}
-// Working on this not done yet but had to go - Nate
+
+		// Working on this not done yet but had to go - Nate
 		public EntityBuilder polygonCollider(Vector2[] points, float density) {
 			PolygonShape shape = new PolygonShape(); //
 			shape.set(points);
@@ -361,11 +342,11 @@ public class EntityFactory {
 
 			return this;
 		}
-		
+
 		public EntityBuilder boxCollider(float height, float width, float density) {
 			PolygonShape shape = new PolygonShape(); //
 			shape.setAsBox(height, width);
-			
+
 			PhysicsComponent physics = Components.PHYSICS.get(entity);
 			if (physics == null) {
 				physicsBody(DEFAULT_BODY);
@@ -389,14 +370,6 @@ public class EntityFactory {
 			physics.getBody().createFixture(shape, density);
 
 			return this;
-		}
-		
-		public EntityBuilder setUUID(long uuid) {
-
-			entity.add(engine.createComponent(IdentifyingComponent.class).init(uuid));
-
-			return this;
-
 		}
 
 		public EntityBuilder circleSensor(float radius) {
@@ -458,6 +431,11 @@ public class EntityFactory {
 		public EntityBuilder sprite(TextureRegion region, float width, float height) {
 			SpriteComponent spriteComp = engine.createComponent(SpriteComponent.class).init(region, position.x, position.y, width, height);
 			entity.add(spriteComp);
+			return this;
+		}
+
+		public EntityBuilder uuid(long uuid) {
+			entity.add(engine.createComponent(IdentifyingComponent.class).init(uuid));
 			return this;
 		}
 

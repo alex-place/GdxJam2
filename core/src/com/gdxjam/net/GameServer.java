@@ -1,16 +1,24 @@
 package com.gdxjam.net;
 
 import java.io.IOException;
+import java.util.HashMap;
 
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive;
 import com.esotericsoftware.kryonet.FrameworkMessage.Ping;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import com.gdxjam.net.Network.ReplyAddPlayer;
+import com.gdxjam.net.Network.RequestAddPlayer;
+import com.gdxjam.utils.EntityFactory;
 
 public class GameServer {
 	Server server;
+	HashMap<Long, Entity> entities = new HashMap<Long, Entity>(100);
+	long count = 0;
 
 	public GameServer() throws IOException {
 		Log.set(Log.LEVEL_DEBUG);
@@ -30,6 +38,18 @@ public class GameServer {
 
 		server.addListener(new Listener() {
 			public void received(Connection c, Object message) {
+
+				if (message instanceof RequestAddPlayer) {
+					RequestAddPlayer request = (RequestAddPlayer) message;
+					Entity e = EntityFactory.createPlayer(request.faction, new Vector2(100, 100), count);
+					entities.put(count, e);
+					count++;
+					ReplyAddPlayer reply = new ReplyAddPlayer();
+					reply.faction = request.faction;
+					reply.position = new Vector2(100, 100);
+					reply.uuid = count;
+					server.sendToAllTCP(reply);
+				}
 
 				if ((message instanceof Ping) || (message instanceof KeepAlive)) {
 

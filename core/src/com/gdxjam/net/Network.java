@@ -1,12 +1,9 @@
 package com.gdxjam.net;
 
-import java.util.ArrayList;
-
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
-import com.esotericsoftware.kryonet.FrameworkMessage.Ping;
+import com.gdxjam.components.FactionComponent.Faction;
 
 public class Network {
 
@@ -16,10 +13,10 @@ public class Network {
 	// This registers objects that are going to be sent over the network.
 	static public void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
-		kryo.register(Ping.class);
+		kryo.register(RequestAddPlayer.class);
+		kryo.register(ReplyAddPlayer.class);
+		kryo.register(Faction.class);
 		kryo.register(Vector2.class);
-		kryo.register(ArrayList.class);
-		kryo.register(Entity.class);
 
 	}
 
@@ -29,6 +26,20 @@ public class Network {
 
 	public static void setIP(String ip) {
 		Network.ip = ip;
+	}
+
+	// Standard is clients request and Server replies net messages are static
+	// classes
+	public static class RequestAddPlayer {
+		Faction faction;
+
+	}
+
+	public static class ReplyAddPlayer {
+		Faction faction;
+		Vector2 position;
+		long uuid;
+
 	}
 
 }
