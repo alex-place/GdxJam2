@@ -45,9 +45,8 @@ public class Network {
 	}
 
 	public static class RequestUpdate {
-		long uuid;
-		Vector2 position;
-		float rotation;
+		boolean forward, reverse, left, right;
+		Vector2 lookAt;
 
 	}
 

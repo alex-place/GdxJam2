@@ -11,19 +11,19 @@ import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 
 /**
- * This is the movement behavior for the " saucer" ship which i called a "Corvette"
+ * This is the movement behavior for the " saucer" ship which i called a
+ * "Corvette"
  * 
- * 
- * @author alex-place / Nate Baker
+ * @author alex-place
+ * @author Nate Baker
  * */
-public class CorvetteControlBehavior implements ControlBehavior  {
+public class CorvetteControlBehavior implements ControlBehavior {
 
 	PooledEngine engine;
 	Entity entity;
 	SteeringBehaviorComponent steer;
 	SteerableComponent steerable;
 	float speed = 150;
-	
 
 	// TODO make parameters (or a param class) for ship classes (speed...)
 	public CorvetteControlBehavior(Entity entity, PooledEngine engine, float radius) {
@@ -37,26 +37,58 @@ public class CorvetteControlBehavior implements ControlBehavior  {
 
 	@Override
 	public void forward(float delta) {
-		steerable.getBody().setLinearVelocity(new Vector2(0,0)); //remove all velocity to creat instant speed change. -Nate
+		steerable.getBody().setLinearVelocity(new Vector2(0, 0)); // remove
+												// all
+												// velocity
+												// to
+												// creat
+												// instant
+												// speed
+												// change.
+												// -Nate
 		steerable.getBody().applyForce(new Vector2(0, speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
 	public void reverse(float delta) {
-		steerable.getBody().setLinearVelocity(new Vector2(0,0)); //remove all velocity to creat instant speed change. -Nate
+		steerable.getBody().setLinearVelocity(new Vector2(0, 0)); // remove
+												// all
+												// velocity
+												// to
+												// creat
+												// instant
+												// speed
+												// change.
+												// -Nate
 		steerable.getBody().applyForce(new Vector2(0, -speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
 	public void left(float delta) {
-		steerable.getBody().setLinearVelocity(new Vector2(0,0)); //remove all velocity to creat instant speed change. -Nate
+		steerable.getBody().setLinearVelocity(new Vector2(0, 0)); // remove
+												// all
+												// velocity
+												// to
+												// creat
+												// instant
+												// speed
+												// change.
+												// -Nate
 		steerable.getBody().applyForce(new Vector2(-speed * delta, 0), steerable.getBody().getWorldCenter(), true);
 
 	}
 
 	@Override
 	public void right(float delta) {
-		steerable.getBody().setLinearVelocity(new Vector2(0,0)); //remove all velocity to creat instant speed change. -Nate
+		steerable.getBody().setLinearVelocity(new Vector2(0, 0)); // remove
+												// all
+												// velocity
+												// to
+												// creat
+												// instant
+												// speed
+												// change.
+												// -Nate
 		steerable.getBody().applyForce(new Vector2(speed * delta, 0), steerable.getBody().getWorldCenter(), true);
 	}
 

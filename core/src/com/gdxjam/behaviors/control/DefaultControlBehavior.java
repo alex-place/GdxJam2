@@ -13,7 +13,8 @@ import com.gdxjam.components.SteeringBehaviorComponent;
 /**
  * The default implementation of a player controlled unit
  * 
- * @author alex-place / Nate Baker
+ * @author alex-place
+ * @author Nate Baker
  * */
 public class DefaultControlBehavior implements ControlBehavior {
 

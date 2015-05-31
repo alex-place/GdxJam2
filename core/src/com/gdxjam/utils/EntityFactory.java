@@ -62,8 +62,6 @@ public class EntityFactory {
 		PhysicsComponent physicsComp = Components.PHYSICS.get(entity);
 
 		Components.STEERABLE.get(entity).setIndependentFacing(true);
-
-		engine.addEntity(entity);
 		return entity;
 
 	}
@@ -71,7 +69,7 @@ public class EntityFactory {
 	public static Entity createPlayer(Faction faction, Vector2 position, long count) {
 		Entity entity = EntityFactory.createShip(faction, position);
 		builder.entity = entity;
-		builder.control(faction).uuid(count);
+		builder.control(faction).uuid(count).addToEngine();
 		return entity;
 
 	}

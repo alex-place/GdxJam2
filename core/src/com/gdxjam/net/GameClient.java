@@ -83,9 +83,6 @@ public class GameClient {
 
 	public void update() {
 		RequestUpdate request = new RequestUpdate();
-		request.uuid = GameManager.getPlayer().getComponent(IdentifyingComponent.class).getUuid();
-		request.position = GameManager.getPlayer().getComponent(PhysicsComponent.class).getBody().getPosition();
-		request.rotation = GameManager.getPlayer().getComponent(PhysicsComponent.class).getBody().getAngle();
 		if (client.isConnected())
 			client.sendTCP(request);
 	}

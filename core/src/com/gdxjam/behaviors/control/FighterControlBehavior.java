@@ -11,10 +11,11 @@ import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 
 /**
- * This is a new movement type I came up with. Will work like a fps move movement where the ship only fires frontwards. still working on it. 
+ * This is a new movement type I came up with. Will work like a fps move
+ * movement where the ship only fires frontwards. still working on it.
  * 
- * 
- * @author alex-place / Nate Baker
+ * @author alex-place
+ * @author Nate Baker
  * */
 public class FighterControlBehavior implements ControlBehavior {
 
@@ -26,8 +27,6 @@ public class FighterControlBehavior implements ControlBehavior {
 	float rotation;
 	float rotationSpeed = 10.0f;
 
-	
-
 	// TODO make parameters (or a param class) for ship classes (speed...)
 	public FighterControlBehavior(Entity entity, PooledEngine engine, float radius) {
 		this.entity = entity;
@@ -37,7 +36,9 @@ public class FighterControlBehavior implements ControlBehavior {
 		steerable.setIndependentFacing(true);
 		steerable.setMaxLinearSpeed(5);
 	}
-// I will inherited this form DefaultControlBehavior if I don't need to change it.
+
+	// I will inherited this form DefaultControlBehavior if I don't need to
+	// change it.
 	@Override
 	public void forward(float delta) {
 		rotation = steerable.getOrientation();
@@ -46,8 +47,7 @@ public class FighterControlBehavior implements ControlBehavior {
 			direction.nor();
 		}
 
-		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), 
-				steerable.getBody().getWorldCenter(), true);
+		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
@@ -58,40 +58,40 @@ public class FighterControlBehavior implements ControlBehavior {
 			direction.nor();
 		}
 
-		steerable.getBody().applyForce(new Vector2(direction.x * -speed * delta, direction.y * -speed * delta), 
-				steerable.getBody().getWorldCenter(), true);
+		steerable.getBody().applyForce(new Vector2(direction.x * -speed * delta, direction.y * -speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
-//this will have to be overridden in any case. Should be strafing but haven'r figured it up yet.
+
+	// this will have to be overridden in any case. Should be strafing but
+	// haven'r figured it up yet.
 	@Override
 	public void left(float delta) {
-		rotation = (float)(steerable.getOrientation()+Math.PI/2);
+		rotation = (float) (steerable.getOrientation() + Math.PI / 2);
 		Vector2 direction = new Vector2(MathUtils.cos(rotation), MathUtils.sin(rotation));
 		if (direction.len() > 0) {
 			direction.nor();
 		}
 
-		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), 
-				steerable.getBody().getWorldCenter(), true);
+		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
 	public void right(float delta) {
-		rotation = (float)(steerable.getOrientation()-Math.PI/2);
+		rotation = (float) (steerable.getOrientation() - Math.PI / 2);
 		Vector2 direction = new Vector2(MathUtils.cos(rotation), MathUtils.sin(rotation));
 		if (direction.len() > 0) {
 			direction.nor();
 		}
 
-		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), 
-				steerable.getBody().getWorldCenter(), true);
-	
+		steerable.getBody().applyForce(new Vector2(direction.x * speed * delta, direction.y * speed * delta), steerable.getBody().getWorldCenter(), true);
+
 	}
 
- 	@Override
- 	public void lookAt(Vector2 position) {
+	@Override
+	public void lookAt(Vector2 position) {
 		float angle = MathUtils.degreesToRadians * position.sub(steerable.getPosition()).angle();
 		steerable.setOrientation(angle);
- 	}
+	}
+
 	@Override
 	public Entity getEntity() {
 		// TODO Auto-generated method stub

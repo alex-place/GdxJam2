@@ -56,15 +56,6 @@ public class GameServer {
 
 				if (message instanceof RequestUpdate) {
 					RequestUpdate request = (RequestUpdate) message;
-					// Entity e = entities.get(request.uuid);
-					// e.getComponent(PhysicsComponent.class).getBody().setTransform(request.position,
-					// request.rotation);
-
-					ReplyUpdate reply = new ReplyUpdate();
-					reply.position = request.position;
-					reply.rotation = request.rotation;
-					reply.uuid = request.uuid;
-					server.sendToAllExceptTCP(c.getID(), reply);
 				}
 
 				if ((message instanceof Ping) || (message instanceof KeepAlive)) {

@@ -13,7 +13,8 @@ import com.gdxjam.components.SteeringBehaviorComponent;
 /**
  * The Cruiser is the "Astroids Style" movement
  * 
- * @author alex-place / Nate Baker
+ * @author alex-place
+ * @author Nate Baker
  * */
 public class CruiserControlBehavior extends DefaultControlBehavior {
 
