@@ -11,24 +11,29 @@ import com.gdxjam.components.SteerableComponent;
 import com.gdxjam.components.SteeringBehaviorComponent;
 
 /**
- * The Cruiser is the "Astroids Style" movement
+ * The default implementation of a player controlled unit
  * 
  * @author alex-place
  * @author Nate Baker
  * */
-public class CruiserControlBehavior extends DefaultControlBehavior {
+public class CruiserControlBehavior implements ControlBehavior {
 
 	PooledEngine engine;
 	Entity entity;
 	SteeringBehaviorComponent steer;
 	SteerableComponent steerable;
-	float speed = 150;
+	float speed = 15000;
 	float rotation;
-	float rotationSpeed = 10.0f;
+	float rotationSpeed = 0.4f;
 
 	// TODO make parameters (or a param class) for ship classes (speed...)
 	public CruiserControlBehavior(Entity entity, PooledEngine engine, float radius) {
-		super(entity, engine, radius);
+		this.entity = entity;
+		this.engine = engine;
+		steer = Components.STEERING_BEHAVIOR.get(entity);
+		steerable = engine.createComponent(SteerableComponent.class).init(Components.PHYSICS.get(entity).getBody(), radius);
+		steerable.setIndependentFacing(true);
+		steerable.setMaxLinearSpeed(5);
 	}
 
 	@Override
@@ -55,13 +60,13 @@ public class CruiserControlBehavior extends DefaultControlBehavior {
 
 	@Override
 	public void left(float delta) {
-		steerable.getBody().applyAngularImpulse(0.5f, true);
+		steerable.getBody().applyAngularImpulse(rotationSpeed, true);
 
 	}
 
 	@Override
 	public void right(float delta) {
-		steerable.getBody().applyAngularImpulse(-0.5f, true);
+		steerable.getBody().applyAngularImpulse(-rotationSpeed, true);
 	}
 
 	@Override
