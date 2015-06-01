@@ -38,7 +38,7 @@ public class GameClient {
 		client.addListener(new Listener() {
 			public void connected(Connection connection) {
 				RequestAddPlayer request = new RequestAddPlayer();
-				request.faction = Faction.FACTION0;
+				request.faction = GameManager.playerFaction;
 				if (client.isConnected())
 					client.sendTCP(request);
 			}
