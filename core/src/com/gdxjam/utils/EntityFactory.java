@@ -69,6 +69,7 @@ public class EntityFactory {
 	public static Entity createPlayer(Faction faction, Vector2 position, long count) {
 		Entity entity = EntityFactory.createShip(faction, position);
 		builder.entity = entity;
+		builder.setCollider(faction);
 		builder.control(faction).uuid(count).addToEngine();
 		return entity;
 
@@ -281,6 +282,16 @@ public class EntityFactory {
 			SteerableComponent steerable = engine.createComponent(SteerableComponent.class).init(physics.getBody(), radius);
 			entity.add(steerable);
 			return this;
+		}
+		
+		public EntityBuilder setCollider(Faction faction){
+			if(faction == Faction.FACTION0){
+				return circleCollider(1, 1);
+			}
+			if(faction == Faction.FACTION1 || faction == Faction.FACTION2){
+				return boxCollider(1, 1, 1);
+			}
+			else{return null;}
 		}
 
 		public EntityBuilder circleCollider(float radius, float density) {
