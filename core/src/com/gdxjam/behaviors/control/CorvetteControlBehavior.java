@@ -23,7 +23,7 @@ public class CorvetteControlBehavior implements ControlBehavior {
 	Entity entity;
 	SteeringBehaviorComponent steer;
 	SteerableComponent steerable;
-	float speed = 150;
+	float speed = 15000;
 
 	// TODO make parameters (or a param class) for ship classes (speed...)
 	public CorvetteControlBehavior(Entity entity, PooledEngine engine, float radius) {
@@ -37,58 +37,21 @@ public class CorvetteControlBehavior implements ControlBehavior {
 
 	@Override
 	public void forward(float delta) {
-		steerable.getBody().setLinearVelocity(new Vector2(0, 0)); // remove
-												// all
-												// velocity
-												// to
-												// creat
-												// instant
-												// speed
-												// change.
-												// -Nate
 		steerable.getBody().applyForce(new Vector2(0, speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
 	public void reverse(float delta) {
-		steerable.getBody().setLinearVelocity(new Vector2(0, 0)); // remove
-												// all
-												// velocity
-												// to
-												// creat
-												// instant
-												// speed
-												// change.
-												// -Nate
 		steerable.getBody().applyForce(new Vector2(0, -speed * delta), steerable.getBody().getWorldCenter(), true);
 	}
 
 	@Override
 	public void left(float delta) {
-		steerable.getBody().setLinearVelocity(new Vector2(0, 0)); // remove
-												// all
-												// velocity
-												// to
-												// creat
-												// instant
-												// speed
-												// change.
-												// -Nate
 		steerable.getBody().applyForce(new Vector2(-speed * delta, 0), steerable.getBody().getWorldCenter(), true);
-
 	}
 
 	@Override
 	public void right(float delta) {
-		steerable.getBody().setLinearVelocity(new Vector2(0, 0)); // remove
-												// all
-												// velocity
-												// to
-												// creat
-												// instant
-												// speed
-												// change.
-												// -Nate
 		steerable.getBody().applyForce(new Vector2(speed * delta, 0), steerable.getBody().getWorldCenter(), true);
 	}
 
